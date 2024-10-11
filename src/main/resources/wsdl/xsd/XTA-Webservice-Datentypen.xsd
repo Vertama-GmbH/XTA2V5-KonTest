@@ -1,0 +1,1071 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+           xmlns:xta-core="https://xoev.de/transport/xta/core/3.1.1"
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+           targetNamespace="https://xoev.de/transport/xta/core/3.1.1"
+           version="3.1.1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+    <xs:annotation>
+        <xs:appinfo>
+            <standard>
+                <nameLang>XTA 2 - Interoperabilitätsstandard zur Einbindung von IT-Fachapplikationen in eine
+                    Infrastruktur für Nachrichtenübermittlung
+                </nameLang>
+                <nameKurz>XTA 2</nameKurz>
+                <nameTechnisch>xta2</nameTechnisch>
+                <kennung>urn:xoev-de:kosit:standard:xta2</kennung>
+                <beschreibung>XTA 2 ist ein vom IT-Planungsrat empfohlener Interoperabilitätsstandard. Das Modul XTA
+                    Webservice vereinheitlicht die funktionalen Schnittstellen zwischen Fach- und Transportverfahren, um
+                    die Übermittlung von Nachrichten – also den Transport – zu standardisieren. Das Modul XTA Service
+                    Profile ist das Instrument zur einheitlichen Definition und Konfiguration der regelgeleiteten
+                    Anforderungen an den Transport. Weitere Information können von der Webseite der KoSIT abgerufen
+                    werden.
+                </beschreibung>
+            </standard>
+            <versionStandard>
+                <status>Final – 26. Juli 2024</status>
+                <version>5.1.1</version>
+                <beschreibung>Das Modul "XTA Webservice" wurde umfangreich überarbeitet und dessen Bestandteile stärker
+                    differenziert: Es wurden Erweiterungsmechanismen eingeführt und viele Funktionen in eigene
+                    Erweiterungen verschoben. Durch die Erweiterungsmöglichkeiten wurde ein Kern des Moduls erschaffen,
+                    der eine einfachere und langfristig stabile Implementierung der Kernfunktionen erlaubt. Die Module
+                    "XTA Webservice" und "XTA Service Profile" wurden technisch besser voreinander getrennt und die
+                    gesamte Spezifikation wurde textuell überarbeitet. Weitere Information können von der Webseite der
+                    KoSIT abgerufen werden.
+                </beschreibung>
+                <versionXOEVProfil>1.5.1</versionXOEVProfil>
+                <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                <versionXGenerator>3.1.1</versionXGenerator>
+                <versionModellierungswerkzeug>19.0 SP4</versionModellierungswerkzeug>
+                <nameModellierungswerkzeug>MagicDraw</nameModellierungswerkzeug>
+            </versionStandard>
+        </xs:appinfo>
+        <xs:documentation>Hier wird die Sammlung von Typen dargestellt, welche der XTA-WS definiert und verwendet.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:include schemaLocation="XTA-Webservice-Codes.xsd"/>
+    <xs:import schemaLocation="../externe_Schemata/xmldsig-core-schema.xsd"
+               namespace="http://www.w3.org/2000/09/xmldsig#"/>
+    <xs:complexType name="AdditionalIdentifierType">
+        <xs:annotation>
+            <xs:documentation>Zusätzliche Nachrichtenidentifikatoren, geltend für die gesamte Transportstrecke (auf
+                Anwendungs- sowie Transportebene). Im XÖV-Umfeld kann in diesem Typ die nachrichtenUUID der
+                Fachnachrichtenidentifikation des Nachrichtenkopfes eingetragen werden.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="MessageIdentifier" type="xta-core:NonEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation>Zusätzliche Nachrichtenidentifikation, geltend für die gesamte Transportstrecke.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Context" type="xta-core:Code.IdentifierContext">
+                <xs:annotation>
+                    <xs:documentation>Einordnung der zusätzlichen Nachrichtenidentifikation in einen durch eine
+                        Codeliste auswählbaren Kontext.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required">
+            <xs:annotation>
+                <xs:documentation>Hier muss die ID zur eindeutigen Referenzierung des XML-Elements eingetragen werden.
+                    Ihr Verwendungszweck ist außerhalb der Spezifikation beschrieben.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="AdditionalReportListType">
+        <xs:annotation>
+            <xs:documentation>Dieser Typ gestattet zwecks erweiterter Protokollierung das Ablegen von Berichten,
+                Quittungen und weiterer Nachweise.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Report" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>In diesem Element ist ein zusätzlicher Bericht abgelegt, der den TransportReport
+                        ergänzt. Damit können verschiedene Arten von zusätzlichen Berichten hinterlegt werden (z. B.
+                        OSCI Process Card).
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Key" type="xta-core:Code.ReportType">
+                            <xs:annotation>
+                                <xs:documentation>Dieses Element benennt den Typ des Reports, um dem Leser die
+                                    Interpretation der Reportdaten zu ermöglichen. Die Benennung des Typs des Reports
+                                    geschieht auf der Basis einer Codeliste.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="Data"
+                                    type="xs:base64Binary"
+                                    xmime:expectedContentTypes="application/octet-stream">
+                            <xs:annotation>
+                                <xs:documentation>Hier wird der zusätzliche Report in einem technisch neutralen Format
+                                    eingetragen.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CertificateType">
+        <xs:annotation>
+            <xs:documentation>Struktur für zu prüfende Zertifikate. Die Prüfung der Zertifikate kann auf dem
+                Transportweg durchgeführt werden und ist eine optionale Serviceleistung der Transportinfrastruktur. Dies
+                kann ein Zertifikat des Autors für eine fachliche Signatur der zu übertragenden Fachnachricht sein, wie
+                z.B. im Kontext XhD oder ein Zertifikat anhand dessen die Berechtigung des Autors durch den Leser
+                überprüft werden kann.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Usage"
+                        maxOccurs="unbounded"
+                        type="xta-core:Code.CertificateUsage">
+                <xs:annotation>
+                    <xs:documentation>Hier werden die Nutzungszwecke des Zertifikats angegeben.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Data" type="ds:X509DataType">
+                <xs:annotation>
+                    <xs:documentation>Hier wird das eigentliche Zertifikat hinterlegt.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ContentContainerType">
+        <xs:annotation>
+            <xs:documentation>Hier werden die zu transportierenden Inhaltsdaten (Fachnachricht, Anlage und/oder
+                erweiterter Inhalt) strukturiert hinterlegt. Dabei muss mindestens eines der Kindelemente existieren und
+                befüllt sein. Jedes Kindelement muss über einen eindeutigen Identifikator referenzierbar sein.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Message" minOccurs="0" type="xta-core:ContentType">
+                <xs:annotation>
+                    <xs:documentation>Enthält den base64-kodierten Inhalt der Fachnachricht.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Attachment"
+                        minOccurs="0"
+                        maxOccurs="unbounded"
+                        type="xta-core:ContentType">
+                <xs:annotation>
+                    <xs:documentation>Enthält den base64-kodierten Inhalt der Anhänge zur Fachnachricht.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Extensions" minOccurs="0" type="xta-core:ExtensionsType">
+                <xs:annotation>
+                    <xs:documentation>Eine Liste von Erweiterungen, welche die Funktion des XTA Kerns nach eigener
+                        Spezifikation ergänzen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ContentType">
+        <xs:annotation>
+            <xs:documentation>Typ für die technisch neutrale (base64-kodierte) Darstellung von Information. Enthält den
+                base64-kodierten Inhalt (Fachnachricht oder Anlage), der zwischen WebService-Client und XTA-Server
+                transportiert wird. Die Attribute sind der MIME-Spezifikation (RFC 2183) entnommen. Die Belegung der
+                Attribute ist für verschiedene Fachlichkeiten unterschiedlich und ist durch den Fachstandard
+                festzulegen, der für die Definition der Inhaltsdaten verantwortlich ist.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:base64Binary"
+                          xmime:expectedContentTypes="application/octet-stream">
+                <xs:attribute name="contentType"
+                              type="xta-core:NonEmptyStringType"
+                              use="optional">
+                    <xs:annotation>
+                        <xs:documentation>Der Internet Media Type (MIME-Type) des enthaltenen Inhalts (z.B. text/xml,
+                            text/plain, application/gzip oder application/pdf).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="encoding" type="xta-core:NonEmptyStringType" use="optional">
+                    <xs:annotation>
+                        <xs:documentation>Der Zeichensatz, der der Kodierung des Inhalts zugrunde gelegen hat.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="filename" type="xta-core:NonEmptyStringType" use="optional">
+                    <xs:annotation>
+                        <xs:documentation>Der Dateiname der Datenquelle, falls der Inhalt einer Datei entnommen worden
+                            ist. Bsp.: Für die Übermittlung von xdomea-Nachrichten ist dieses Attribut Pflicht.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="id" type="xs:ID" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Hier muss die ID zur eindeutigen Identifizierung des Inhalts eingetragen
+                            werden. Ihr Verwendungszweck ist außerhalb der Spezifikation beschrieben.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="size" type="xs:positiveInteger" use="optional">
+                    <xs:annotation>
+                        <xs:documentation>Die Größe des Inhalts in Bytes.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="DateTimeWithIDType">
+        <xs:annotation>
+            <xs:documentation>Ein W3C-Zeitstempel mit einem Identifikator.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:dateTime">
+                <xs:attribute name="id" type="xs:ID" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Hier muss die ID zur eindeutigen Referenzierung des XML-Elements eingetragen
+                            werden. Ihr Verwendungszweck ist außerhalb der Spezifikation beschrieben.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="DeliveryAttributesType">
+        <xs:annotation>
+            <xs:documentation>Struktur für Zeitstempel der Transportetappen.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Origin" minOccurs="0" type="xta-core:DateTimeWithIDType">
+                <xs:annotation>
+                    <xs:documentation>Zeitstempel für die Erzeugung der Fachnachricht und deren Übermittlung an den
+                        Sender. Auszufüllen durch den Autor. Im XÖV-Umfeld ist hier der Erstellungszeitpunkt der
+                        Nachricht eingetragen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="InitialSend" minOccurs="0" type="xta-core:DateTimeWithIDType">
+                <xs:annotation>
+                    <xs:documentation>Zeitstempel für den Versand der Fachnachricht an den Empfänger. Auszufüllen durch
+                        den Sender.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Delivery" minOccurs="0" type="xta-core:DateTimeWithIDType">
+                <xs:annotation>
+                    <xs:documentation>Zeitstempel des Eingangs bei dem Empfänger. Auszufüllen durch: den Sender nach
+                        Eintreffen einer Quittung vom Empfänger vom Empfänger nach Eingang der Fachnachricht
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="InitialFetch"
+                        minOccurs="0"
+                        type="xta-core:DateTimeWithIDType">
+                <xs:annotation>
+                    <xs:documentation>Zeitstempel der Zustellung beim Leser durch Abruf aus einem Postfach mit der
+                        Methode getMessage oder durch Zustellung beim Leser mit der Methode deliverMessage. Auszufüllen
+                        durch den Empfänger.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Reception" minOccurs="0" type="xta-core:DateTimeWithIDType">
+                <xs:annotation>
+                    <xs:documentation>Wird vom Empfänger gesetzt, sobald der Leser die Abholung der Fachnachricht mit
+                        der Methode close bestätigt hat.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ExtensionType">
+        <xs:annotation>
+            <xs:documentation>Ein Element zum Hinzufügen einer Extension.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Identifier" type="xta-core:NonEmptyURIType">
+                <xs:annotation>
+                    <xs:documentation>Eindeutige Kennung der verwendeten Erweiterung als URI-Angabe. Beispiel:
+                        urn:xoev-de:kosit:standard:xta.extended-contentcontainer
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Version" type="xta-core:NonEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation>Verwendete Version der Erweiterung nach dem Semantic Versioning Prinzip.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Data" type="xs:anyType">
+                <xs:annotation>
+                    <xs:documentation>Enthält Daten die mit einem eigenen Schema definiert und nach einer dazugehörigen
+                        Spezifikation der Erweiterung verwendet werden müssen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required">
+            <xs:annotation>
+                <xs:documentation>Hier muss die ID zur eindeutigen Referenzierung des XML-Elements eingetragen werden.
+                    Ihr Verwendungszweck ist außerhalb der Spezifikation beschrieben.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="ExtensionsType">
+        <xs:annotation>
+            <xs:documentation>Eine Liste von Erweiterungen, welche die Funktionen des XTA Kerns nach eigener
+                Spezifikation ergänzen.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Extension"
+                        maxOccurs="unbounded"
+                        type="xta-core:ExtensionType">
+                <xs:annotation>
+                    <xs:documentation>Eine Erweiterung der Kernparameterinhalte.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="MessageMetaDataType">
+        <xs:annotation>
+            <xs:documentation>Struktur des Transportauftrags, die sowohl Daten zum Transport der Fachnachricht, als auch
+                über den Inhalt der Fachnachricht abbildet. Zum Transport wird festgehalten, von wem die Fachnachricht
+                erstellt wurde (Autor) und an wen sie gerichtet ist (Leser). Zum Inhalt der Fachnachricht werden
+                Identifikation sowie der fachliche Kontext, Nachrichtentyp und gemäß Vorgabe beziehungsweise
+                Vereinbarung zusätzliche Eigenschaften eingetragen.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="XTAMessageID" type="xta-core:XTAMessageIDType">
+                <xs:annotation>
+                    <xs:documentation>Der eindeutige Identifikator des Transportauftrags.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Reader" type="xta-core:PartyWithIDType">
+                <xs:annotation>
+                    <xs:documentation>Angaben zum Leser (Auswerter der Fachnachricht). Hier können verwendete
+                        Zertifikate hinterlegt werden.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Originators" type="xta-core:OriginatorsType">
+                <xs:annotation>
+                    <xs:documentation>Angaben zum Autor und Sender.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Qualifier" type="xta-core:QualifierType">
+                <xs:annotation>
+                    <xs:documentation>Informationen zur Einordnung der Fachnachricht.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MessageSize" type="xs:positiveInteger">
+                <xs:annotation>
+                    <xs:documentation>Ungefähre Größe des Elements ContentContainer in Bytes. Die Angabe kann zur
+                        Optimierung der weiteren Abarbeitung herangezogen werden.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DeliveryAttributes" type="xta-core:DeliveryAttributesType">
+                <xs:annotation>
+                    <xs:documentation>Zeitstempel der Transportetappen.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ServiceQuality" type="xta-core:ServiceQualityType">
+                <xs:annotation>
+                    <xs:documentation>Angaben zu geforderten Service Qualitäten.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AdditionalIdentifier"
+                        minOccurs="0"
+                        maxOccurs="unbounded"
+                        type="xta-core:AdditionalIdentifierType">
+                <xs:annotation>
+                    <xs:documentation>Zusätzliche Identifikation der Nachricht, geltend für die gesamte
+                        Transportstrecke.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MessageProperty"
+                        minOccurs="0"
+                        maxOccurs="unbounded"
+                        type="xta-core:MessagePropertyType">
+                <xs:annotation>
+                    <xs:documentation>Zusätzliche Eigenschaften für den Transport.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Extensions" minOccurs="0" type="xta-core:ExtensionsType">
+                <xs:annotation>
+                    <xs:documentation>Eine Liste von Erweiterungen (Extensions), welche die Funktion des XTA Kerns nach
+                        eigener Spezifikation ergänzen. Die Liste kann aus mehreren Erweiterungen bestehen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="MessagePropertyType">
+        <xs:annotation>
+            <xs:documentation>Struktur für einen zusätzlichen Wert mit einem dazugehörigen Schlüssel zur Nutzung durch
+                die verschiedenen Rollen des XTA-Rollenmodells. Die Eintragung erfolgt nach Abstimmung zwischen den
+                betroffenen Rollen.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Key" type="xta-core:NonEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation>Schlüssel des Schlüssel-Wert-Paares.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Value" type="xs:anySimpleType">
+                <xs:annotation>
+                    <xs:documentation>Wert des Schlüssel-Wert-Paares.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required">
+            <xs:annotation>
+                <xs:documentation>Hier muss die ID zur eindeutigen Referenzierung des XML-Elements eingetragen werden.
+                    Ihr Verwendungszweck ist außerhalb der Spezifikation beschrieben.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="MessageSelectorType">
+        <xs:annotation>
+            <xs:documentation>Hiermit muss die Auswahl oder Filterung von Nachrichten in einem Postfach vorgenommen
+                werden.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="XTAMessageIDs">
+                <xs:annotation>
+                    <xs:documentation>Falls eindeutige Identifikatoren der Transportaufträge bekannt sind, werden diese
+                        einzeln angegeben.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="XTAMessageID"
+                                    maxOccurs="unbounded"
+                                    type="xta-core:XTAMessageIDType">
+                            <xs:annotation>
+                                <xs:documentation>Eindeutige Identifikatoren der Transportaufträge.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="OtherCriteria">
+                <xs:annotation>
+                    <xs:documentation>Falls keine eindeutigen Identifikatoren der Transportaufträge bekannt sind, können
+                        nachfolgende Filterkriterien einzeln oder in Kombination (UND-Verknüpfung) angegeben werden.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="NewEntry" minOccurs="0" type="xs:boolean">
+                            <xs:annotation>
+                                <xs:documentation>Über diesen Wahrheitswert legt der Leser fest, ob nur neue
+                                    Fachnachrichten in die Auswahl mit einbezogen werden sollen. Beim Fehlen dieses
+                                    Attributs wird davon ausgegangen, dass nur neue Fachnachrichten (ohne Zeitstempel
+                                    InititalFetch) ausgewählt werden sollen.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="MaxMessages" minOccurs="0" type="xs:positiveInteger">
+                            <xs:annotation>
+                                <xs:documentation>Vom Leser vorgegebene maximale Anzahl von Fachnachrichten, die beim
+                                    Aufruf der Methode getStatusList zurückgeliefert werden sollen. Diese Obergrenze
+                                    kann durch den Empfänger auf Ebene der Postfachinstanz selbstständig auf jeden Wert
+                                    größer null beschränkt werden.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="MessageBoxEntryTimeFrom" minOccurs="0" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>Untergrenze für den Eingangszeitpunkt der auszuwählenden
+                                    Fachnachrichten. Wenn dieses Element gesetzt ist, werden nur Transportaufträge zu
+                                    den Fachnachrichten geliefert, die nach diesem Zeitpunkt (nach Delivery, siehe )
+                                    empfangen wurden.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="MessageBoxEntryTimeTo" minOccurs="0" type="xs:dateTime">
+                            <xs:annotation>
+                                <xs:documentation>Obergrenze für den Eingangszeitpunkt der auszuwählenden Nachrichten.
+                                    Wenn dieses Element gesetzt ist, werden nur Transportaufträge zu den Fachnachrichten
+                                    geliefert, die vor diesem Zeitpunkt (nach Delivery, siehe ) empfangen wurden.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="Extensions" minOccurs="0" type="xta-core:ExtensionsType">
+                            <xs:annotation>
+                                <xs:documentation>Eine Liste von Erweiterungen, welche die Funktion des XTA Kerns nach
+                                    eigener Spezifikation ergänzen.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="MessageStatusListType">
+        <xs:annotation>
+            <xs:documentation>Struktur einer Antwort beim Aufruf der Methode getStatusList. Hier wird der
+                Transportauftrag MessageMetaData der ausgewählten Fachnachrichten übertragen.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="MessageMetaData"
+                        minOccurs="0"
+                        maxOccurs="unbounded"
+                        type="xta-core:MessageMetaDataType">
+                <xs:annotation>
+                    <xs:documentation>Liste der Transportaufträge der ausgewählten Fachnachrichten.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Extensions" minOccurs="0" type="xta-core:ExtensionsType">
+                <xs:annotation>
+                    <xs:documentation>Eine Liste von Erweiterungen, welche die Funktion des XTA Kerns nach eigener
+                        Spezifikation ergänzen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="MessageStatusType">
+        <xs:annotation>
+            <xs:documentation>Gibt die Struktur für die Meldungen (Logging-Informationen) über den Transportverlauf vor.
+                Er sieht Meldungszeilen für Infos, Warnungen und Fehler vor.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Status" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Wird durch Sender bzw. Empfänger fortgeschrieben. Wird der TransportReport noch
+                        fortgeschrieben, wird er hier mit 0=offen markiert. Nach Abschluss des TransportReports wird
+                        nach dem Max-Prinzip der höchste Ampelstatus aus den Elementen ErrorList, WarnList, InfoList
+                        hier numerisch dargestellt. 0=offen: Der Transportauftrag befindet sich noch in der
+                        Verarbeitung. 1=grün: Es sind keine Fehler oder Warnungen aufgetreten. 2=gelb: Es sind
+                        Warnungen, aber keine kritischen Fehler aufgetreten. 3=rot: Es sind kritische Fehler
+                        aufgetreten.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ErrorList" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Liste der Fehlermeldungen.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Error"
+                                    minOccurs="0"
+                                    maxOccurs="unbounded"
+                                    type="xta-core:RecordType">
+                            <xs:annotation>
+                                <xs:documentation>Hier wird die Fehlermeldung mit ihren Parametern eingetragen.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="WarnList" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Liste der Warnungen.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Warning"
+                                    minOccurs="0"
+                                    maxOccurs="unbounded"
+                                    type="xta-core:RecordType">
+                            <xs:annotation>
+                                <xs:documentation>Hier wird die Warnung mit ihren Paramtern eingetragen.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="InfoList" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Liste der Informationsmeldungen.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Info"
+                                    minOccurs="0"
+                                    maxOccurs="unbounded"
+                                    type="xta-core:RecordType">
+                            <xs:annotation>
+                                <xs:documentation>Hier wird die Informationsmeldung mit ihren Parametern eingetragen.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="NonEmptyStringType">
+        <xs:annotation>
+            <xs:documentation>Eine Zeichenkette mit der Mindestlänge 1.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NonEmptyURIType">
+        <xs:annotation>
+            <xs:documentation>Eine Resssourcenidentifikation mit der Mindestlänge 1.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:anyURI">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="NonEmptyURIWithIDType">
+        <xs:annotation>
+            <xs:documentation>Eine Resssourcenidentifikation mit der Mindestlänge 1 und einem Identifikator.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xta-core:NonEmptyURIType">
+                <xs:attribute name="id" type="xs:ID" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Hier muss die ID zur eindeutigen Referenzierung des XML-Elements eingetragen
+                            werden. Ihr Verwendungszweck ist außerhalb der Spezifikation beschrieben.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="OriginatorsType">
+        <xs:annotation>
+            <xs:documentation>Autor der Fachnachricht und der beauftragte Sender.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Author" type="xta-core:PartyWithIDType">
+                <xs:annotation>
+                    <xs:documentation>Angaben zum Autor (Ersteller der Fachnachricht). Hier können verwendete
+                        Zertifikate eingetragen werden.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Sender" minOccurs="0" type="xta-core:PartyWithIDType">
+                <xs:annotation>
+                    <xs:documentation>Angaben zum Sender (Ersteller der Transportnachricht), z.B. XTA-WS oder
+                        OSCI-Gateway. Hier können verwendete Zertifikate eingetragen werden.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PartyIdentifierType">
+        <xs:annotation>
+            <xs:documentation>Struktur zur eindeutigen Identifikation eines Kommunikationspartners anhand einer Kennung
+                sowie mehrerer Attribute zur Zuordnung eines Kontextes für diese Kennung. Im XÖV-Umfeld muss hier die
+                eindeutige Kennzeichnung der Behörde eingetragen werden.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xta-core:NonEmptyStringType">
+                <xs:attribute name="identifierScheme"
+                              type="xta-core:NonEmptyStringType"
+                              use="optional">
+                    <xs:annotation>
+                        <xs:documentation>Ausweisung des Schemas zur Interpretation des PartyIdentifiers/Bezeichners,
+                            z.B. iso6523-actorid-upis für Peppol Participant Identifier Scheme. Aus dem jeweiligen
+                            Verzeichnisdienst können die Verbindungsparameter entnommen werden. Die möglichen Werte sind
+                            unter den Kommunikationspartnern abzustimmen und zu dokumentieren. Es wird empfohlen den
+                            Wert aus einer Codeliste zu beziehen, z.B. Type of Party Identifier, die mit der Kennung
+                            urn:de:xta:codeliste:type.of.party.identifier im XRepository (www.xrepository.de) abrufbar
+                            ist.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="name" type="xta-core:NonEmptyStringType" use="optional">
+                    <xs:annotation>
+                        <xs:documentation>Optionaler menschenlesbarer Name zur Darstellung in User Agents (bekannt z.B.
+                            aus eMail). Im XÖV-Umfeld muss hier der Name der Behörde / öffentlichen Stelle eingetragen
+                            werden.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="organizationCategory"
+                              type="xta-core:NonEmptyStringType"
+                              use="optional">
+                    <xs:annotation>
+                        <xs:documentation>Fachkategorie des identifizierten Kommunikationspartners innerhalb der Domäne.
+                            Die möglichen Werte sind unter den Kommunikationspartnern abzustimmen und zu dokumentieren.
+                            Zur Unterstützung im XÖV-Umfeld stellt die KoSIT die Codeliste XOEV-Category of Party
+                            bereit, die mit der Kennung urn:de:xta:codeliste:category.of.party im XRepository
+                            (www.xrepository.de) abrufbar ist.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="PartyType">
+        <xs:annotation>
+            <xs:documentation>Struktur für die Identifikation eines Kommunikationspartners.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Identifier" type="xta-core:PartyIdentifierType">
+                <xs:annotation>
+                    <xs:documentation>Identifikation des Kommunikationspartners.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Directory" minOccurs="0" type="xta-core:Code.Directory">
+                <xs:annotation>
+                    <xs:documentation>Eine mögliche Vorgabe des zu nutzenden Verzeichnisdienstes für den Abruf weiterer
+                        Identifizierungs- sowie Adressierungsparameter. Die möglichen Werte sind unter den
+                        Kommunikationspartnern abzustimmen und zu dokumentieren.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Extensions" minOccurs="0" type="xta-core:ExtensionsType">
+                <xs:annotation>
+                    <xs:documentation>Eine Liste von Erweiterungen, welche die Funktion des XTA Kerns nach eigener
+                        Spezifikation ergänzen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PartyWithIDType">
+        <xs:annotation>
+            <xs:documentation>Struktur für die Identifikation eines Kommunikationspartners, ergänzt um eine ID und
+                gegebenenfalls verwendeter Zertifikate.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-core:PartyType">
+                <xs:sequence>
+                    <xs:element name="Certificate"
+                                minOccurs="0"
+                                maxOccurs="unbounded"
+                                type="xta-core:CertificateType">
+                        <xs:annotation>
+                            <xs:documentation>Hier können zu prüfende Zertifikate hinterlegt werden.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="id" type="xs:ID" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Hier muss die ID zur eindeutigen Referenzierung des XML-Elements eingetragen
+                            werden. Ihr Verwendungszweck ist außerhalb der Spezifikation beschrieben.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="QualifierType">
+        <xs:annotation>
+            <xs:documentation>Die Struktur identifiziert die auf der fachlichen Ebene durchzuführende
+                Nachrichtenübermittlung und bietet für die Weiterverarbeitung Aspekte der fachlichen Einordnung der
+                Fachnachricht an. Dies gilt auch für Transportprozesse, die nicht auf die Fachnachricht zugreifen
+                sollen. Im Element Service wird der angebotene Dienst des Lesers, im BusinessScenario das
+                Geschäftsszenario und im MessageType die exakte Funktion in der Fachlichkeit angegeben.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Service" minOccurs="0" type="xta-core:NonEmptyURIType">
+                <xs:annotation>
+                    <xs:documentation>Spezifischer Dienst im Kontext eines bestimmten Geschäftsszenario. Hier ist der
+                        durch den Leser angebotene Dienst einzutragen, der durch den Transportauftrag in Anspruch
+                        genommen werden soll. Der Inhalt dieses Elements ist nicht auf der Basis einer Codeliste
+                        eingeschränkt. Dieser Dienst ist mit der Syntax einer URI nach RFC 3986 zu bezeichnen, die vom
+                        Betreiber eines Fachstandards bereitgestellt wird. Im XÖV-Kontext wird zum Beispiel von den
+                        Fachstandards eine Dienste-URI spezifiziert, die gewöhnlich in DVDV hinterlegt wird.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BusinessScenario">
+                <xs:annotation>
+                    <xs:documentation>Angabe eines entweder über Codelisten oder freitextlich definierten
+                        Geschäftsszenarios. Der Zweck der durch den Autor an dieser Stelle einzufüllenden Information
+                        des Transportauftrags ist, dass der Leser bereitliegende Fachnachrichten filtern kann ohne sie
+                        lesen bzw. analysieren zu müssen. Er kann die Information beispielsweise als Suchfeld für den
+                        Abruf aus dem Postfach einsetzen. Bei der Übergabe eines Transportauftrags mit fehlerhaften
+                        Einträgen an den Sender wird der Sender den Auftrag mit einer Exception abweisen.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="Defined" type="xta-core:Code.BusinessScenario">
+                            <xs:annotation>
+                                <xs:documentation>Definierte Angabe eines Geschäftsszenarios zum Abgleich mit einer
+                                    Codeliste.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="Undefined" type="xs:normalizedString">
+                            <xs:annotation>
+                                <xs:documentation>Freitextliche Angabe eines nicht in einer Codeliste definierten
+                                    Geschäftsszenarios.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="MessageType">
+                <xs:annotation>
+                    <xs:documentation>Hier werden das Schema und der vollständige Name des Typs der Fachnachricht
+                        eingetragen. Im XÖV-Umfeld liegt der Name des Nachrichtentyps gängigerweise im Format
+                        ltNachrichtengruppe.Nachrichtenname (inkl. Nummer)gt vor (siehe nachfolgenden XML-Auszug für
+                        eine Fachnachricht aus XMeld). &lt;![CDATA[ fortschreibung.geschlecht.0001
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xta-core:NonEmptyStringType">
+                            <xs:attribute name="messageSchema" type="xta-core:NonEmptyURIType" use="required">
+                                <xs:annotation>
+                                    <xs:documentation>Hier ist der Namensraum (Namespace) des Fachstandards einzutragen,
+                                        in dem der Typ der Fachnachricht definiert ist.
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:attribute>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required">
+            <xs:annotation>
+                <xs:documentation>Hier muss die ID zur eindeutigen Referenzierung des XML-Elements eingetragen werden.
+                    Ihr Verwendungszweck ist außerhalb der Spezifikation beschrieben.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="RecordType">
+        <xs:annotation>
+            <xs:documentation>Typ zur Kennzeichnung und Erläuterung einer Meldung (anwendbar auf Info-, Fehlermeldungen
+                und Warnungen).
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Timestamp" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Zeitstempel für den Zeitpunkt der Aufzeichnung der Meldung.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Code" type="xta-core:Code.RecordType">
+                <xs:annotation>
+                    <xs:documentation>Schlüssel, der die Bedeutung der Meldung kodiert. Dieser Schlüssel muss aus einer
+                        eingebundenen Codeliste stammen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Reason" type="xta-core:NonEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation>Hier wird zur weiteren Erläuterung der Grund der Meldung als Freitext
+                        eingetragen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ServiceQualityType">
+        <xs:annotation>
+            <xs:documentation>Mit diesem Typ können Service Qualitäten mithilfe des XTA Moduls Service Profile
+                vorgegeben werden. Erfolgt keine Vorgabe, so ist das Kindelement Undefined mit dem Grund der
+                Nichtbenutzung zu befüllen. In allen anderen Fällen wird das Kindelement Defined durch den Autor bei
+                Erteilung des Transportauftrags eingetragen. Die Vorgaben des Fachstandards müssen bei der Ausführung
+                des Transportauftrags durch alle beteiligten Infrastrukturknoten befolgt werden. Für die
+                Serviceprofilierung muss eine eigene Konformitätserklärung mit Angaben zur verwendeten Version und dem
+                unterstützten Umfang des XTA Moduls Service Profile abgegeben werden.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="Defined" type="xta-core:NonEmptyURIType">
+                <xs:annotation>
+                    <xs:documentation>Hier wird die URI der konkreten Version als eine Referenz auf ein Serviceprofil
+                        eingetragen, in der die Kennung und die Versionsnummer enthalten sind. Ein Serviceprofil ist
+                        eine XML-Instanz, die entsprechend der Spezifikation des XTA Moduls Service Profile erstellt
+                        wurde. Als globale Referenz ist folgendes Muster für die Kennung zu verwenden:
+                        urn:xoev-de:Herausgeber:standard:Fachstandard.xta.serviceprofile.Name_Version Eine URN der
+                        Version könnte wie folgt lauten:
+                        urn:xoev-de:kosit:standard:xmeld.xta.serviceprofile.rueckmeldung_1.0.1 Eine lokale Instanz kann
+                        ebenfalls in Form einer URL angegeben werden.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Undefined" type="xta-core:NonEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation>Der Grund einer Nichtbenutzung eines einheitlichen Serviceprofils wird hier als
+                        Freitext eingetragen. Beispielsweise könnte übergangsweise auf die schriftliche Form der
+                        Transportprofilierung anhand des folgenden Freitextes hingewiesen werden: Das
+                        OSCI-Transportprofil wird dem Fachstandard XMeld 3.4 entnommen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+        <xs:attribute name="id" type="xs:ID" use="required">
+            <xs:annotation>
+                <xs:documentation>Hier muss die ID zur eindeutigen Referenzierung des XML-Elements eingetragen werden.
+                    Ihr Verwendungszweck ist außerhalb der Spezifikation beschrieben.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TransportReportType">
+        <xs:annotation>
+            <xs:documentation>Typ zur Abbildung eines einheitlichen strukturierten Transportberichts. Um Autor und Leser
+                die Möglichkeit zu geben, die Abarbeitung ihrer Transportaufträge zu überwachen, erstellen Sender und
+                Empfänger Transportberichte, die für Abruf und Auswertung bereit liegen. Über die protokollierten
+                Ereignisse des Nachrichtentransports (z.B. Zertifikats- und Berechtigungsüberprüfungen,
+                Verbindungsaufbau zum Empfänger) sowie den zusätzlichen Berichten lässt sich die Auftragsabarbeitung
+                kontrollieren.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="ReportTime" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Fortzuschreibender Zeitpunkt der letzten Aktualisierung des Berichts.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="XTAServerIdentity" type="xs:token">
+                <xs:annotation>
+                    <xs:documentation>Hier gibt Sender oder Empfänger seine Identität beziehungsweise die seiner
+                        Software-Instanz an, indem er z.B. die Server-IP-Adresse oder die URI seines XTA-WS einträgt. Im
+                        Aufbau der URI soll erkennbar sein, welcher Organisation der Ersteller angehört.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MessageStatus" type="xta-core:MessageStatusType">
+                <xs:annotation>
+                    <xs:documentation>Enthält Information über den Verlauf des Transports. Es werden hier Listen mit
+                        aufgetretenen Fehler-, Warnungs- und Informationsmeldungen geführt. Außerdem ist nach Schließung
+                        des Transportauftrags im Feld Status eine "Schnell-Info" verfügbar.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MessageMetaData" type="xta-core:MessageMetaDataType">
+                <xs:annotation>
+                    <xs:documentation>Diese Struktur umfasst alle Daten des Transportauftrags, auf dessen Ausführung
+                        sich der TransportReport bezieht. Zu den Informationen gehören die Identifizierung von Absender
+                        und (einem oder mehreren) Empfängern, Metainformation zu Inhalt und Identität der zu
+                        transportierenden Fachnachricht sowie weitere Attribute, die Auslieferung, Quittungen und
+                        Servicequalität betreffen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AdditionalReports"
+                        minOccurs="0"
+                        type="xta-core:AdditionalReportListType">
+                <xs:annotation>
+                    <xs:documentation>Ergänzend können hier weitere Berichte, Quittungen und weitere Nachweise abgelegt
+                        werden.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Extensions" minOccurs="0" type="xta-core:ExtensionsType">
+                <xs:annotation>
+                    <xs:documentation>Eine Liste von Erweiterungen, welche die Funktion des XTA Kerns nach eigener
+                        Spezifikation ergänzen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required">
+            <xs:annotation>
+                <xs:documentation>Hier muss die ID zur eindeutigen Referenzierung des XML-Elements eingetragen werden.
+                    Primär wird die Referenz für die Erstellung der Signatur im ReportResult benötigt.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="XTAMessageIDType">
+        <xs:annotation>
+            <xs:documentation>Eine XTAMessageID identifiziert eindeutig einen Transportauftrag und soll folgende
+                Anforderungen erfüllen: Die XTAMessageID lässt der Autor vor der Beauftragung des Transports durch den
+                Sender erstellen, um sie dann für den Transport dem Sender zu übergeben. Die XTAMessageID muss über die
+                gesamte Datenübermittlung eindeutig sein. Die XTAMessageID muss erkennen lassen, von wem sie erstellt
+                wurde. So kann in Problemfällen der Ersteller und Versender der Fachnachricht leichter ermittelt werden.
+                Die XTAMessageID muss die Form einer URN haben und darf maximal 100 Zeichen lang sein. Beim Einsatz von
+                Systemen mit alten XTA Versionen muss die genutzte Länge unter den Kooperationspartnern abgestimmt
+                werden. Die XTAMessageID kann unter Verwendung von Groß- und Kleinschreibung gebildet werden, allerdings
+                darf beim Vergleich der Identifikatoren die Groß- und Kleinschreibung nicht berücksichtigen werden. Zur
+                Erfüllung der Anforderungen besteht die XTAMessageID aus einer Namespace-ID, Sender-Kennung und einer
+                UUID. Somit ergibt sich der folgende Aufbau der XTAMessageID: Namespace-ID: Angabe des Namensraumes mit
+                dem festen Wert: de:xta:messageid Sender-Kennung: Angabe über die Softwareinstanz, die die XTAMessageID
+                erstellt. Die Länge sollte nicht mehr als 41 Zeichen sein. Beispiele: ClearingstelleXY_Xta_01 oder
+                ClearingstelleXY_SAP_15 UUID: Angabe einer für jeden Transportauftrag generierten eindeutigen UUID
+                (siehe RFC 4122, z.B. 000ca2fe-f4e1-45c2-8233-3a0eb760bd16) Für den Aufbau der XTAMessageID wird
+                folgendes Muster verwendet: urn:ltNamespace-IDgt:ltSender-Kennunggt:ltUUIDgt Eine Beispielinstanz wäre:
+                urn:de:xta:messageid:ClearingstelleXY_Xta_01:000ca2fe-f4e1-45c2-8233-3a0eb760bd16
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xta-core:NonEmptyURIWithIDType"/>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:element name="ContentContainer" type="xta-core:ContentContainerType">
+        <xs:annotation>
+            <xs:documentation>Element des Typs ContentContainerType.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="MessageMetaData" type="xta-core:MessageMetaDataType">
+        <xs:annotation>
+            <xs:documentation>Element des Typs MessageMetaDataType.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="MessageSelector" type="xta-core:MessageSelectorType">
+        <xs:annotation>
+            <xs:documentation>Element des Typs MessageSelectorType.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="MessageStatusList" type="xta-core:MessageStatusListType">
+        <xs:annotation>
+            <xs:documentation>Element des Typs MessageStatusListType.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="Party" type="xta-core:PartyType">
+        <xs:annotation>
+            <xs:documentation>Element des Typs PartyType.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="ReportResult">
+        <xs:annotation>
+            <xs:documentation>Der Typ beinhaltet den zum Transportauftrag zugehörigen Transportbericht. Zur
+                Sicherstellung der Authentizität und Integrität der Daten soll der Transportbericht vom Sender
+                beziehungsweise Empfänger signiert werden.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="TransportReport" type="xta-core:TransportReportType">
+                    <xs:annotation>
+                        <xs:documentation>Status und alle Ereignisse des Nachrichtentransports.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Signature" minOccurs="0" type="ds:SignatureType">
+                    <xs:annotation>
+                        <xs:documentation>Falls der TransportReport vom Sender oder Empfänger signiert wird, findet sich
+                            hier die Signatur.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="XTAMessageID" type="xta-core:XTAMessageIDType">
+        <xs:annotation>
+            <xs:documentation>Element des Typs XTAMessageIDType.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+</xs:schema>

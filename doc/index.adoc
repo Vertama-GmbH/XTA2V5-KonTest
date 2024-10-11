@@ -1,0 +1,38 @@
+= XTA Testumgebung
+:toc:
+:toc-title: Inhalt
+:toclevels: 3
+:docinfo: shared
+
+== Vorwort
+
+Die KoSIT stellt den XTA-Konformitätstester als ein Tool zur Verfügung, welches primär eine automatisierte Prüfung eines Produkts gegen die Konformitätsvorgaben für XTA 2 Version 5 ermöglicht und eine Konformitätserklärung anhand eines generierten Berichts vereinfacht.
+Sekundär dient die Testumgebung bei der grundlegenden Implementierung von Methodenaufrufen als ein Hilfsmittel (nicht-normativ).
+Die aktuelle Spezifikation (normativ) und Konformitätsvorgaben für XTA 2 Version 5 können unter https://www.xoev.de/xta/v5 heruntergeladen werden.
+
+Zur besseren Nachvollziehbarkeit der internen Abläufe der XTA Testumgebung werden neben der vorliegenden Dokumentation ein SOAP-UI Projekt mit XTA SOAP Requests und der Quellcode zur Verfügung gestellt.
+
+Die XTA Testumgebung ist ein Projekt der KoSIT und wurde im Auftrag durch Nortal AG umgesetzt.
+
+Bei technischen Rückfragen zur Testumgebung bzw.
+Fehlermeldungen melden Sie dieses bitte bei xta2@nortal.com mit CC an kosit@finanzen.bremen.de .
+
+Bei Rückfragen zum Standard wenden Sie sich bitte an thomas.matern@finanzen.bremen.de oder kosit@finanzen.bremen.de .
+
+== Dokumentation
+
+* xref:bedienungsanleitung.adoc[Bedienungsanleitung] +
+Beschreibt das Starten und die Verwendung des XTA Konformitätstesters
+* xref:release_notes.adoc[Release Notes] +
+Informationen zu den XTA-Konformitätstester-Versionen (z.B. Funktionsumfang)
+* xref:erstellen_von_zertifikaten.adoc[Erstellen von Zertifikaten] +
+Anleitung zum erstellen von Zertifikaten
+* xref:umsetzungsuebersicht.adoc[Umsetzungsübersicht] +
+Übersicht welche Funktionen/Funktionalitäten in den Methoden aus den Konformitätsvorgaben umgesetzt wurden
+* xref:protokoll.adoc[Protokoll] +
+Dokumentation der Klassenstruktur für die Protokollierung der Testfälle
+* xref:szenarien.adoc[Szenarien] +
+Enthält die Dokumentation der Klassenstruktur für die Szenariendefinition und Sequenzdiagramme für jedes Szenario mit Erläuterungen
+* xref:minimaler_parameterinhalt.adoc[Minimaler Parameterinhalt] +
+Tabelle der Datentypen aus den Konformitätsvorgaben nur mit zusätzlichen Links auf referenzierte Datentypen
+

@@ -1,0 +1,963 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+           xmlns:xta-sp="https://xoev.de/transport/xta/serviceprofile/1.3.1"
+           targetNamespace="https://xoev.de/transport/xta/serviceprofile/1.3.1"
+           version="1.3.1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+   <xs:annotation>
+      <xs:appinfo>
+         <standard>
+            <nameLang>XTA 2 - Interoperabilitätsstandard zur Einbindung von IT-Fachapplikationen in eine Infrastruktur für Nachrichtenübermittlung</nameLang>
+            <nameKurz>XTA 2</nameKurz>
+            <nameTechnisch>xta2</nameTechnisch>
+            <kennung>urn:xoev-de:kosit:standard:xta2</kennung>
+            <beschreibung>XTA 2 ist ein vom IT-Planungsrat empfohlener Interoperabilitätsstandard. Das Modul XTA Webservice vereinheitlicht die funktionalen Schnittstellen zwischen Fach- und Transportverfahren, um die Übermittlung von Nachrichten – also den Transport – zu standardisieren. Das Modul XTA Service Profile ist das Instrument zur einheitlichen Definition und Konfiguration der regelgeleiteten Anforderungen an den Transport. Weitere Information können von der Webseite der KoSIT abgerufen werden.</beschreibung>
+         </standard>
+         <versionStandard>
+            <status>Final – 26. Juli 2024</status>
+            <version>5.1.1</version>
+            <beschreibung>Das Modul "XTA Webservice" wurde umfangreich überarbeitet und dessen Bestandteile stärker differenziert: Es wurden Erweiterungsmechanismen eingeführt und viele Funktionen in eigene Erweiterungen verschoben. Durch die Erweiterungsmöglichkeiten wurde ein Kern des Moduls erschaffen, der eine einfachere und langfristig stabile Implementierung der Kernfunktionen erlaubt. Die Module "XTA Webservice" und "XTA Service Profile" wurden technisch besser voreinander getrennt und die gesamte Spezifikation wurde textuell überarbeitet. Weitere Information können von der Webseite der KoSIT abgerufen werden.</beschreibung>
+            <versionXOEVProfil>1.5.1</versionXOEVProfil>
+            <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+            <versionXGenerator>3.1.1</versionXGenerator>
+            <versionModellierungswerkzeug>19.0 SP4</versionModellierungswerkzeug>
+            <nameModellierungswerkzeug>MagicDraw</nameModellierungswerkzeug>
+         </versionStandard>
+      </xs:appinfo>
+   </xs:annotation>
+   <xs:include schemaLocation="XTA-ServiceProfile-Codes.xsd"/>
+   <xs:complexType name="Algorithm">
+      <xs:annotation>
+         <xs:documentation>Dieser Typ beinhaltet Parameter für Identifikation und Beschreibung eines kryptographischen Algorithmus.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="Algorithmidentifier"
+                     type="xta-sp:Code.KryptographischeAlgorithmen">
+            <xs:annotation>
+               <xs:documentation>Hier steht die Zeichenfolge, die zur Identifizierung des Algorithmus dient.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="NotAfter" minOccurs="0" type="xs:date">
+            <xs:annotation>
+               <xs:documentation>Hier ist das Datum zu nennen, bis zu dem der Algorithmus gültig ist.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Remark" minOccurs="0" type="xta-sp:NonEmptyStringType">
+            <xs:annotation>
+               <xs:documentation>Hier besteht die Möglichkeit, eine Bemerkung zu diesem Algorithmus einzutragen.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="AlgorithmAsymmetricEncryption">
+      <xs:annotation>
+         <xs:documentation>Dieser Typ bildet einen Algorithmus für asymmetrische Verschlüsselung ab. Er ergänzt den Typ Algorithmus um einen weiteren Parameter.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-sp:Algorithm">
+            <xs:sequence>
+               <xs:element name="KeySize" type="xta-sp:Code.KryptographischeSchluessellaenge">
+                  <xs:annotation>
+                     <xs:documentation>Hier ist die zu verwendende Schlüssellänge einzutragen.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="CipherSuiteType">
+      <xs:annotation>
+         <xs:documentation>Dieser Typ bildet eine Algorithmus-Deklaration für Cipher-Suiten ab.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-sp:Algorithm">
+            <xs:sequence>
+               <xs:element name="Source" minOccurs="0" type="xta-sp:NonEmptyStringType">
+                  <xs:annotation>
+                     <xs:documentation>Die Quelle beschreibt die Herkunft des Algorithmus. Hier kann z. B. WS-Security policy Spec oder BSI Algo Catalog stehen.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="CryptoSuitesType">
+      <xs:annotation>
+         <xs:documentation>Dieser Typ bietet den Rahmen, um ein Set von Krypto-Suiten zu definieren, die für die kryptographische Umsetzung der Anforderungen aus Schutz- und Infrastrukturprofilen benötigt werden.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="CryptoSuite" maxOccurs="unbounded">
+            <xs:annotation>
+               <xs:documentation>Ein Element bildet die Definition einer Krypto-Suite ab. Eine Krypto-Suite ist eine Zusammenstellung von kryptographischen Mitteln (Algorithmen und Schlüssellängen), jeweils zugeordnet einem bestimmen Schutzniveau einer kryptographisch abzusichernden Kommunikation. Wenn mehrere Verfahren vorgegeben werden, liegt es in der Zuständigkeit der Rolle Sender, das für einen gegebenen Transportauftrag geeignete Verfahren unter Berücksichtigung der Qualitätsanforderung in cryptoQuality auszuwählen. Die Auswahl muss im ServiceReport durch das Ereignis AuswahlServicequalitaet protokolliert werden. Wenn keine der angegebenen Krypto-Suiten verwendet werden konnte, ist die Servicequalität nicht erfüllt.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="CryptoQuality" type="xta-sp:Code.QualitaetKryptographie">
+                     <xs:annotation>
+                        <xs:documentation>Eine Krypto-Qualität benennt eine Abstufung (z. B. hoch, normal, niedrig) des geforderten Schutzniveaus einer kryptographisch zu sichernden Kommunikation. Das hier einzustellende Niveau korrespondiert mit den Elementen namens qualitaet aus dem Schutzprofil in den Kontexten der Servicequalitäten Authentizität, Unveränderbarkeit und Vertraulichkeit (vgl. und ).</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="CryptoAssignment" maxOccurs="unbounded">
+                     <xs:annotation>
+                        <xs:documentation>Unterhalb dieses Elements wird einem bestimmten Schutzniveau einer kryptographisch abzusichernden Kommunikation (gelistete Krypto-Qualität, festgelegt durch das Element cryptoQuality) ein Set von Algorithmen und Schlüssellängen zugeordnet. Wenn mehrere Algorithmen vorgegeben werden, liegt es in der Zuständigkeit der Rolle Sender, den für einen gegebenen Transportauftrag geeigneten Algorithmus unter Berücksichtigung der Qualitätsanforderung in cryptoQuality auszuwählen. Die Auswahl muss im ServiceReport durch das Ereignis AuswahlServicequalitaet protokolliert werden. Wenn keiner der angegebenen Algorithmen verwendet werden konnte, ist die Servicequalität nicht erfüllt.</xs:documentation>
+                     </xs:annotation>
+                     <xs:complexType>
+                        <xs:choice>
+                           <xs:element name="W3CCipherSuite" type="xta-sp:W3CCipherSuiteType"/>
+                           <xs:element name="CipherSuite" type="xta-sp:CipherSuiteType"/>
+                        </xs:choice>
+                     </xs:complexType>
+                  </xs:element>
+                  <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                     <xs:annotation>
+                        <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <xs:attribute name="target" type="xta-sp:NonEmptyStringType" use="required">
+                  <xs:annotation>
+                     <xs:documentation>Verwendungskontext der Krypto-Suite z.B. OSCI 1.2, TLS oder Fachnachricht.</xs:documentation>
+                  </xs:annotation>
+               </xs:attribute>
+            </xs:complexType>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="IdentifikationType">
+      <xs:annotation>
+         <xs:documentation>Dieser Typ wird verwendet zur Darstellung der Parameter zu Identität und Herkunft eines Profils (versionsübergreifend verstanden) bzw. einer Profilinstanz.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-sp:InstanzIdentifikationType">
+            <xs:sequence>
+               <xs:element name="URIderVersion" type="xta-sp:NonEmptyURIType">
+                  <xs:annotation>
+                     <xs:documentation>Hier ist eine URI einzutragen, durch die diese Profilinstanz identifiziert wird. Die Bezeichnung hat die Form einer URN mit angehänger Versionsnummer. Fiktives Beispiel: urn:xoev-de:kosit:standard:xmeld.xta.serviceprofile.rueckmeldung_1.0.1</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="BezeichnungKurz" type="xta-sp:NonEmptyStringType">
+                  <xs:annotation>
+                     <xs:documentation>Hier wird die Kurzbezeichnung des Profils eingetragen (versionsübergreifend). Sie soll nach Möglichkeit aus einem oder zwei Worten bestehen.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="BezeichnungLang" type="xta-sp:NonEmptyStringType">
+                  <xs:annotation>
+                     <xs:documentation>Hier ist die vollständige Bezeichnung des Profils (versionsübergreifend) einzutragen. Sie kann aus mehreren Begriffen bestehen.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="Herausgeber">
+                  <xs:annotation>
+                     <xs:documentation>Unterhalb dieses Element sind die Daten des Herausgebers des Profils eingetragen.</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                     <xs:sequence>
+                        <xs:element name="BezeichnungKurz" type="xta-sp:NonEmptyStringType">
+                           <xs:annotation>
+                              <xs:documentation>Hier wird die Kurzbezeichnung des Herausgebers eingetragen.</xs:documentation>
+                           </xs:annotation>
+                        </xs:element>
+                        <xs:element name="BezeichnungLang" type="xta-sp:NonEmptyStringType">
+                           <xs:annotation>
+                              <xs:documentation>Hier ist die vollständige Bezeichnung des Herausgebers einzutragen.</xs:documentation>
+                           </xs:annotation>
+                        </xs:element>
+                     </xs:sequence>
+                  </xs:complexType>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="InfrastrukturProfilType">
+      <xs:annotation>
+         <xs:documentation>Grundstruktur für alle Infrastrukturprofile</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="Profilkopf">
+            <xs:annotation>
+               <xs:documentation>Dieses Element wird gefüllt mit Informationen zu Identität und Gültigkeit der vorliegenden Profilinstanz.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Identifikation" type="xta-sp:IdentifikationType">
+                     <xs:annotation>
+                        <xs:documentation>Identität und Herkunft der vorliegenden Profilinstanz (informativ)</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Dokumentation" type="xta-sp:NonEmptyStringType">
+                     <xs:annotation>
+                        <xs:documentation>Dokumentation der vorliegenden Profilinstanz</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Gueltigkeit" type="xta-sp:InstanzGueltigkeitType">
+                     <xs:annotation>
+                        <xs:documentation>Gültigkeit der vorliegenden Profilinstanz</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Infrastrukturkategorie" type="xta-sp:InfrastrukturkategorieType">
+            <xs:annotation>
+               <xs:documentation>Unter diese Kategorie fallen alle Servicequalitäten, die dazu dienen, die Infrastrukturkomponenten für einen Transport festzulegen.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="InfrastrukturkategorieType">
+      <xs:annotation>
+         <xs:documentation>Beschreibt die für einen Transport benötigten bzw. einzusetzenden Verzeichnisdienste und Übertragungswege.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="Geltungsbereich"
+                     type="xta-sp:Code.GeltungsbereichInfrastrukturprofil-Parameter">
+            <xs:annotation>
+               <xs:documentation>Geltungsbereich für das vorliegende Infrastrukturprofil</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Uebertragungskanaele">
+            <xs:annotation>
+               <xs:documentation>Vorgaben zu den möglichen Übertragungskanälen</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Kanal" maxOccurs="unbounded" type="xta-sp:Code.Kanal">
+                     <xs:annotation>
+                        <xs:documentation>Kommunikationskanal zwischen Sender und Empfänger (Art der technischen Verbindung oder das Netz, über das kommuniziert wird). Wenn mehrere Kanäle vorgegeben werden, liegt es in der Zuständigkeit der Rolle Sender, die für einen gegebenen Transportauftrag geeignete Vorgabe auszuwählen. Die Auswahl muss im ServiceReport durch das Ereignis AuswahlServicequalitaet protokolliert werden. Wenn keiner der angegebenen Kanäle verwendet werden kann, wurde die Serivcequalität nicht erfüllt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                     <xs:annotation>
+                        <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Transportnachrichtenformat">
+            <xs:annotation>
+               <xs:documentation>Vorgaben zum Format der Transportnachrichten</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Format" type="xta-sp:Code.TransportnachrichtenFormat">
+                     <xs:annotation>
+                        <xs:documentation>In diesem Element wird das Format eingetragen, in dem die Daten zwischen Sender und Empfänger zu übertragen sind.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                     <xs:annotation>
+                        <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Transportprotokoll">
+            <xs:annotation>
+               <xs:documentation>Vorgaben zum Transportprotokoll</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Protokoll" type="xta-sp:Code.Transportprotokoll">
+                     <xs:annotation>
+                        <xs:documentation>Dieses Element legt das Übertragungsprotokoll fest, das für die Kommunikation der Transportnachrichten zwischen Sender und Empfänger zu verwenden ist.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                     <xs:annotation>
+                        <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Adressierung">
+            <xs:annotation>
+               <xs:documentation>Vorgaben zur Adressierung</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Verzeichnis" type="xta-sp:Code.VerzeichnisAdressierung">
+                     <xs:annotation>
+                        <xs:documentation>Hier wird die Bezeichnung des Verzeichnisdienstes eingetragen, der für jeden Teilnehmer des Nachrichtenaustauschs die Parameter für die technische Adressierung von Teilnehmern bereitstellt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                     <xs:annotation>
+                        <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Identifizierung">
+            <xs:annotation>
+               <xs:documentation>Vorgaben zur Identifizierung</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Verzeichnis" type="xta-sp:Code.VerzeichnisIdentifizierung">
+                     <xs:annotation>
+                        <xs:documentation>Hier ist der Verzeichnisdienst genannt, der zu allen Teilnehmern die Parameter und Entitäten für Identität und Identitätsnachweis bereitstellt.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                     <xs:annotation>
+                        <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Zertifikat">
+            <xs:annotation>
+               <xs:documentation>Rollenbezogene Vorgaben zum Herausgeber von Zertifikaten</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Rolle" type="xta-sp:Code.XTARolle">
+                     <xs:annotation>
+                        <xs:documentation>Hier wird die Rolle in der XTA-Infrastruktur (Autor, Sender, ...) benannt, auf die sich die Vorgabe bezieht.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Herausgeber" type="xta-sp:Code.ZertifikatHerausgeber">
+                     <xs:annotation>
+                        <xs:documentation>Hier ist eine Vorgabe in Bezug auf den Herausgeber der zugeordneten Zertifikate einzutragen.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                     <xs:annotation>
+                        <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Protokollfuehrung">
+            <xs:annotation>
+               <xs:documentation>Festlegungen zur Protokollführung in Transportprozessen Thema ist hier Vorhaltung und Löschung der Protokollinhalte. Die Qualität der Löschung (wie sie durchzuführen ist) wird an anderer Stelle (im Schutzprofil) geregelt. Diese Festlegungen gelten für alle Transporteure in den Rollen Sender und Empfänger.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Vorhaltedauer" type="xs:positiveInteger">
+                     <xs:annotation>
+                        <xs:documentation>Es ist die Anzahl Tage einzutragen, für die die Protokolle mindestens vorzuhalten sind.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="StartzeitpunktLoeschfrist"
+                              type="xta-sp:Code.StartzeitpunktLoeschfrist"/>
+                  <xs:element name="Loeschfrist" type="xs:positiveInteger">
+                     <xs:annotation>
+                        <xs:documentation>Hier ist die Höchstspeicherzeit für ggf. erstellte Protokolle einzutragen. Es ist die Anzahl Tage einzutragen, nach deren Verstreichen die Protokolle spätestens zu löschen sind.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                     <xs:annotation>
+                        <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Datenhaltung">
+            <xs:annotation>
+               <xs:documentation>Festlegungen zum Umgang mit Daten - also mit den Fachnachrichten - in einer XTA-Infrastruktur eingetragen. Diese Festlegungen gelten für alle Transporteure in den Rollen Sender und Empfänger.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Loeschfrist" type="xs:positiveInteger">
+                     <xs:annotation>
+                        <xs:documentation>Generell gilt, dass durch den Sender erfolgreich übermittelte Daten auf Seiten des Senders anschließend zu löschen sind ("erfolgreich übermittelt" bedeutet, dass die Daten im Zugriffsbereich des Empfängers angekommen sind). Dieses Element dient der Festlegung, wann (a) nicht-vermittelte Daten durch den Sender bzw. den Empfänger zu löschen sind und wann (b) vermittelte Daten vom Empfänger zu löschen sind. Es ist in das Element die Höchstspeicherzeit für die vorgehaltenen Daten einzutragen. Es ist die Anzahl Tage einzutragen, nach deren Verstreichen die Daten spätestens zu löschen sind.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                     <xs:annotation>
+                        <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Abgabestation">
+            <xs:annotation>
+               <xs:documentation>Vorgaben zum Infrastrukturknoten, der das Ende des Übertragungsweges der Fachnachricht ist</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Zielknoten" type="xta-sp:Code.Abgabestation">
+                     <xs:annotation>
+                        <xs:documentation>Knoten der Infrastruktur, an dem die Fachnachricht final abzuliefern ist</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                     <xs:annotation>
+                        <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="MaxNachrichtengroesse" minOccurs="0">
+            <xs:annotation>
+               <xs:documentation>Größenbeschränkung für die Fachnachricht Falls eine Prüfung durchgeführt wird, muss die Auswahl im ServiceReport durch das Ereignis AuswahlServicequalitaet protokolliert werden. Hierbei ist der Name des Elementes und die ermittelte Nachrichtengröße eingetragen werden.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="MaxNachrichtengroesse" type="xs:positiveInteger">
+                     <xs:annotation>
+                        <xs:documentation>Dieses Element ermöglicht es, eine Größenbeschränkung für die Fachnachricht festzulegen. Die Größenbeschränkung ist als positive ganze Zahl anzugeben und bezeichnet eine Anzahl Megabyte (MB). Größenbeschränkungen können sich zum Beispiel aus den technischen Grenzen der Fachverfahren und aus den technischen Grenzen der Infrastruktur ergeben.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                     <xs:annotation>
+                        <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="InstanzGueltigkeitType">
+      <xs:annotation>
+         <xs:documentation>Typ für die Angabe der Gültigkeit (von, bis) einer Profilinstanz.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="GueltigkeitVon" type="xs:date">
+            <xs:annotation>
+               <xs:documentation>Hier ist, falls eine solche Festlegung vorgesehen ist, der Tag einzutragen, an dem die Gültigkeit der Profilinstanz beginnt.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="GueltigkeitBis" minOccurs="0" type="xs:date">
+            <xs:annotation>
+               <xs:documentation>Hier ist, falls eine solche Festlegung vorgesehen ist, der letzte Tag der Gültigkeit der Profilinstanz einzutragen.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="InstanzIdentifikationType">
+      <xs:annotation>
+         <xs:documentation>Typ für die Identifikation einer Profilinstanz. Lässt sich sowohl einsetzen, um innerhalb einer Profilinstanz ihre Identität einzutragen als auch für die Referenzierung auf eine Profilnstanz.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="Version" type="xta-sp:NonEmptyStringType">
+            <xs:annotation>
+               <xs:documentation>Hier wird die Versionsbezeichnung der Profilinstanz eingetragen. Die Versionsbezeichnung ist aus Zahlen, ggf. kombiniert mit Punkten, zu bilden. Weitere Zeichen (wie z. B. Unterstriche) sind nicht vorgesehen. Beispiel für eine Versionsbezeichnung: 1.1</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="URI" type="xta-sp:NonEmptyURIType">
+            <xs:annotation>
+               <xs:documentation>Hier ist die Kennung der Profilinstanz einzutragen. Sie hat die Form einer URN und wird versionsübergreifend interpretiert. Sie darf also keine Angabe einer Versionsnummer enthalten. Basierend auf den Regelungen zur Bildung von Kennungen des XÖV-Handbuch, ist folgendes Muster zu verwenden: urn:xoev-de:Herausgeber:standard:Fachstandard.xta.serviceprofile.Name</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="KryptographieProfilType">
+      <xs:annotation>
+         <xs:documentation>Grundstruktur für alle Kryptographieprofile</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="Profilkopf">
+            <xs:annotation>
+               <xs:documentation>Dieses Element wird gefüllt mit Informationen zu Identität und Gültigkeit der vorliegenden Profilinstanz. Hier ist die Versionsnummer der Kryptographieprofilinstanz einzutragen.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Identifikation" type="xta-sp:IdentifikationType">
+                     <xs:annotation>
+                        <xs:documentation>Identität und Herkunft der vorliegenden Profilinstanz (informativ)</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Dokumentation" type="xta-sp:NonEmptyStringType">
+                     <xs:annotation>
+                        <xs:documentation>Dokumentation der vorliegenden Profilinstanz</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Gueltigkeit" type="xta-sp:InstanzGueltigkeitType">
+                     <xs:annotation>
+                        <xs:documentation>Gültigkeit der vorliegenden Profilinstanz</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="DatumVeroeffentlichung" type="xs:date">
+            <xs:annotation>
+               <xs:documentation>Hier ist das Datum einzutragen, an dem die Kryptographieprofilinstanz veröffentlicht wurde.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="KryptoSuiten" type="xta-sp:CryptoSuitesType">
+            <xs:annotation>
+               <xs:documentation>Unterhalb dieses Elements wird der Inhalt des Kryptographieprofils dargestellt. Dies sind die Definitionen der bei der Umsetzung der Anforderungen aus Infrastruktur- und Schutzprofilen zu verwendenden kryptographischen Mittel. Im Zusammenhang wird dies näher erläutert im Dokument XTA Rahmenbedingungen.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="NachrichtentypListeType">
+      <xs:annotation>
+         <xs:documentation>Eine Liste von Typen von Fachnachrichten, die einem gemeinsamen Namensraum (Namespace) zugeordnet sind.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="Nachrichtentyp"
+                     maxOccurs="unbounded"
+                     type="xta-sp:NonEmptyStringType">
+            <xs:annotation>
+               <xs:documentation>Pro Element ist ein Nachrichtentyp aus dem Fachstandard einzutragen.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+      <xs:attribute name="messageSchema" type="xta-sp:NonEmptyURIType" use="required">
+         <xs:annotation>
+            <xs:documentation>Hier ist der Namensraum (Namespace) des Fachstandards einzutragen, dem die Typen der Fachnachrichten zugeordnet sind.</xs:documentation>
+         </xs:annotation>
+      </xs:attribute>
+   </xs:complexType>
+   <xs:simpleType name="NonEmptyStringType">
+      <xs:annotation>
+         <xs:documentation>Eine Zeichenkette mit der mindestlänge 1. Dies schließt nicht Leerzeichen o.ä. aus, aber den Leerstring.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:minLength value="1"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="NonEmptyURIType">
+      <xs:restriction base="xs:anyURI">
+         <xs:minLength value="1"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:complexType name="SchutzProfilType">
+      <xs:annotation>
+         <xs:documentation>Grundstruktur für alle Schutzprofile</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="Profilkopf">
+            <xs:annotation>
+               <xs:documentation>Dieses Element wird gefüllt mit Informationen zu Identität und Gültigkeit der vorliegenden Profilinstanz.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Identifikation" type="xta-sp:IdentifikationType">
+                     <xs:annotation>
+                        <xs:documentation>Identität und Herkunft der vorliegenden Profilinstanz (informativ)</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Dokumentation" type="xta-sp:NonEmptyStringType">
+                     <xs:annotation>
+                        <xs:documentation>Dokumentation der vorliegenden Profilinstanz</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Gueltigkeit" type="xta-sp:InstanzGueltigkeitType">
+                     <xs:annotation>
+                        <xs:documentation>Gültigkeit der vorliegenden Profilinstanz</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Schutzkategorie" type="xta-sp:SchutzkategorieType">
+            <xs:annotation>
+               <xs:documentation>Hier werden die Schutzziele des Datenschutzes, gruppiert nach den Oberbegriffen Transparenz und Intervenierbarkeit, angegeben.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Sicherheitskategorie" type="xta-sp:SicherheitskategorieType">
+            <xs:annotation>
+               <xs:documentation>Hier werden die Servicequalitäten der Datensicherheit, gruppiert nach den Oberbegriffen Vertraulichkeit und Integrität, angegeben.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="SchutzkategorieType">
+      <xs:annotation>
+         <xs:documentation>Bei der Erstellung einer Schutzprofilinstanz für die Servicequalitäten ist jeweils eine Ausprägung und / oder ein Geltungsbereich anzugeben.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="Transparenz">
+            <xs:annotation>
+               <xs:documentation>Bei Transparenz geht es um Nachvollziehbarkeit. Wenn die Prozesse der Nachrichtenübermittlung transparent ausgestaltet sind, bieten sie Aufsichtsbehörden, dem Auftraggeber oder sonstigen Betroffenen (beispielsweise in den Rollen Autor, Sender, Empfänger, Leser) die Möglichkeit, Vorgehen und Ereignisse nachzuvollziehen bzw. zu überprüfen. Einsehbare Protokolle und zugestellte Quittungen sind das XTA-Angebot, Transparenz zu unterstützen.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Protokollierung" maxOccurs="unbounded">
+                     <xs:annotation>
+                        <xs:documentation>Protokolle / Reports gemäß XTA-Vorgaben dokumentieren die Bearbeitungsschritte und die Ergebnisse im Rahmen der Abarbeitung eines Transportauftrags. Sie werden durch die Knoten geführt, die an dieser Abarbeitung beteiligt sind und die entsprechenden Zugriff auf die MessageID des Transportauftrags haben. Dabei bedeutet Protokollierung durch Rolle Autor nicht notwendigerweise, dass dies durch das Fachverfahren geschieht. Diese Aufgabe kann an das Transportverfahren delegiert sein.</xs:documentation>
+                     </xs:annotation>
+                     <xs:complexType>
+                        <xs:sequence>
+                           <xs:element name="Rolle" type="xta-sp:Code.XTARolle">
+                              <xs:annotation>
+                                 <xs:documentation>Hier ist einzutragen, in Bezug auf welche Rolle in der XTA-Infrastruktur hier Festlegungen zur Protokollierung eingetragen werden soll.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Qualitaet" type="xta-sp:Code.QualitaetProtokollierung">
+                              <xs:annotation>
+                                 <xs:documentation>Hier ist einzutragen, ob durch den betreffenden Knoten ein Protokoll / ein Report zu führen ist und mit welchem Absicherungsniveau dies geschehen soll.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                              <xs:annotation>
+                                 <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                        </xs:sequence>
+                     </xs:complexType>
+                  </xs:element>
+                  <xs:element name="TechnischeQuittung" maxOccurs="unbounded">
+                     <xs:annotation>
+                        <xs:documentation>Unterhalb dieses Elements wird eingetragen, welche Quittungen in einem bestimmten Kontext gefordert sind. In einer XTA-Infrastruktur ist die Möglichkeit vorgesehen, dass Knoten der Infrastruktur durch Quittungen über entfernte Ereignisse der Abarbeitung eines Transportauftrags informiert werden. (vgl. XTA Rahmenbedingungen)</xs:documentation>
+                     </xs:annotation>
+                     <xs:complexType>
+                        <xs:sequence>
+                           <xs:element name="ArtDerQuittung" type="xta-sp:Code.TechnischeQuittungen">
+                              <xs:annotation>
+                                 <xs:documentation>Hier ist eine der Quittungsarten einzutragen, welche in einer XTA-Infrastruktur vorgesehen sind (siehe XTA Rahmenbedingungen). Pro Quittungsart, die im Schutzprofil vorgeschrieben werden soll, ist ein eigenes Element zu erstellen.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                              <xs:annotation>
+                                 <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                        </xs:sequence>
+                     </xs:complexType>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Intervenierbarkeit">
+            <xs:annotation>
+               <xs:documentation>Wenn ein Verfahren intervenierbar ausgestaltet ist, bietet es der betroffenen Person oder Organisation die Möglichkeit, ihre Rechte in einem definierten Vorgehen kontrolliert zu wahren bzw. durchzusetzen.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="DefiniertesLoeschen">
+                     <xs:annotation>
+                        <xs:documentation>Das Löschen der Daten und Protokolle erfolgt mit einer vorgegebenen Qualität, welche hier festgelegt wird. Der Zeitpunkt des Löschens wird im InfrastrukturProfil geregelt. Diese Servicequalität ist nicht transportrelevant, da das Löschen der Daten nach dem Transport erfolgt. Dementsprechend muss eine Abweichung von dieser Servicequalität nicht im TransportReport eingetragen werden.</xs:documentation>
+                     </xs:annotation>
+                     <xs:complexType>
+                        <xs:sequence>
+                           <xs:element name="Qualitaet" type="xta-sp:Code.QualitaetLoeschen">
+                              <xs:annotation>
+                                 <xs:documentation>In diesem Element wird die geforderten Ausprägung der Servicequalität Löschen von personen- oder organisationsbezogenen Daten hinterlegt. Aus dieser geht hervor, auf welche Weise diese Daten zum vorgegebenen Zeitpunkt zu löschen sind.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                              <xs:annotation>
+                                 <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                        </xs:sequence>
+                     </xs:complexType>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="ServiceProfilType">
+      <xs:annotation>
+         <xs:documentation>In einem Serviceprofil können eine strukturierte Beschreibung der fachlichen Kommunikation (fachlicher Dienst) zwischen dem Autor und Leser und die zugehörigen Anforderungen an den Transport gemeinsam definiert werden. Eine Referenz auf ein Serviceprofil kann bei Bedarf als Teil des Transportauftrags übergeben werden. Es kann auf weitere Profile verwiesen werden, in denen die Anforderungen an den Transport (Servicequalitäten) einschließlich einer Vorgabe für das Verhalten bei Abweichungen festgelegt sind.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="Profilkopf">
+            <xs:annotation>
+               <xs:documentation>Dieses Element wird gefüllt mit Informationen zu Identität und Gültigkeit der vorliegenden Profilinstanz. Wenn das Profil nicht mehr gültig ist, darf das Profil nicht angewendet werden. Der Transport muss abgebrochen werden. Die verletzte Vorgabe muss mit dem Ereignis ServiceQualitaetVerletzt im ServiceReport dokumentiert werden. Im TransportReport muss für das nichtanwendbare Serviceprofil eine Fehlermeldung ParameterIsNotValidException protokolliert werden.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Identifikation" type="xta-sp:IdentifikationType">
+                     <xs:annotation>
+                        <xs:documentation>Identität und Herkunft der vorliegenden Profilinstanz (informativ)</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Dokumentation" type="xta-sp:NonEmptyStringType">
+                     <xs:annotation>
+                        <xs:documentation>Dokumentation der vorliegenden Profilinstanz</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Gueltigkeit" type="xta-sp:InstanzGueltigkeitType">
+                     <xs:annotation>
+                        <xs:documentation>Gültigkeit der vorliegenden Profilinstanz</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Servicekategorie" type="xta-sp:ServicekategorieType">
+            <xs:annotation>
+               <xs:documentation>Beschreibt die Eigenschaften eines oder mehrerer fachlicher Dienste, auf die das vorgegebene Serviceprofil angewendet werden soll. Wird mindestens eine Eigenschaft nicht erfüllt, kann das vorgegebene Serviceprofil nicht angewendet werden. Der Transport muss abgebrochen werden. Jede Eigenschaft, die nicht erfüllt wurde, muss jeweils durch ein Ereignis ServiceQualitaetVerletzt im ServiceReport dokumentiert werden. Im TransportReport muss für das nichtanwendbare Serviceprofil eine Fehlermeldung ParameterIsNotValidException protokolliert werden.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="RefSchutzprofil" type="xta-sp:InstanzIdentifikationType">
+            <xs:annotation>
+               <xs:documentation>Referenz auf eine existierende Schutzprofilinstanz, die Struktur selbst ist in SchutzProfil definiert.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="RefInfrastrukturprofil"
+                     maxOccurs="unbounded"
+                     type="xta-sp:InstanzIdentifikationType">
+            <xs:annotation>
+               <xs:documentation>Referenz auf existierende Infrastrukturprofilinstanz, die Struktur ist in InfrastrukturProfil definiert. Wenn mehrere Referenzen angegeben werden, liegt es in der Zuständigkeit der Rolle Sender, das für einen gegebenen Transportauftrag geeignete Infrastrukturprofile aus den referenzierten Infrastrukturprofilen auszuwählen. Die Auswahl muss im ServiceReport durch das Ereignis AuswahlProfil protokolliert werden.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="RefKryptographieProfil"
+                     minOccurs="0"
+                     maxOccurs="unbounded"
+                     type="xta-sp:InstanzIdentifikationType">
+            <xs:annotation>
+               <xs:documentation>Referenz auf existierende Kryptographieprofilinstanz, die Struktur ist in KryptographieProfil definiert. Wenn mehrere Referenzen angegeben werden, liegt es in der Zuständigkeit der Rolle Sender, das für einen gegebenen Transportauftrag geeignete Kryptographieprofil aus den referenzierten Kryptographieprofilen auszuwählen. Die Auswahl muss im ServiceReport durch das Ereignis AuswahlProfil protokolliert werden.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="ServicekategorieType">
+      <xs:annotation>
+         <xs:documentation>Grundstruktur für alle Servicekategorien.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="Service" maxOccurs="unbounded">
+            <xs:annotation>
+               <xs:documentation>Eindeutige Identifikation eines fachlichen Dienstes, durch eine eindeutige Ressourcenkennung (URI) und zugeordnete Typen von Fachnachrichten.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Bezeichnung" type="xta-sp:NonEmptyURIType">
+                     <xs:annotation>
+                        <xs:documentation>In diesem Element steht bzw. ist einzutragen die Bezeichnung des Service. Es ist jeweils die fachliche Dienst-Bezeichnung einzutragen; sie ist im Fachstandard spezifiziert. Für Fachstandards mit DVDV-Bezug ist diese Bezeichnung die URL der Service-WSDL. Diese muss für Fachstandards im DVDV-Umfeld in der Spezifikation des Fachstandards eingetragen sein.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="NachrichtentypListen">
+                     <xs:annotation>
+                        <xs:documentation>Unterhalb dieses Elements werden die Gruppen von Typen von Fachnachrichten eingetragen, die zu diesem Dienst (Service) gehören.</xs:documentation>
+                     </xs:annotation>
+                     <xs:complexType>
+                        <xs:sequence>
+                           <xs:element name="NachrichtentypListe"
+                                       maxOccurs="unbounded"
+                                       type="xta-sp:NachrichtentypListeType">
+                              <xs:annotation>
+                                 <xs:documentation>Dies ist eine Liste von Typen von Fachnachrichten, die einem gemeinsamen Namespace zugeordnet sind.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                        </xs:sequence>
+                     </xs:complexType>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Kommunikationstyp" type="xta-sp:Code.Kommunikationstyp">
+            <xs:annotation>
+               <xs:documentation>Angabe zur Art der fachlichen Kommunikation (synchron oder asynchron)</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="HatSynchroneFachantwort" type="xs:boolean">
+            <xs:annotation>
+               <xs:documentation>Festlegung für eine fachliche Kommunikation, ob eine fachliche Antwort (neue Fachnachricht) erwartet wird. Für synchrone Szenarien mit Antwort ist hier true zu wählen, für asynchrone Szenarien und für synchrone Szenarien ohne Antwort false.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Verfuegbarkeit" type="xta-sp:Code.QualitaetVerfuegbarkeit">
+            <xs:annotation>
+               <xs:documentation>Hier wird die für Verfügbarkeit des fachlichen Dienstes zur Bearbeitung von Transportaufträge eingetragen. Diese wirkt sich unmittelbar auf die Anforderung zur Verfügbarkeit der Transportverfahren aus, mit denen diese Verfügbarkeit realisiert wird. Die Verfügbarkeit ist dabei die Wahrscheinlichkeit, dass der Transportauftrag innerhalb des vereinbarten Zeitraums ausgeführt wird.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Zustellfrist" type="xta-sp:Code.Zustellfrist">
+            <xs:annotation>
+               <xs:documentation>Die Zustellfrist innerhalb derer der fachliche Dienst die Zustellung von Fachnachrichten und damit die über diesen Dienst erteilten Transportaufträge abschließen muss. Die Zeitspanne beginnt ab dem Zeitpunkt der Erteilung des Transportauftrags.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="SicherheitskategorieType">
+      <xs:annotation>
+         <xs:documentation>Unter dem Bereich der Sicherheitskategorie stehen die Servicequalitäten der Datensicherheit, soweit für die Erstellung der Serviceprofile relevant. Sie sind hier den Oberbegriffen Vertraulichkeit und Integrität zugeordnet. Gegebenenfalls ist bei der Erstellung einer Schutzprofilinstanz eine Ausprägung (z.B. 'Vertraulichkeit hoch') und / oder ein Geltungsbereich (z.B. 'geltend für die Nachrichtenkommunikation auf der Strecke 'Sender-Empfänger') anzugeben, wofür bei den Unterelementen jeweils die benötigten Codelisten hinterlegt sind.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="Vertraulichkeit" maxOccurs="unbounded">
+            <xs:annotation>
+               <xs:documentation>Die Vertraulichkeit einer Fachnachricht oder von Daten ist die Eigenschaft, nur für einen abgegrenzten Empfängerkreis vorgesehen zu sein. Diese Servicequalität wird hier definiert bezogen auf einen bestimmten Geltungsbereich der Nachrichtenkommunikation (Element geltungsbereich). Außerdem wird die Anforderung formuliert bezogen auf ein gefordertes Niveau der Vertraulichkeit (Element qualitaet). Wenn mehrere Vorgaben zur Vertraulichkeit festegelegt werden, liegt es in der Zuständigkeit der Rolle Sender, die für einen gegebenen Transportauftrag geeignete Vorgabe unter Berücksichtigung des Geltungsbereichs auszuwählen. Die Auswahl muss im ServiceReport durch das Ereignis AuswahlServicequalitaet protokolliert werden.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="Geltungsbereich"
+                              type="xta-sp:Code.GeltungsbereichSchutzprofil-Parameter">
+                     <xs:annotation>
+                        <xs:documentation>Hier ist einzutragen, für welche Teilstrecken der Nachrichtenkommunikation eine Vertraulichkeit gefordert werden soll.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Qualitaet" type="xta-sp:Code.QualitaetVertraulichkeit">
+                     <xs:annotation>
+                        <xs:documentation>Hier ist einzutragen, welches Niveau von Vertraulichkeit auf der entsprechenden Strecke gefordert ist.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                     <xs:annotation>
+                        <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="Integritaet">
+            <xs:annotation>
+               <xs:documentation>Unter Integrität werden die Unversehrtheit von Daten und das korrekte Funktionieren von Systemen verstanden.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="NachweisBetreiber" type="xta-sp:Code.NachweisVerlaesslichkeit">
+                     <xs:annotation>
+                        <xs:documentation>Organisatorische Anforderung an die Erklärung des Betreibers eines Fach- oder Transportverfahrens über seine Verlässlichkeit. Die Erklärung ist an einem definierten Ort zu hinterlegen. Die Einhaltung kann technisch nicht überprüft werden, der Ort, an dem die Erklärung zum Zeitpunkt des Transportes hinterlegt wurde, muss jedoch im ServiceReport durch das Ereignis ErklaerungHinterlegt dokumentiert werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="NachweisHersteller" type="xta-sp:Code.NachweisVerlaesslichkeit">
+                     <xs:annotation>
+                        <xs:documentation>Organisatorische Anforderung an die Erklärung des Herstellers über die Verlässlichkeit der von ihm vorgelegten Software hins. Betriebs- und Prozessintegrität. Die Erklärung ist an einem definierten Ort zu hinterlegen. Die Einhaltung kann technisch nicht überprüft werden, der Ort, an dem die Erklärung zum Zeitpunkt des Transportes hinterlegt wurde, muss jedoch im ServiceReport durch das Ereignis ErklaerungHinterlegt dokumentiert werden.</xs:documentation>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Authentizitaet" maxOccurs="unbounded">
+                     <xs:annotation>
+                        <xs:documentation>Die Kommunikationsteilnehmer müssen sich der Identität des Kommunikationspartners vergewissern. In welchem Maß (Element qualitaet) und in welchem Kontext (Element geltungsbereich) das zu geschehen hat: dafür ist die Servicequalität der Authentizität zu definieren. Wenn mehrere Vorgaben zur Authentizität festegelegt werden, liegt es in der Zuständigkeit der Rolle Sender, die für einen gegebenen Transportauftrag geeignete Vorgabe unter Berücksichtigung des Geltungsbereichs auszuwählen. Die Auswahl muss im ServiceReport durch das Ereignis AuswahlServicequalitaet protokolliert werden.</xs:documentation>
+                     </xs:annotation>
+                     <xs:complexType>
+                        <xs:sequence>
+                           <xs:element name="Geltungsbereich"
+                                       type="xta-sp:Code.GeltungsbereichSchutzprofil-Parameter">
+                              <xs:annotation>
+                                 <xs:documentation>Hier ist einzutragen, für welche Teilstrecken der Nachrichtenkommunikation die Authentizität abzusichern ist.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Qualitaet" type="xta-sp:Code.QualitaetAuthentizitaet">
+                              <xs:annotation>
+                                 <xs:documentation>Hier ist einzutragen, welches Niveau von Authentizität auf der entsprechenden Strecke gefordert ist.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                              <xs:annotation>
+                                 <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                        </xs:sequence>
+                     </xs:complexType>
+                  </xs:element>
+                  <xs:element name="Unveraenderbarkeit" maxOccurs="unbounded">
+                     <xs:annotation>
+                        <xs:documentation>Die Servicequalität der Unveränderbarkeit ist die Anforderung, dass die Daten im Zuge ihrer Übertragung durch die Messaging Infrastruktur nicht verändert werden können. In welchem Maß (Element qualitaet) und in welchem Kontext (Element geltungsbereich) diese Anforderung besteht wird in einer Instanz dieses Typs definiert. Wenn mehrere Vorgaben zur Unveränderbarkeit festegelegt werden, liegt es in der Zuständigkeit der Rolle Sender, die für einen gegebenen Transportauftrag geeignete Vorgabe unter Berücksichtigung des Geltungsbereichs auszuwählen. Die Auswahl muss im ServiceReport durch das Ereignis AuswahlServicequalitaet protokolliert werden.</xs:documentation>
+                     </xs:annotation>
+                     <xs:complexType>
+                        <xs:sequence>
+                           <xs:element name="Geltungsbereich"
+                                       type="xta-sp:Code.GeltungsbereichSchutzprofil-Parameter">
+                              <xs:annotation>
+                                 <xs:documentation>Hier ist einzutragen, für welche Teilstrecken der Nachrichtenkommunikation die Unveränderbarkeit abzusichern ist.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Qualitaet" type="xta-sp:Code.QualitaetUnveraenderbarkeit">
+                              <xs:annotation>
+                                 <xs:documentation>Hier ist einzutragen, welches Niveau von Unveränderbarkeit auf der entsprechenden Strecke gefordert ist.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                              <xs:annotation>
+                                 <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                        </xs:sequence>
+                     </xs:complexType>
+                  </xs:element>
+                  <xs:element name="Zertifikat" maxOccurs="unbounded">
+                     <xs:annotation>
+                        <xs:documentation>Für die durch die Beteiligten zu verwendenden Zertifikate lassen sich hier Vorgaben formulieren, indem das geforderte Zertifikatsniveau und das geforderte Zertifikatsmedium angegeben wird. Zur Herausgeberschaft der Zertifikate werden die Festlegungen nicht hier formuliert, sondern in der Infrastrukturkategorie. Wenn mehrere Vorgaben zu den zu verwendenden Zertifikaten festegelegt werden, liegt es in der Zuständigkeit der Rolle Sender, die für einen gegebenen Transportauftrag geeignete Vorgabe unter Berücksichtigung des Niveaus und des Mediums auszuwählen. Die Auswahl muss im ServiceReport durch das Ereignis AuswahlServicequalitaet protokolliert werden.</xs:documentation>
+                     </xs:annotation>
+                     <xs:complexType>
+                        <xs:sequence>
+                           <xs:element name="Rolle" type="xta-sp:Code.XTARolle">
+                              <xs:annotation>
+                                 <xs:documentation>Hier ist der Beteiligte in einer XTA-Kommunikationsinfrastruktur zu nennen, in Bezug auf dessen Zertifikate hier Anforderungen definiert werden.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Niveau" type="xta-sp:Code.ZertifikatNiveau">
+                              <xs:annotation>
+                                 <xs:documentation>Hier ist das geforderte Nivau der Zertifikate zu benennen.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Medium" type="xta-sp:Code.ZertifikatMedium">
+                              <xs:annotation>
+                                 <xs:documentation>Hier ist das geforderte Medium der Zertifikate zu benennen.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                           <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                              <xs:annotation>
+                                 <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der vorgegebenen Codeliste gewählt werden.</xs:documentation>
+                              </xs:annotation>
+                           </xs:element>
+                        </xs:sequence>
+                     </xs:complexType>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="W3CCipherSuiteType">
+      <xs:annotation>
+         <xs:documentation>Dieser Typ bildet eine Algorithmus-Deklaration für Cipher-Suiten ab.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-sp:Algorithm">
+            <xs:sequence>
+               <xs:element name="Digest"
+                           minOccurs="0"
+                           maxOccurs="unbounded"
+                           type="xta-sp:Algorithm">
+                  <xs:annotation>
+                     <xs:documentation>Algorithmus-Deklaration für Digests ohne Erweiterungen.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="Signature"
+                           minOccurs="0"
+                           maxOccurs="unbounded"
+                           type="xta-sp:Algorithm">
+                  <xs:annotation>
+                     <xs:documentation>Algorithmus-Deklaration für Signaturen ohne Erweiterungen.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="SymmetricEncryption" minOccurs="0" maxOccurs="unbounded">
+                  <xs:annotation>
+                     <xs:documentation>Algorithmus-Deklaration für symmetrische Verschlüsselung inkl. Schlüsselverschlüsselung.</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                     <xs:complexContent>
+                        <xs:extension base="xta-sp:Algorithm">
+                           <xs:sequence>
+                              <xs:element name="KeyEncryption"
+                                          minOccurs="0"
+                                          maxOccurs="unbounded"
+                                          type="xta-sp:AlgorithmAsymmetricEncryption">
+                                 <xs:annotation>
+                                    <xs:documentation>Hier sind Algorithmen und Parameter zur Schlüsselverschlüsselung aufgeführt.</xs:documentation>
+                                 </xs:annotation>
+                              </xs:element>
+                           </xs:sequence>
+                        </xs:extension>
+                     </xs:complexContent>
+                  </xs:complexType>
+               </xs:element>
+               <xs:element name="AsymmetricEncryption"
+                           minOccurs="0"
+                           maxOccurs="unbounded"
+                           type="xta-sp:AlgorithmAsymmetricEncryption">
+                  <xs:annotation>
+                     <xs:documentation>Algorithmus-Deklaration für asymmetrische Verschlüsselung inkl. Schlüssellänge.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+            <xs:attribute name="source" type="xta-sp:NonEmptyStringType" use="optional">
+               <xs:annotation>
+                  <xs:documentation>Die Quelle beschreibt die Herkunft des Algorithmus. Hier kann z. B. WS-Security policy Spec oder BSI Algo Catalog stehen.</xs:documentation>
+               </xs:annotation>
+            </xs:attribute>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+</xs:schema>

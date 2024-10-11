@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="form_row(id, labelText, inputType, value, tooltip, required)" class="row form-group form-inline">
+    <label class="col-md-3 settings-label"
+          th:for="${id}"
+              th:text="${labelText + (required == 'true' ?'*':' ') + '&nbsp;&#x1F6C8;'}"
+              th:title="${tooltip}" />
+    <div class="col-md-9" th:if="${inputType} != 'checkbox'">          
+	    <input th:if="${inputType} == 'text' or ${inputType} == 'password'"
+	           class="form-control"
+	           th:type="${inputType}"
+	           th:id="${id}"
+	           th:name="${id}"
+	           th:value="${value}"
+	           th:title="${tooltip}"
+	           th:required="${required}" />
+	    <textarea th:if="${inputType} == 'textarea'"
+	              class="form-control"
+	              th:id="${id}"
+	              th:name="${id}"
+	              th:inline="text"
+	              th:title="${tooltip}"
+	              rows="3"
+	              th:required="${required}" 
+	    >[[${value}]]</textarea>
+	    
+    </div>
+    <div class="form-check form-switch col-md-9" th:if="${inputType} == 'checkbox'">
+        <input class="form-check-input"
+               th:type="${inputType}"
+               th:id="${id}"
+               th:name="${id}"
+               th:checked="${value}"
+               th:title="${tooltip}"
+               th:required="${required}" />
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<title>[[ #{page.control.reportForm.title}]]</title>
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<div class="row">
+			<div class="col-md-10">
+				<div class="container">
+					<div class="row">
+						<div class="col d-flex align-items-start flex-column">
+							<div class="text-max-content">
+								<h2 th:text="#{page.control.reportForm.compliance}">Selbsterklärung zur XTA2-Konformität</h2>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col d-flex align-items-end flex-column">
+							<img th:src="@{/static/kosit_logo.gif}" alt="KoSIT Logo">
+						</div>
+					</div>
+					<div class="mt-3">
+						<div class="row">
+							<div class="col-sm">
+								<h3 th:text="#{page.control.reportForm.testenv.heading}">Daten zur Testumgebung</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-5" th:text="#{page.control.reportForm.testenv.producer1}">Hersteller:</div>
+							<div class="col-sm" th:text="#{page.control.reportForm.testenv.producer2}">Nortal AG</div>
+						</div>
+						<div class="row">
+							<div class="col-5" th:text="#{page.control.reportForm.testenv.product1}">Name:</div>
+							<div class="col-sm" th:text="#{page.control.reportForm.testenv.product2}">XTA-Tester</div>
+						</div>
+						<div class="row">
+							<div class="col-5" th:text="#{page.control.reportForm.testenv.version}">Version:</div>
+							<div class="col-sm" th:text="${version}">1.0.0-SNAPSHOT</div>
+						</div>
+						<div class="row">
+							<div class="col-5" th:text="#{page.control.reportForm.testenv.spec}">XTA-Spezifikation:</div>
+							<div class="col-sm"><a href="https://www.xoev.de/downloads-2316#XTA">[[#{page.commons.xtaversion} ]]</a></div>
+						</div>
+						<div class="row">
+							<div class="col-5" th:text="#{page.control.reportForm.testenv.compliance}">XTA-Konformitätsvorgaben:</div>
+							<div class="col-sm"><a href="https://www.xoev.de/downloads-2316#XTA">[[#{page.commons.xtaversion} ]]</a></div>
+						</div>
+						<div class="row">
+							<div class="col-5" th:text="#{page.control.reportForm.testenv.wsdlVersion}">XTA-WSDL-Version:</div>
+							<div class="col-sm" th:text="${wsdlversion}">1.0.0</div>
+						</div>
+					</div>
+					<div class="mt-3">
+						<div class="row">
+							<div class="col-sm">
+								<h3 th:text="#{page.control.reportForm.product.title}">Daten zum getesteten Produkt</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-5" th:text="#{page.control.reportForm.product.name}">Name:</div>
+							<div class="col-sm" th:text="${protocol.getMetadata().getSoftwareName()}">Dummy XTA Produkt</div>
+						</div>
+						<div class="row">
+							<div class="col-5" th:text="#{page.control.reportForm.product.version}">Version:</div>
+							<div class="col-sm" th:text="${protocol.getMetadata().getSoftwareVersion()}">1.0.0</div>
+						</div>
+						<div class="row">
+							<div class="col-5" th:text="#{page.control.reportForm.product.producer}">Kontaktdaten Hersteller:</div>
+								<div class="col-sm">
+									<span th:text="${protocol.getMetadata().getSoftwareManufacturer()}">Nortal AG</span><br />
+									<span th:text="${protocol.getMetadata().getStreet()} + ' ' + ${protocol.getMetadata().getStreetNo()}">Knesebeckstr 1</span><br />
+									<div th:remove="tag" th:each="addressAddition : ${protocol.getMetadata().getAddressAdditionAsList()}">
+									<span th:text="${addressAddition}"></span><br />
+								</div>
+								<span th:text="${protocol.getMetadata().getZipCode()} + ' ' + ${protocol.getMetadata().getCity()}">10623 Berlin</span><br />
+							</div>
+						</div>
+					</div>
+
+					<div class="mt-3">
+						<div class="row">
+							<div class="col-sm">
+								<h3 th:text="#{page.control.reportForm.summary.title}">Zusammenfassung</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-5" th:text="#{page.control.reportForm.summary.date}">Datum der Durchführung:</div>
+							<div class="col-sm" th:text="${date}">01.11.2021</div>
+						</div>
+						<div class="row">
+							<div class="col-5" th:text="#{page.control.reportForm.summary.result}">Ergebnis:</div>
+							<div class="col" th:if="${protocol.areAllConformityTestPassed()}" th:text="#{page.control.reportForm.summary.confirmed}">Konformität wird bestätigt</div>
+							<div class="col" th:unless="${protocol.areAllConformityTestPassed()}" th:text="#{page.control.reportForm.summary.notconfirmed}">keine Konformität</div>
+						</div>
+						<div class="row">
+							<div class="col-5" th:text="#{page.control.reportForm.summary.testsRun}">Anzahl durchgeführte Szenarien:</div>
+							<div class="col" th:text="${protocol.scenarioCount()}">0</div>
+						</div>
+						<div class="row">
+							<div class="col-5" th:text="#{page.control.reportForm.summary.testsSuccess}">Anzahl erfolgreiche Szenarien:</div>
+							<div class="col" th:text="${protocol.conformityTestPassedScenarioCount()}">0</div>
+							<br />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-10">
+				<div class="pagebreak"> </div>
+				<div class="container">
+					<div class="mt-3">
+						<div class="row">
+							<div class="col-sm">
+								<h4 th:text="#{page.control.reportForm.resultsTable.title}">Durchgeführte Szenarien</h4>
+							</div>
+						</div>
+						<table class="table mt-2">
+							<caption th:text="#{page.control.reportForm.resultsTable.caption}">Durchgeführte Szenarien</caption>
+							<thead>
+								<tr>
+									<th id="scenario" th:text="#{page.control.reportForm.resultsTable.scenario}">Szenario</th>
+									<th id="scenarioResult" th:text="#{page.control.reportForm.resultsTable.result}">Ergebnis</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="scenarioProtocol : ${protocol.getScenarioProtocols()}">
+									<td th:text="${scenarioProtocol.getScenarioDefinition().getDisplayName()}">Szenarioname</td>
+									<td th:if="${scenarioProtocol.isConformityTestPassed()}" th:text="#{page.control.reportForm.resultsTable.scenarioSuccess}">erfolgreich</td>
+									<td th:unless="${scenarioProtocol.isConformityTestPassed()}" th:text="#{page.control.reportForm.resultsTable.scenarioError}">nicht erfolgreich</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="mt-3">
+						<div class="row">
+							<div class="col-sm">
+								<h4 th:text="#{page.control.reportForm.resultsTable.compliance}">Selbsterklärung zur XTA-Konformität</h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm">
+								<p>[[#{page.control.reportForm.resultsTable.complianceText1}]] [[${protocol.getMetadata().getSoftwareName()}]] [[#{page.control.reportForm.resultsTable.complianceText2}]] [[${protocol.getMetadata().getSoftwareManufacturer()}]] [[#{page.control.reportForm.resultsTable.complianceText3}]] [[#{page.commons.xtaversion}]] [[#{page.control.reportForm.resultsTable.complianceText4}]] [[#{page.commons.xtaversion}]] [[#{page.control.reportForm.resultsTable.complianceText5}]] [[${protocol.getScenarioDisplayNamesAsText()}]] [[#{page.control.reportForm.resultsTable.complianceText6}]]</p>
+							</div>
+						</div>
+						<div><p>&nbsp;</p></div>
+						<div class="row mt-5">
+							<div class="col-12" th:text="#{page.control.reportForm.resultsTable.dateSignature}">Datum, Unterschrift</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="pagebreak"> </div>
+				<div class="container">
+					<div class="mt-5 mt-print-0">
+						<div class="row col-12">
+							<h3 th:text="#{page.control.reportForm.resultsTable.testSteps}">Detaillierte Testschritte</h3>
+						</div>
+
+						<div th:remove="tag" th:each="scenarioProtocol : ${protocol.getScenarioProtocols()}">
+						<div class="row">
+							<div class="col-sm">
+								<h4>[[#{page.control.reportForm.resultsTable.testSteps1}]] <span th:text="${scenarioProtocol.getScenarioDefinition().getDisplayName()}"> [[#{page.control.reportForm.resultsTable.testSteps}]]</span></h4>
+							</div>
+						</div>
+						<table class="table fit-column-width mt-2">
+							<caption>[[#{page.control.reportForm.resultsTable.tableCaption}]] <span th:text="${scenarioProtocol.getScenarioDefinition().getDisplayName()}">Szenarioname</span></caption>
+							<thead>
+								<tr>
+									<th id="checkStep" th:text="#{page.control.reportForm.resultsTable.testStep}">Prüfschritt</th>
+									<th id="result" th:text="#{page.control.reportForm.resultsTable.testResult}">Ergebnis</th>
+									<th id="resultMessage" colspan="2" th:text="#{page.control.reportForm.resultsTable.testExplanation}">Erläuterung</th>
+								</tr>
+							</thead>
+							<tbody>
+								<div th:remove="tag" th:each="scenarioEvent : ${scenarioProtocol.getScenarioProtocolEvents()}">
+								<tr th:each="resultMessage : ${scenarioEvent.getEventResult().getMessages()}">
+									<td style="max-width: 20%" th:if="${resultMessageStat.index} == 0" th:rowspan="${resultMessageStat.size}">
+										<span th:text="${scenarioEvent.getEventDefinition().getEventType().getDisplayName()}"></span>
+										<img class="align-right" th:if="${scenarioEvent.getEventDefinition().isPassive()}" alt="input" src="/static/input.png">
+										<img class="align-right" th:unless="${scenarioEvent.getEventDefinition().isPassive()}" alt="output" src="/static/output.png">
+									</td>
+									<td style="max-width: 15%" th:if="${resultMessageStat.index} == 0" th:rowspan="${resultMessageStat.size}" th:text="#{${scenarioEvent.getEventResult().getWorstType().getMessageKey()}}"></td>
+									<td style="max-width: 15%" th:text="#{${resultMessage.getType().getMessageKey()}}"></td>
+									<td style="min-width: 50%; word-wrap: break-word;" th:text="${resultMessage.getMessage()}"></td>
+								</tr>
+								</div>
+							</tbody>
+						</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="footer-tooltip-reload-advised" class="d-none alert alert-warning text-center" role="alert" layout:fragment="additionalFooter">
+        <span th:text="#{page.control.reportForm.reloadRequired}">Es liegt eine neuere Version des Reports vor. Möchten Sie die Ansicht aktualisieren?</span>
+        <a role="button" href="#" onclick="location.reload()" th:text="#{page.control.reportForm.reload}">Aktualisieren</a>
+	</div>
+
+    <!--  we use natural templating here, so we do not get any errors from parsers -->
+	<script layout:fragment="optional" type="text/javascript" th:inline="javascript">
+		$(document).ready(function() {
+			var previousTimestamp = /*[[${protocolTimestamp}]]*/ ""
+			console.log(previousTimestamp)
+			const intervalMs = 2000
+			const intervalId = setInterval(async () => {
+				fetch("/rest/api/mgmt/protocol/timestamp")
+				.then(response=> {
+				    if (!response.ok) {
+				        throw new Error('Network response was not OK');
+				      }
+				      return response.text();
+				    })
+				.then(data => {
+					const nextTimestamp = data || ""
+				if (nextTimestamp === previousTimestamp) return
+
+				previousTimestamp = nextTimestamp
+				$("#footer-tooltip-reload-advised").removeClass("d-none")
+				clearInterval(intervalId)
+				})
+				.catch((error) => {
+					console.error("failed to contact server")
+					clearInterval(intervalId)
+				})
+			}, intervalMs)
+		});
+	</script>
+</body>
+</html>

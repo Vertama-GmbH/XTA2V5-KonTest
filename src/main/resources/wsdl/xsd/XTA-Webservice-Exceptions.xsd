@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+           xmlns:xta-core="https://xoev.de/transport/xta/core/3.1.1"
+           targetNamespace="https://xoev.de/transport/xta/core/3.1.1"
+           version="3.1.1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+   <xs:annotation>
+      <xs:appinfo>
+         <standard>
+            <nameLang>XTA 2 - Interoperabilitätsstandard zur Einbindung von IT-Fachapplikationen in eine Infrastruktur für Nachrichtenübermittlung</nameLang>
+            <nameKurz>XTA 2</nameKurz>
+            <nameTechnisch>xta2</nameTechnisch>
+            <kennung>urn:xoev-de:kosit:standard:xta2</kennung>
+            <beschreibung>XTA 2 ist ein vom IT-Planungsrat empfohlener Interoperabilitätsstandard. Das Modul XTA Webservice vereinheitlicht die funktionalen Schnittstellen zwischen Fach- und Transportverfahren, um die Übermittlung von Nachrichten – also den Transport – zu standardisieren. Das Modul XTA Service Profile ist das Instrument zur einheitlichen Definition und Konfiguration der regelgeleiteten Anforderungen an den Transport. Weitere Information können von der Webseite der KoSIT abgerufen werden.</beschreibung>
+         </standard>
+         <versionStandard>
+            <status>Final – 26. Juli 2024</status>
+            <version>5.1.1</version>
+            <beschreibung>Das Modul "XTA Webservice" wurde umfangreich überarbeitet und dessen Bestandteile stärker differenziert: Es wurden Erweiterungsmechanismen eingeführt und viele Funktionen in eigene Erweiterungen verschoben. Durch die Erweiterungsmöglichkeiten wurde ein Kern des Moduls erschaffen, der eine einfachere und langfristig stabile Implementierung der Kernfunktionen erlaubt. Die Module "XTA Webservice" und "XTA Service Profile" wurden technisch besser voreinander getrennt und die gesamte Spezifikation wurde textuell überarbeitet. Weitere Information können von der Webseite der KoSIT abgerufen werden.</beschreibung>
+            <versionXOEVProfil>1.5.1</versionXOEVProfil>
+            <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+            <versionXGenerator>3.1.1</versionXGenerator>
+            <versionModellierungswerkzeug>19.0 SP4</versionModellierungswerkzeug>
+            <nameModellierungswerkzeug>MagicDraw</nameModellierungswerkzeug>
+         </versionStandard>
+      </xs:appinfo>
+      <xs:documentation>Hier wird die Sammlung von Typen dargestellt, welche der XTA-WS verwendet, um SOAP Exceptions zu definieren und zu verwenden.</xs:documentation>
+   </xs:annotation>
+   <xs:include schemaLocation="XTA-Webservice-Codes.xsd"/>
+   <xs:include schemaLocation="XTA-Webservice-Datentypen.xsd"/>
+   <xs:complexType name="ExceptionType">
+      <xs:annotation>
+         <xs:documentation>Dieser Datentyp legt die grundlegende Struktur einer Exception im Rahmen des XTA Webservice fest. Sie kapselt Information zu Identität und Bedeutung eines aufgetretenen Fehlers.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="ErrorCode" type="xta-core:Code.Fehlernummer">
+            <xs:annotation>
+               <xs:documentation>In diesem Element wird die Fehlernummer übermittelt, die einen Fehler grob beschreibt.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Detail" minOccurs="0" type="xta-core:NonEmptyStringType">
+            <xs:annotation>
+               <xs:documentation>In diesem Element wird der Fehlertext übermittelt, der konkrete Angaben zu dem Fehler beinhaltet (z.B. eine konkrete XTAMessageID oder die Kennung einer nicht unterstützten Erweiterung / zusätzlichen Parametrisierung).</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="ExternalServiceUnavailableExceptionType">
+      <xs:annotation>
+         <xs:documentation>Dieser abgeleitete Typ wird vom zugehörigen Exception-Objekt verwendet.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-core:ExceptionType"/>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="InvalidMessageIDExceptionType">
+      <xs:annotation>
+         <xs:documentation>Dieser abgeleitete Typ wird vom zugehörigen Exception-Objekt verwendet.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-core:ExceptionType"/>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="MessageSchemaViolationExceptionType">
+      <xs:annotation>
+         <xs:documentation>Dieser abgeleitete Typ wird vom zugehörigen Exception-Objekt verwendet.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-core:ExceptionType"/>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="MessageVirusDetectionExceptionType">
+      <xs:annotation>
+         <xs:documentation>Dieser abgeleitete Typ wird vom zugehörigen Exception-Objekt verwendet.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-core:ExceptionType"/>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="NotImplementedExceptionType">
+      <xs:annotation>
+         <xs:documentation>Dieser abgeleitete Typ wird vom zugehörigen Exception-Objekt verwendet.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-core:ExceptionType"/>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="ParameterIsNotValidExceptionType">
+      <xs:annotation>
+         <xs:documentation>Dieser abgeleitete Typ wird vom zugehörigen Exception-Objekt verwendet.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-core:ExceptionType"/>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="ParameterNotSupportedExceptionType">
+      <xs:annotation>
+         <xs:documentation>Dieser abgeleitete Typ wird vom zugehörigen Exception-Objekt verwendet.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-core:ExceptionType"/>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="PermissionDeniedExceptionType">
+      <xs:annotation>
+         <xs:documentation>Dieser abgeleitete Typ wird vom zugehörigen Exception-Objekt verwendet.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-core:ExceptionType"/>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="SyncAsyncExceptionType">
+      <xs:annotation>
+         <xs:documentation>Dieser abgeleitete Typ wird vom zugehörigen Exception-Objekt verwendet.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-core:ExceptionType"/>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="TechnicalProblemExceptionType">
+      <xs:annotation>
+         <xs:documentation>Dieser abgeleitete Typ wird vom zugehörigen Exception-Objekt verwendet.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-core:ExceptionType"/>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="UnsupportedExtensionExceptionType">
+      <xs:annotation>
+         <xs:documentation>Dieser abgeleitete Typ wird vom zugehörigen Exception-Objekt verwendet.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="xta-core:ExceptionType"/>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:element name="ExternalServiceUnavailableException"
+               type="xta-core:ExternalServiceUnavailableExceptionType">
+      <xs:annotation>
+         <xs:documentation>Die Exception signalisiert einen Fehler aufgrund von Nichterreichbarkeit eines externen Dienstes (z.B. Verzeichnisdienste und PKI-Systeme).</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:element name="InvalidMessageIDException"
+               type="xta-core:InvalidMessageIDExceptionType">
+      <xs:annotation>
+         <xs:documentation>Die Exception signalisiert, dass zu der angegebenen XTAMessageID keine Protokollinformationen für die Autorisierung vorliegen.</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:element name="MessageSchemaViolationException"
+               type="xta-core:MessageSchemaViolationExceptionType">
+      <xs:annotation>
+         <xs:documentation>Die Exception signalisiert eine nicht schemakonforme Fachnachricht.</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:element name="MessageVirusDetectionException"
+               type="xta-core:MessageVirusDetectionExceptionType">
+      <xs:annotation>
+         <xs:documentation>Die Exception signalisiert schadhaften Code in einer der übergebenen Strukturen (Fachnachricht oder Transportauftrag).</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:element name="NotImplementedException"
+               type="xta-core:NotImplementedExceptionType">
+      <xs:annotation>
+         <xs:documentation>Die Exception signalisiert, dass diese Methode nicht implementiert wurde.</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:element name="ParameterIsNotValidException"
+               type="xta-core:ParameterIsNotValidExceptionType">
+      <xs:annotation>
+         <xs:documentation>Die Exception signalisiert fehlende oder fehlerhafte Eingabeparameter.</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:element name="ParameterNotSupportedException"
+               type="xta-core:ParameterNotSupportedExceptionType">
+      <xs:annotation>
+         <xs:documentation>Die Exception signalisiert den Aufruf einer Methode mit spezifikationsgemäßen, aber von der Implementierung nicht unterstützen Parametern.</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:element name="PermissionDeniedException"
+               type="xta-core:PermissionDeniedExceptionType">
+      <xs:annotation>
+         <xs:documentation>Die Exception signalisiert einen Autorisierungsfehler.</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:element name="SyncAsyncException" type="xta-core:SyncAsyncExceptionType">
+      <xs:annotation>
+         <xs:documentation>Die Exception signalisiert, dass eine Fachnachricht, die nur für die synchrone Weiterleitung gültig ist und für die asynchrone Weiterleitung übergeben wurde oder eine Fachnachricht für die synchrone Weiterleitung übergeben wurde und nur für die asynchrone Weiterleitung gültig ist.</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:element name="TechnicalProblemException"
+               type="xta-core:TechnicalProblemExceptionType">
+      <xs:annotation>
+         <xs:documentation>Die Exception signalisiert einen allgemeinen Fehler während der Verarbeitung. Sie kann z. B. durch ein Problem beim Zugriff auf die interne Datenbank des XTA-Servers ausgelöst worden sein.</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+   <xs:element name="UnsupportedExtensionException"
+               type="xta-core:UnsupportedExtensionExceptionType">
+      <xs:annotation>
+         <xs:documentation>Die Exception signalisiert den Aufruf einer Methode mit nicht unterstützten Erweiterungen der Kernparameter (Extensions/Extension).</xs:documentation>
+      </xs:annotation>
+   </xs:element>
+</xs:schema>

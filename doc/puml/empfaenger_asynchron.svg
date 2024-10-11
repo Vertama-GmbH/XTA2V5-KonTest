@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="434px" preserveAspectRatio="none" style="width:472px;height:434px;background:#FFFFFF;" version="1.1" viewBox="0 0 472 434" width="472px" zoomAndPan="magnify"><defs><filter height="300%" id="fi2wohm1vh7gq" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#fi2wohm1vh7gq)" height="332.3281" style="stroke:#A80036;stroke-width:1.0;" width="10" x="71" y="50.2969"/><rect fill="#FFFFFF" filter="url(#fi2wohm1vh7gq)" height="26.5664" style="stroke:#A80036;stroke-width:1.0;" width="10" x="241.5" y="83.9961"/><rect fill="#FFFFFF" filter="url(#fi2wohm1vh7gq)" height="14" style="stroke:#A80036;stroke-width:1.0;" width="10" x="241.5" y="139.6953"/><rect fill="#FFFFFF" filter="url(#fi2wohm1vh7gq)" height="26.5664" style="stroke:#A80036;stroke-width:1.0;" width="10" x="241.5" y="195.3945"/><rect fill="#FFFFFF" filter="url(#fi2wohm1vh7gq)" height="26.5664" style="stroke:#A80036;stroke-width:1.0;" width="10" x="241.5" y="263.6602"/><rect fill="#FFFFFF" filter="url(#fi2wohm1vh7gq)" height="34.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="241.5" y="339.4922"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="76" x2="76" y1="40.2969" y2="391.625"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="246" x2="246" y1="40.2969" y2="391.625"/><rect fill="#90EE90" filter="url(#fi2wohm1vh7gq)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="138" x="5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="124" x="12" y="24.9951">Leser (asynchron)</text><rect fill="#90EE90" filter="url(#fi2wohm1vh7gq)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="138" x="5" y="390.625"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="124" x="12" y="410.6201">Leser (asynchron)</text><rect fill="#FEFECE" filter="url(#fi2wohm1vh7gq)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="175" x="157" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="161" x="164" y="24.9951">Empfänger (asynchron)</text><rect fill="#FEFECE" filter="url(#fi2wohm1vh7gq)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="175" x="157" y="390.625"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="161" x="164" y="410.6201">Empfänger (asynchron)</text><rect fill="#FFFFFF" filter="url(#fi2wohm1vh7gq)" height="332.3281" style="stroke:#A80036;stroke-width:1.0;" width="10" x="71" y="50.2969"/><rect fill="#FFFFFF" filter="url(#fi2wohm1vh7gq)" height="26.5664" style="stroke:#A80036;stroke-width:1.0;" width="10" x="241.5" y="83.9961"/><rect fill="#FFFFFF" filter="url(#fi2wohm1vh7gq)" height="14" style="stroke:#A80036;stroke-width:1.0;" width="10" x="241.5" y="139.6953"/><rect fill="#FFFFFF" filter="url(#fi2wohm1vh7gq)" height="26.5664" style="stroke:#A80036;stroke-width:1.0;" width="10" x="241.5" y="195.3945"/><rect fill="#FFFFFF" filter="url(#fi2wohm1vh7gq)" height="26.5664" style="stroke:#A80036;stroke-width:1.0;" width="10" x="241.5" y="263.6602"/><rect fill="#FFFFFF" filter="url(#fi2wohm1vh7gq)" height="34.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="241.5" y="339.4922"/><polygon fill="#A80036" points="229.5,79.9961,239.5,83.9961,229.5,87.9961,233.5,83.9961" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="81" x2="235.5" y1="83.9961" y2="83.9961"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="128" x="88" y="78.9302">checkAccountActive</text><path d="M256,55.2969 L256,95.2969 L462,95.2969 L462,65.2969 L452,55.2969 L256,55.2969 " fill="#FBFB77" filter="url(#fi2wohm1vh7gq)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M452,55.2969 L452,65.2969 L462,65.2969 L452,55.2969 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="167" x="262" y="72.3638">muss zu einem beliebigen</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="185" x="262" y="87.4966">Zeitpunkt aufgerufen werden</text><polygon fill="#A80036" points="92,106.5625,82,110.5625,92,114.5625,88,110.5625" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="86" x2="245.5" y1="110.5625" y2="110.5625"/><polygon fill="#A80036" points="229.5,135.6953,239.5,139.6953,229.5,143.6953,233.5,139.6953" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="81" x2="235.5" y1="139.6953" y2="139.6953"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="85" x="88" y="134.6294">getStatusList</text><polygon fill="#A80036" points="92,149.6953,82,153.6953,92,157.6953,88,153.6953" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="86" x2="245.5" y1="153.6953" y2="153.6953"/><polygon fill="#A80036" points="229.5,191.3945,239.5,195.3945,229.5,199.3945,233.5,195.3945" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="81" x2="235.5" y1="195.3945" y2="195.3945"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="78" x="88" y="190.3286">getMessage</text><path d="M256,166.6953 L256,206.6953 L436,206.6953 L436,176.6953 L426,166.6953 L256,166.6953 " fill="#FBFB77" filter="url(#fi2wohm1vh7gq)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M426,166.6953 L426,176.6953 L436,176.6953 L426,166.6953 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="159" x="262" y="183.7622">muss nach getStatusList</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="119" x="262" y="198.895">aufgerufen werden</text><polygon fill="#A80036" points="92,217.9609,82,221.9609,92,225.9609,88,221.9609" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="86" x2="245.5" y1="221.9609" y2="221.9609"/><polygon fill="#A80036" points="229.5,259.6602,239.5,263.6602,229.5,267.6602,233.5,263.6602" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="81" x2="235.5" y1="263.6602" y2="263.6602"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="33" x="88" y="258.5942">close</text><path d="M256,234.9609 L256,274.9609 L429,274.9609 L429,244.9609 L419,234.9609 L256,234.9609 " fill="#FBFB77" filter="url(#fi2wohm1vh7gq)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M419,234.9609 L419,244.9609 L429,244.9609 L419,234.9609 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="152" x="262" y="252.0278">muss nach getMessage</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="119" x="262" y="267.1606">aufgerufen werden</text><polygon fill="#A80036" points="92,286.2266,82,290.2266,92,294.2266,88,290.2266" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="86" x2="245.5" y1="290.2266" y2="290.2266"/><polygon fill="#A80036" points="229.5,335.4922,239.5,339.4922,229.5,343.4922,233.5,339.4922" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="81" x2="235.5" y1="339.4922" y2="339.4922"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="124" x="88" y="334.4263">getTransportReport</text><path d="M256,303.2266 L256,358.2266 L463,358.2266 L463,313.2266 L453,303.2266 L256,303.2266 " fill="#FBFB77" filter="url(#fi2wohm1vh7gq)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M453,303.2266 L453,313.2266 L463,313.2266 L453,303.2266 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="167" x="262" y="320.2935">muss zu einem beliebigen</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="186" x="262" y="335.4263">Zeitpunkt nach getStatusList</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="119" x="262" y="350.5591">aufgerufen werden</text><polygon fill="#A80036" points="92,369.625,82,373.625,92,377.625,88,373.625" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="86" x2="245.5" y1="373.625" y2="373.625"/><!--MD5=[2eb86179027c1267d71a934b4e09d109]
+@startuml
+participant "Leser (asynchron)" as leser #LightGreen
+participant "Empfänger (asynchron)" as empfaenger
+
+activate leser
+
+leser -> empfaenger: checkAccountActive
+note right 
+muss zu einem beliebigen 
+Zeitpunkt aufgerufen werden
+end note
+activate empfaenger
+return
+
+leser -> empfaenger: getStatusList
+activate empfaenger
+return
+
+
+leser -> empfaenger: getMessage
+note right
+muss nach getStatusList
+aufgerufen werden
+end note
+activate empfaenger
+return
+
+leser -> empfaenger: close
+note right
+muss nach getMessage
+aufgerufen werden
+end note
+activate empfaenger
+return
+
+leser -> empfaenger: getTransportReport
+note right 
+muss zu einem beliebigen
+Zeitpunkt nach getStatusList
+aufgerufen werden
+end note
+activate empfaenger
+return
+
+@enduml
+
+PlantUML version 1.2022.1(Tue Feb 01 19:19:58 CET 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>

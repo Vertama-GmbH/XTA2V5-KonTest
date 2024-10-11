@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+           xmlns:xta-sp="https://xoev.de/transport/xta/serviceprofile/1.3.1"
+           xmlns:wsa="http://www.w3.org/2005/08/addressing"
+           xmlns:xoev-lc="http://xoev.de/latinchars/1_1/datatypes"
+           xmlns:xta-core="https://xoev.de/transport/xta/core/3.1.1"
+           targetNamespace="https://xoev.de/transport/xta/serviceprofile/1.3.1"
+           version="1.3.1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+    <xs:annotation>
+        <xs:appinfo>
+            <standard>
+                <nameLang>XTA 2 - Interoperabilitätsstandard zur Einbindung von IT-Fachapplikationen in eine
+                    Infrastruktur für Nachrichtenübermittlung
+                </nameLang>
+                <nameKurz>XTA 2</nameKurz>
+                <nameTechnisch>xta2</nameTechnisch>
+                <kennung>urn:xoev-de:kosit:standard:xta2</kennung>
+                <beschreibung>XTA 2 ist ein vom IT-Planungsrat empfohlener Interoperabilitätsstandard. Das Modul XTA
+                    Webservice vereinheitlicht die funktionalen Schnittstellen zwischen Fach- und Transportverfahren, um
+                    die Übermittlung von Nachrichten – also den Transport – zu standardisieren. Das Modul XTA Service
+                    Profile ist das Instrument zur einheitlichen Definition und Konfiguration der regelgeleiteten
+                    Anforderungen an den Transport. Weitere Information können von der Webseite der KoSIT abgerufen
+                    werden.
+                </beschreibung>
+            </standard>
+            <versionStandard>
+                <status>Final – 26. Juli 2024</status>
+                <version>5.1.1</version>
+                <beschreibung>Das Modul "XTA Webservice" wurde umfangreich überarbeitet und dessen Bestandteile stärker
+                    differenziert: Es wurden Erweiterungsmechanismen eingeführt und viele Funktionen in eigene
+                    Erweiterungen verschoben. Durch die Erweiterungsmöglichkeiten wurde ein Kern des Moduls erschaffen,
+                    der eine einfachere und langfristig stabile Implementierung der Kernfunktionen erlaubt. Die Module
+                    "XTA Webservice" und "XTA Service Profile" wurden technisch besser voreinander getrennt und die
+                    gesamte Spezifikation wurde textuell überarbeitet. Weitere Information können von der Webseite der
+                    KoSIT abgerufen werden.
+                </beschreibung>
+                <versionXOEVProfil>1.5.1</versionXOEVProfil>
+                <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                <versionXGenerator>3.1.1</versionXGenerator>
+                <versionModellierungswerkzeug>19.0 SP4</versionModellierungswerkzeug>
+                <nameModellierungswerkzeug>MagicDraw</nameModellierungswerkzeug>
+            </versionStandard>
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:include schemaLocation="XTA-ServiceProfile-Codes.xsd"/>
+    <xs:include schemaLocation="XTA-ServiceProfile-Datentypen.xsd"/>
+    <xs:import schemaLocation="../externe_Schemata/ws-addr.xsd"
+               namespace="http://www.w3.org/2005/08/addressing"/>
+    <xs:import schemaLocation="../externe_Schemata/latinchars.xsd"
+               namespace="http://xoev.de/latinchars/1_1/datatypes"/>
+    <xs:import schemaLocation="XTA-Webservice-Datentypen.xsd"
+               namespace="https://xoev.de/transport/xta/core/3.1.1"/>
+    <xs:complexType name="AbbruchZustellversuche">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender zu protokollieren, wenn dieser die Zustellversuche abbricht, weil die
+                maximale Anzahl an Zustellversuchen überschritten wurde.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="AnzahlZustellversuche" type="xs:integer">
+                        <xs:annotation>
+                            <xs:documentation>Vorgabe für die maximale Anzahl von Versuchen, eine Fachnachricht
+                                erfolgreich zu übermitteln.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="AbfrageVerzeichnisdienst">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender zu protokollieren, wenn dieser einen Verzeichnisdienst abfragt.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Verzeichnisdienst" type="xta-sp:VerzeichnisdienstNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Abholbestaetigung">
+        <xs:annotation>
+            <xs:documentation>Ist vom Empfänger zu protokollieren, wenn der Leser die Abholung einer Fachnachricht
+                bestätigt.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Teilnehmer" type="xta-sp:TeilnehmeridentifikationNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="AbholenDurchLeser">
+        <xs:annotation>
+            <xs:documentation>Ist vom Empfänger zu protokollieren, wenn ein Leser eine Fachnachricht abholt.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Teilnehmer" type="xta-sp:TeilnehmeridentifikationNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="AufloesungTransportverschluesselung">
+        <xs:annotation>
+            <xs:documentation>Ist vom Empfänger zu protokollieren, wenn dieser eine Transportverschlüsselung auflöst.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Kryptographiemerkmale" type="xta-sp:KryptographieNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="AuswahlProfil">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender oder Empfänger zu protokollieren, wenn dieser ein Profil auswählt, dass auf
+                den Transport angewendet werden soll.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Profil" type="xta-sp:NonEmptyURIType">
+                        <xs:annotation>
+                            <xs:documentation>Die eindeutige URI des ausgewählten Serviceprofils.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="AuswahlServicequalitaet">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender oder Empfänger zu protokollieren, wenn dieser ein Profil auswählt, dass auf
+                den Transport angewendet werden soll.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Servicequalitaet" type="xta-sp:NonEmptyStringType">
+                        <xs:annotation>
+                            <xs:documentation>Name der Servicequalität, deren Wert bei der Durchführung vom Sender oder
+                                Empfänger ausgewählt wird.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="Wert" type="xta-sp:NonEmptyStringType">
+                        <xs:annotation>
+                            <xs:documentation>Der Wert, der für die angegebene Servicequalität ausgewählt wurde.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="EreignisListType">
+        <xs:annotation>
+            <xs:documentation>Liste der Ereignisse.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Ereignis"
+                        minOccurs="0"
+                        maxOccurs="unbounded"
+                        type="xta-sp:EreignisType">
+                <xs:annotation>
+                    <xs:documentation>Hier werden Ereignisse eingetragen.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="EreignisType" abstract="true">
+        <xs:annotation>
+            <xs:documentation>Die Grundstruktur für alle Ereignisse. Als Grundbestandteil wird der EreignisType nie
+                direkt verwendet. An seiner Stelle wird immer ein daraus abgeleiteter, konkreter Nachweis verwendet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="TimeStamp" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Der Zeitpunkt, an dem das Ereignis protokolliert wird. Datum/Uhrzeit sollen auf
+                        eine 1/1000 Sekunde genau dokumentiert werden. Es ist sicherzustellen, dass für die beteiligten
+                        Systeme eine Zeitsynchronisierung durchgeführt wird.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MessageID" type="wsa:AttributedURIType">
+                <xs:annotation>
+                    <xs:documentation>Der eindeutige Identifikator des Transportauftrags. Er ist über die gesamte
+                        Datenübermittlung die eindeutige Referenz des Transportauftrages. Der Autor lässt den
+                        Identifikator vor der Beauftragung des Transports durch den Sender erstellen, um ihn dann für
+                        den Transport dem Sender zu übergeben. In Verbindung mit dem Modul XTA Webservice muss die
+                        XTAMessageID als Identifikator eingetragen werden.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="XTAServerIdentitaet" type="xs:token">
+                <xs:annotation>
+                    <xs:documentation>Die Identität des protokollierenden Prozesses als Software-Instanz, z.B. die
+                        Server-IP-Adresse oder die URI seines XTA-WS.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="XTARolle" type="xta-sp:Code.XTARolle">
+                <xs:annotation>
+                    <xs:documentation>Die XTA-Rolle (Autor, Sender, Empfänger oder Leser) des Prozesses, die das
+                        Ereignis erstellt.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Ereignis" type="xta-sp:Code.EreignisArtType">
+                <xs:annotation>
+                    <xs:documentation>Ereignisart des Ereignisses, das durch den Protokolleintrag dokumentiert wird.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="IstFehler" default="false" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Gibt an, ob das Ereignis einen Fehlerfall dokumentiert. Erhält den Wert true,
+                        falls ein Fehlerfall dokumentiert wird. In diesem Fall müssen im Element fehler zusätzliche
+                        Informationen zur Fehlersituation eingetragen werden. Der Wert wird auf false gesetzt, wenn ein
+                        erfolgreicher Bearbeitungsschritt dokumentiert wird. In diesem Fall wird dem Element fehler kein
+                        Wert zugewiesen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Fehler" minOccurs="0" type="xta-sp:NonEmptyStringType">
+                <xs:annotation>
+                    <xs:documentation>Zusatzinformation zur Fehlersituation.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ErklaerungHinterlegt">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender oder Empfänger zu protokollieren, um eine Verbindung zu dem Dokument
+                herzustellen, mit dem die organisatorische Vorgabe umgesetzt wurde.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Ort" type="xta-sp:NonEmptyStringType">
+                        <xs:annotation>
+                            <xs:documentation>Eindeutige, nachvollziehbare Bezeichnung des Ortes, an dem die Erklärung
+                                hinterlegt ist.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="KryptographieNachweis">
+        <xs:annotation>
+            <xs:documentation>Enthält alle Nachweise für Ereignisse mit Bezug zu kryptographischen Verfahren.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:ZertifikatNachweis">
+                <xs:sequence>
+                    <xs:element name="Algorithmenbezeichnung" type="xoev-lc:String.Latin">
+                        <xs:annotation>
+                            <xs:documentation>Bezeichnung des kryptographischen Verfahrens.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="Schluessellaenge" type="xs:integer">
+                        <xs:annotation>
+                            <xs:documentation>Schlüssellänge für das verwendete kryptographische Verfahren.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="ZertifikatNiveau" type="xta-sp:Code.ZertifikatNiveau">
+                        <xs:annotation>
+                            <xs:documentation>Niveau des elektronischen Zertifikates, welches für die
+                                Transportverschlüsselung verwendet wurde.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="ZertifikatMedium" type="xta-sp:Code.ZertifikatMedium">
+                        <xs:annotation>
+                            <xs:documentation>Art des Trägermediums des elektronischen Zertifikates, welches für die
+                                Transportverschlüsselung verwendet wurde.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="NachrichtEmpfangen">
+        <xs:annotation>
+            <xs:documentation>Ist vom Empfänger zu protokollieren, wenn dieser eine Fachnachricht annimmt.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Transporteigenschaften" type="xta-sp:TransportNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="NachrichtLoeschen">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender oder Empfänger zu protokollieren, wenn dieser eine Fachnachricht löscht.
+                Bei wem dieses Ereignis ausgelöst wird, wird im Element XTA-Rolle dokumentiert. Dieses Ereignis ist
+                nicht transportrelevant und führt daher nicht zu einem Eintrag im TransportReport.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Loeschqualitaet" type="xta-sp:Code.QualitaetLoeschen">
+                        <xs:annotation>
+                            <xs:documentation>Niveaustufe, auf dem das Löschen der Daten vorgenommen wurde.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="NachrichtVersenden">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender zu protokollieren, wenn dieser eine Fachnachricht versendet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="AdresseEmpfaenger" type="xta-sp:NonEmptyStringType">
+                        <xs:annotation>
+                            <xs:documentation>Eindeutige, technische Adressierung des Empfängers.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="Transporteigenschaften" type="xta-sp:TransportNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="NachrichtengroesseGeprueft">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender oder Empfänger zu protokollieren, wenn dieser die ermittelte Größe einer
+                Fachnachricht gegen eine vorgegebene Größenbeschränkung für Fachnachrichten prüft.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="MaxNachrichtengroesse" type="xs:positiveInteger">
+                        <xs:annotation>
+                            <xs:documentation>Vorgegebene Größenbeschränkung für Fachnachrichten, gegen die geprüft
+                                wurde, in Megabyte (MB) als positive ganze Zahl.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="IstNachrichtengroesse" type="xs:positiveInteger">
+                        <xs:annotation>
+                            <xs:documentation>Ermittelte Größe der Fachnachricht in Megabyte (MB) als positive ganze
+                                Zahl.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="NotifikationGesendet">
+        <xs:annotation>
+            <xs:documentation>Ist vom Empfänger zu protokollieren, wenn dieser eine Notifikation an den Leser sendet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="ServiceURI" type="xta-sp:ServiceUriNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="OnlineZertifikatspruefung">
+        <xs:annotation>
+            <xs:documentation>Ist vom Empfänger zu protokollieren, wenn dieser eine Notifikation an den Leser sendet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="ZertifikatEigenschaften" type="xta-sp:ZertifikatNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ProtokollAbgerufen">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender oder Empfänger zu protokollieren, wenn eine Fachnachricht den Schutzbedarf
+                hoch hat und sie Gegenstand eines Service Report ist. Bei wem dieses Ereignis ausgelöst wird, wird im
+                Element XTA-Rolle dokumentiert.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Teilnehmer" type="xta-sp:TeilnehmeridentifikationNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ProtokollierungGeloescht">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender oder Empfänger zu protokollieren, wenn Nachweise nach Erreichen der
+                Löschfrist automatisch vom XTA-Server gelöscht werden. Bei wem dieses Ereignis ausgelöst wird, wird im
+                Element XTA-Rolle dokumentiert.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Loeschfrist" type="xs:positiveInteger">
+                        <xs:annotation>
+                            <xs:documentation>Die Anzahl Tage, nach deren Verstreichen das Protokoll spätestens gelöscht
+                                werden musste (Höchstspeicherzeit).
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="Startzeitpunkt" type="xta-sp:Code.StartzeitpunktLoeschfrist"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ProtokollqualitaetNachweis">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender oder Empfänger zu protokollieren, wenn Protokolle / Reports die
+                Bearbeitungsschritte und die Ergebnisse im Rahmen der Abarbeitung eines Transportauftrags gemäß der
+                Vorgaben zur Transparenz im Serviceprofil dokumentieren.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Protokoll">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="Rolle" type="xta-sp:Code.XTARolle">
+                                    <xs:annotation>
+                                        <xs:documentation>Hier ist einzutragen, in Bezug auf welche Rolle in der
+                                            XTA-Infrastruktur hier Festlegungen zur Protokollierung eingetragen werden
+                                            soll.
+                                        </xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element name="Qualitaet" type="xta-sp:Code.QualitaetProtokollierung">
+                                    <xs:annotation>
+                                        <xs:documentation>Hier ist einzutragen, ob durch den betreffenden Knoten ein
+                                            Protokoll / ein Report zu führen ist und mit welchem Absicherungsniveau dies
+                                            geschehen soll.
+                                        </xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten">
+                                    <xs:annotation>
+                                        <xs:documentation>Hier wird festgelegt was geschehen soll, wenn von der
+                                            zugehörigen Vorgabe abgewichen wird. Das Abweichverhalten muss aus der
+                                            vorgegebenen Codeliste gewählt werden.
+                                        </xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="PruefungTransportsignatur">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender zu protokollieren, wenn dieser eine Transportsignatur prüft.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Kryptographiemerkmale" type="xta-sp:KryptographieNachweis"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Quittungsempfang">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender zu protokollieren, wenn dieser eine Quittung empfängt.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Quittungstyp" type="xta-sp:QuittungstypNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="QuittungstypNachweis">
+        <xs:annotation>
+            <xs:documentation>Enthält alle Nachweise für Ereignisse mit Bezug zu Quittungstypen.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Quittungstyp" type="xta-sp:Code.TechnischeQuittungen">
+                <xs:annotation>
+                    <xs:documentation>Art der technischen Quittung im Rahmen des Nachrichtentransports.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Quittungsversand">
+        <xs:annotation>
+            <xs:documentation>Ist vom Empfänger zu protokollieren, wenn dieser eine Quittung versendet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Quittungstyp" type="xta-sp:QuittungstypNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ServiceQualitaetVerletzt">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender oder Emfpänger zu protokollieren, wenn eine Servicequalität nicht erbracht
+                werden kann. Bei wem dieses Ereignis ausgelöst wird, wird im Element XTA-Rolle dokumentiert.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Servicequalitaet" type="xta-sp:NonEmptyStringType"/>
+                    <xs:element name="Zielwert" type="xta-sp:NonEmptyStringType"/>
+                    <xs:element name="AktuellerWert" type="xta-sp:NonEmptyStringType"/>
+                    <xs:element name="Abweichverhalten" type="xta-sp:Code.Abweichverhalten"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ServiceUriNachweis">
+        <xs:annotation>
+            <xs:documentation>Enthält alle Nachweise für Ereignisse mit Bezug zu Service URIs.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="ServiceURI" type="xta-sp:NonEmptyURIType">
+                <xs:annotation>
+                    <xs:documentation>Die eindeutige Ressourcenkennung, unter der der Zustellungsdienst für die
+                        synchrone Zustellung beim Leser aufgerufen wurde.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Kanal" type="xta-sp:Code.Kanal">
+                <xs:annotation>
+                    <xs:documentation>Verwendeter Kommunikationskanal zwischen Sender und Empfänger.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TeilnehmeridentifikationNachweis">
+        <xs:annotation>
+            <xs:documentation>Enthält alle Nachweise für Ereignisse mit Bezug zur Identifikation von Teilnehmern.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Teilnehmer" type="xta-core:PartyType">
+                <xs:annotation>
+                    <xs:documentation>Die fachliche Identität des Autors oder Lesers.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TransportNachweis">
+        <xs:annotation>
+            <xs:documentation>Enthält alle Nachweise für Ereignisse mit Bezug zu den technischen Merkmalen des
+                Transports.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="TypKommunikation" type="xta-sp:Code.Kommunikationstyp">
+                <xs:annotation>
+                    <xs:documentation>Typ der Kommunikation (entweder asynchron oder synchron).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Abgabestation" type="xta-sp:Code.Abgabestation">
+                <xs:annotation>
+                    <xs:documentation>Eindeutige Ressourcenkennung des Systems, von dem die Transportnachricht
+                        entgegengenommen wurde.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="FormatTransportnachricht"
+                        type="xta-sp:Code.TransportnachrichtenFormat">
+                <xs:annotation>
+                    <xs:documentation>Format der Transportnachricht, auszuwählen aus der Liste der verfügbaren
+                        Nachrichtenformate für Transportnachrichten.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Kanal" type="xta-sp:VerzeichnisdienstNachweis"/>
+            <xs:element name="Transportprotokoll" type="xta-sp:Code.Transportprotokoll">
+                <xs:annotation>
+                    <xs:documentation>Verwendetes Transportprotokoll zwischen Sender und Empfänger.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TransportauftragsIDErstellen">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender zu protokollieren, wenn dieser eine TransportauftragsID erstellt.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Teilnehmer" type="xta-sp:TeilnehmeridentifikationNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TransportsignaturAnbringen">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender zu protokollieren, wenn dieser eine Transportsignatur anbringt.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Kryptographiemerkmale" type="xta-sp:KryptographieNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TransportverschluesselungAnbringen">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender zu protokollieren, wenn dieser eine Transportverschlüsselung anbringt.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Kryptographiemerkmale" type="xta-sp:KryptographieNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="VerifikationAutor">
+        <xs:annotation>
+            <xs:documentation>Ist vom Empfänger zu protokollieren, wenn dieser den Autor einer Fachnachricht
+                verifiziert.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Teilnehmer" type="xta-sp:TeilnehmeridentifikationNachweis">
+                        <xs:annotation>
+                            <xs:documentation>Eindeutiges Identifikationsmerkmal einer XTA-Rolle.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="Verzeichnisdienst" type="xta-sp:VerzeichnisdienstNachweis">
+                        <xs:annotation>
+                            <xs:documentation>Eindeutiger Name des Verzeichnisdienstes, über den die Parameter für die
+                                technische Adressierung von Teilnehmern bezogen werden.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="VersandauftragErhalten">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender zu protokollieren, wenn dieser einen Versandauftrag erhalten hat.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="TypKommunikation" type="xta-sp:Code.Kommunikationstyp">
+                        <xs:annotation>
+                            <xs:documentation>Typ der Kommunikation (entweder asynchron oder synchron).
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="Schutzbedarf" type="xta-sp:Code.QualitaetKryptographie">
+                        <xs:annotation>
+                            <xs:documentation>Geforderte Niveaustufe der kryptographischen Absicherung.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="Teilnehmer" type="xta-sp:TeilnehmeridentifikationNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="VersandauftragZurueckziehen">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender zu protokollieren, wenn der Autor einen erteilten Versandauftrag
+                zurückzieht.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Teilnehmer" type="xta-sp:TeilnehmeridentifikationNachweis"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="VerzeichnisdienstNachweis">
+        <xs:annotation>
+            <xs:documentation>Enthält alle Nachweise für Ereignisse mit Bezug zu Verzeichnisdiensten.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="NameVerzeichnisdienst" type="xta-sp:Code.VerzeichnisAdressierung">
+                <xs:annotation>
+                    <xs:documentation>Eindeutiger Name des Verzeichnisdienstes, über den die Parameter für die
+                        technische Adressierung von Teilnehmern bezogen werden.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AdresseVerzeichnisdienst" type="xta-sp:NonEmptyURIType">
+                <xs:annotation>
+                    <xs:documentation>Die eindeutige Ressourcenkennung, unter der der festgelegte Verzeichnisdienst
+                        (nameVerzeichnisdienst) zu erreichen ist.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="WeiterleitungAnLeser">
+        <xs:annotation>
+            <xs:documentation>Ist vom Empfänger zu protokollieren, wenn dieser eine synchrone Fachnachricht an den Leser
+                weiterleitet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="ServiceURI" type="xta-sp:ServiceUriNachweis"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ZertifikatNachweis">
+        <xs:annotation>
+            <xs:documentation>Enthält alle Nachweise für Ereignisse mit Bezug zu elektronischen Zertifikaten.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Zertifizierungsdiensteanbieter" type="xoev-lc:String.Latin">
+                <xs:annotation>
+                    <xs:documentation>Bezeichnung des Zertifizierungsdiensteanbieters.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ZertifikatSeriennummer" type="xoev-lc:String.Latin">
+                <xs:annotation>
+                    <xs:documentation>Seriennummer des verwendeten Zertifikats.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ZertifikatCommonName" type="xoev-lc:String.Latin">
+                <xs:annotation>
+                    <xs:documentation>Attribut Common Name aus dem verwendeten Zertifikat.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ZertifikatStatus" type="xta-sp:Code.ZertifikatStatus">
+                <xs:annotation>
+                    <xs:documentation>Status des geprüften Zertifikats.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Zustellfrist">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender zu protokollieren, wenn der Autor dem Sender eine Zustellfrist vorgibt.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Zustellfrist" type="xta-sp:Code.Zustellfrist">
+                        <xs:annotation>
+                            <xs:documentation>Datum, bis zu dem die Fachnachricht erfolgreich zugestellt worden sein
+                                muss.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Zustellungstermin">
+        <xs:annotation>
+            <xs:documentation>Ist vom Sender zu protokollieren, wenn der Autor dem Sender einen Zustellungstermin
+                vorgibt.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-sp:EreignisType">
+                <xs:sequence>
+                    <xs:element name="Zustellungstermin" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Datum, an dem die Fachnachricht zugestellt werden soll.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

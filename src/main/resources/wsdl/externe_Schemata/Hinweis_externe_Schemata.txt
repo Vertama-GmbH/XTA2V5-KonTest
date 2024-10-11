@@ -1,0 +1,2 @@
+Die externen Schemata wurden lokal im Ordner "externe_Schemata" abgelegt. 
+Nach Veröffentlichung der finalen Version von XTA2V5 müssen externe Schemata für die Implementierung eigenständig je nach gewähltem Einsatzszenario eingebunden werden. 

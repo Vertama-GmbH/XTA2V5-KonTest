@@ -1,0 +1,166 @@
+= Minimaler Parameter Inhalt
+:toc:
+:toc-title: Inhalt
+:toclevels: 3
+:docinfo: shared
+
+Die Daten stammen aus den "XTA Konformitätsvorgaben Produkt XTA2v5". In der aufbereiteten Tabelle sind Verweise
+enthalten. So ist eine einfache Navigation zwischen den Datentypen möglich.
+
+[cols="1,1,1"]
+|===
+| Parametername | Typ | Abschnitt in XTA Spezifikation
+
+| [[AdditionalReportListType]]*AdditionalReportListType* | | 5.5.1.3
+| + Report | |
+| ++ Key | xta:<<Code.ReportType, Code.ReportType>> | 5.5.1.4
+| ++ Data | xs:base64binary |
+
+| [[Code.ServiceParameterType]]*Code.ServiceParameterType* | Frei wählbare Codeliste, Empfehlung in Spezifikation | 5.5.1.9
+
+| [[Code.RecordType]]*Code.RecordType* | Frei wählbare Codeliste, Empfehlung in Spezifikation | 5.5.1.1
+
+| [[ContentType]]*ContentType* | erweitert xs:base64Binary | 5.5.1.10
+| + contentType | oscimeta:NonEmptyStringType | 2.4.2
+| + encoding | oscimeta:NonEmptyStringType | 2.4.2
+| + filename | oscimeta:NonEmptyStringType | 2.4.2
+| + id | xs:ID |
+| + size | xs:positiveInteger |
+
+| [[DeliveryAttributesType]]*DeliveryAttributesType* | | 5.4.2.3.2.1
+| + Origin | xs:dateTime |
+| + InitialSend | xs:dateTime |
+| + Delivery | xs:dateTime |
+| + InitialFetch | xs:dateTime |
+
+| [[DestinationsType]]*DestinationsType* | | 5.4.2.3.1
+| + oscimeta:Reader | oscimeta:<<PartyType, PartyType>> |
+
+| [[GenericContentContainer]]*GenericContentContainer* | | 5.5.2.1
+| + xenc:EncryptedData | |
+| + ContentContainer | |
+| ++ Message | xta:<<ContentType, ContentType>> |
+| ++ Attachment | xta:<<ContentType, ContentType>> |
+
+| [[GetTransportReportResponse]]*GetTransportReportResponse* | xta:<<TransportReport, TransportReport>> | 5.4.1.3.1
+
+| [[IsServiceAvailableValueType]]*IsServiceAvailableValueType* | | 5.5.1.8
+| + ServiceIsAvailable | xs:boolean |
+| + ServiceIsAvailableUnknown | xs:boolean |
+
+| [[LookupServiceRequest]]*LookupServiceRequest* | | 5.5.2.2
+| + LookupServiceRequestList | |
+| ++ LookupService | xta:<<LookupServiceType, LookupServiceType>> | 5.5.1.6
+
+| [[LookupServiceResponse]]*LookupServiceResponse* | | 5.5.2.3
+| + LookupServiceResultList | |
+| ++ LookupServiceResult | xta:<<LookupServiceResultType, LookupServiceResultType>> | 5.5.1.7
+
+| [[LookupServiceResultType]]*LookupServiceResultType* | erweitert xta:<<LookupServiceType, LookupServiceType>> | 5.5.1.7
+| + oscimeta:Reader | aus <<LookupServiceType, LookupServiceType>> | 2.4.2
+| + ServiceType | aus <<LookupServiceType, LookupServiceType>> |
+| + IsServiceAvailableValue | xta:<<IsServiceAvailableValueType, IsServiceAvailableValueType>> | 5.5.1.8
+| + ServiceParameter | |
+| ++ ParameterType | xta:<<Code.ServiceParameterType, Code.ServiceParameterType>> | 5.5.1.9
+| ++ Resource | xs:base64Binary |
+
+| [[LookupServiceType]]*LookupServiceType* | | 5.5.1.6
+| + oscimeta:Reader | | 2.4.2
+| + ServiceType | xs:anyURI |
+
+| [[MessageID]]*MessageID* | |
+
+| [[MessageMetaData]]*MessageMetaData* | | 5.4.2.3.1
+| + DeliveryAttributes (-) | oscimeta:<<DeliveryAttributesType, DeliveryAttributesType>> | 5.4.2.3.2.1
+| + Originators (-) | oscimeta:<<OriginatorsType, OriginatorsType>> |
+| + Destinations (-) | oscimeta:<<DestinationsType, DestinationsType>> |
+| + MsgIdentification (-) | oscimeta:<<MsgIdentificationType, MsgIdentificationType>> |
+| + Qualifier (-) | oscimeta:<<QualifierType, QualifierType>> |
+
+| [[MessageStatusType]]*MessageStatusType* | | 5.5.1.5
+| + Status | xs:integer |
+| + ErrorList | |
+| ++ Error | xta:<<RecordType, RecordType>> |
+| + WarnList | |
+| ++ Warning | xta:<<RecordType, RecordType>> |
+| + InfoList | |
+| ++ Info | xta:<<RecordType, RecordType>> |
+
+| [[MessageType]]*MessageType* | erweitert oscimeta:KeyCodeType | 5.4.2.3.3.2
+| + payloadSchema | oscimeta:NonEmptyURIType |
+
+| [[MsgBoxCloseRequest]]*MsgBoxCloseRequest* | <<MsgBoxCloseRequestType, MsgBoxCloseRequestType>> | 5.4.3.3.2
+
+| [[MsgBoxCloseRequestType]]*MsgBoxCloseRequestType* | |
+| + MsgBoxRequestID | xs:anyURI |
+| + LastMsgReceived | wsa:AttributedURIType |
+
+| [[MsgBoxFetchRequest]]*MsgBoxFetchRequest* | <<MsgBoxRequestType, MsgBoxRequestType>> | 5.4.3.4.3
+| + osci:MsgSelector | Aus MsgBoxRequestType |
+| + MsgPart | xs:NMTOKEN |
+
+| [[MsgBoxRequestType]]*MsgBoxRequestType* | | 5.4.3.2.2
+| + MsgSelector | osci:<<MsgSelector, MsgSelector>> |
+
+| [[MsgBoxResponse]]*MsgBoxResponse* | <<MsgBoxResponseType, MsgBoxResponseType>> |
+
+| [[MsgBoxResponseType]]*MsgBoxResponseType* | | 5.4.3.2.2
+| +MsgBoxRequestID | xs:anyURI |
+| +NoMessageAvailable | xs:anyURI |
+| +ItemsPending | xs:nonNegativeInteger |
+
+| [[MsgBoxStatusListRequest]]*MsgBoxStatusListRequest* | <<MsgBoxStatusListRequestType, MsgBoxStatusListRequestType>> |
+
+| [[MsgBoxStatusListRequestType]]*MsgBoxStatusListRequestType* | erweitert <<MsgBoxRequestType, MsgBoxRequestType>> | 5.4.3.1.2
+| + osci:MsgSelector | aus <<MsgBoxRequestType, MsgBoxRequestType>> |
+| + ListForm | osci:ListFormEnum |
+| + maxListItems |xs:positiveInteger |
+
+| [[MsgIdentificationType]]*MsgIdentificationType* | | 5.4.2.3.1
+| + MessageID | wsa:<<MessageID, MessageID>> |
+
+| [[MsgSelector]]*MsgSelector* | | 5.4.3.4.1
+| + newEntry | xs:boolean |
+| + MessageID | wsa:<<MessageID, MessageID>> |
+| + MsgBoxEntryTimeFrom | xs:dateTime |
+| + MsgBoxEntryTimeTo | xs:dateTime |
+
+| [[MsgStatusList]]*MsgStatusList* | <<MsgStatusListType, MsgStatusListType>> |
+
+| [[MsgStatusListType]]*MsgStatusListType* | | 5.4.3.5.1.1.2.2
+| + osci:MessageMetaData | <<MessageMetaData, MessageMetaData>> |
+
+| [[OriginatorsType]]*OriginatorsType* | | 5.4.2.3.1
+| + Author | oscimeta:<<PartyType, PartyType>> |
+| + Sender | oscimeta:<<PartyType, PartyType>> |
+
+| [[PartyIdentifierType]]*PartyIdentifierType* | | 5.4.1.6.1
+| + category | oscimeta:NonEmptyStringType |
+| + type | oscimeta:NonEmptyStringType |
+
+| [[PartyType]]*PartyType* | | 5.4.1.6.1
+| + Identifier | oscimeta:<<PartyIdentifierType, PartyIdentifierType>> |
+
+| [[QualifierType]]*QualifierType* | | 5.4.2.3.3.2
+| + Service | xs:anyURI |
+| + BusinessScenario | |
+| ++ Defined | oscimeta:KeyCodeType |
+| ++ Undefined | xs:normalizedString |
+| + MessageType | oscimeta:<<MessageType, MessageType>> |
+
+| [[RecordType]]*RecordType*  | | 5.5.1.1
+| + Timestamp | xs:dateTime|
+| + Code | xta:<<Code.RecordType, Code.RecordType>> | 5.5.1.2
+| + Reason | xs:string |
+
+| [[TransportReport]]*TransportReport* | | 5.5.2.4
+| + ReportTime | xs:dateTime |
+| + XTAServerIdentity | xs:token |
+| + MessageStatus | xta:<<MessageStatusType, MessageStatusType>> | 5.5.1.5
+| + MessageMetaData | oscimeta:<<MessageMetaData, MessageMetaData>> |
+| + AdditionalReports | xta:<<AdditionalReportListType, AdditionalReportListType>> | 5.5.1.3
+|===
+
+Legende: "-" = keine Vorgabe; "\+", "\++", "\+++", usw. = Einrückung zur Anzeige, dass es sich um ein 
+Bestandteil der zuvor genannten Struktur handelt; "(-)" = Nicht alle Teile dieser Struktur sind verpflichtend umzusetzen.
+

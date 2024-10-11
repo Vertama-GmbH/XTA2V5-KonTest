@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+           xmlns:xta-core="https://xoev.de/transport/xta/core/3.1.1"
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+           targetNamespace="https://xoev.de/transport/xta/core/3.1.1"
+           version="3.1.1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+    <xs:annotation>
+        <xs:appinfo>
+            <standard>
+                <nameLang>XTA 2 - Interoperabilitätsstandard zur Einbindung von IT-Fachapplikationen in eine
+                    Infrastruktur für Nachrichtenübermittlung
+                </nameLang>
+                <nameKurz>XTA 2</nameKurz>
+                <nameTechnisch>xta2</nameTechnisch>
+                <kennung>urn:xoev-de:kosit:standard:xta2</kennung>
+                <beschreibung>XTA 2 ist ein vom IT-Planungsrat empfohlener Interoperabilitätsstandard. Das Modul XTA
+                    Webservice vereinheitlicht die funktionalen Schnittstellen zwischen Fach- und Transportverfahren, um
+                    die Übermittlung von Nachrichten – also den Transport – zu standardisieren. Das Modul XTA Service
+                    Profile ist das Instrument zur einheitlichen Definition und Konfiguration der regelgeleiteten
+                    Anforderungen an den Transport. Weitere Information können von der Webseite der KoSIT abgerufen
+                    werden.
+                </beschreibung>
+            </standard>
+            <versionStandard>
+                <status>Final – 26. Juli 2024</status>
+                <version>5.1.1</version>
+                <beschreibung>Das Modul "XTA Webservice" wurde umfangreich überarbeitet und dessen Bestandteile stärker
+                    differenziert: Es wurden Erweiterungsmechanismen eingeführt und viele Funktionen in eigene
+                    Erweiterungen verschoben. Durch die Erweiterungsmöglichkeiten wurde ein Kern des Moduls erschaffen,
+                    der eine einfachere und langfristig stabile Implementierung der Kernfunktionen erlaubt. Die Module
+                    "XTA Webservice" und "XTA Service Profile" wurden technisch besser voreinander getrennt und die
+                    gesamte Spezifikation wurde textuell überarbeitet. Weitere Information können von der Webseite der
+                    KoSIT abgerufen werden.
+                </beschreibung>
+                <versionXOEVProfil>1.5.1</versionXOEVProfil>
+                <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                <versionXGenerator>3.1.1</versionXGenerator>
+                <versionModellierungswerkzeug>19.0 SP4</versionModellierungswerkzeug>
+                <nameModellierungswerkzeug>MagicDraw</nameModellierungswerkzeug>
+            </versionStandard>
+        </xs:appinfo>
+        <xs:documentation>Hier wird die Sammlung von globalen Elementen dargestellt, welche durch die Methoden des
+            XTA-WS verwendet werden.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:include schemaLocation="XTA-Webservice-Datentypen.xsd"/>
+    <xs:import schemaLocation="../externe_Schemata/xmldsig-core-schema.xsd"
+               namespace="http://www.w3.org/2000/09/xmldsig#"/>
+    <xs:complexType name="IsServiceAvailableValueType">
+        <xs:annotation>
+            <xs:documentation>Das Feld enthält die benötigten Attribute zum Ergebnis der Dienstanfrage: ob der Dienst
+                angeboten wird oder nicht, oder ob diese Information generell nicht bekannt ist.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="ServiceIsAvailable" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Der Dienst wird angeboten (true) oder nicht angeboten (false).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ServiceIsAvailableUnknown" fixed="true" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Es ist nicht bekannt, ob der Dienst angeboten wird oder nicht.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="LookupServiceResultType">
+        <xs:annotation>
+            <xs:documentation>Das Ergebnis einer Dienstanfrage enthält den Status der Erreichbarkeit eines Lesers und
+                die notwendigen technischen Parameter für den Aufruf des fachlichen Dienstes.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="xta-core:LookupServiceType">
+                <xs:sequence>
+                    <xs:element name="IsServiceAvailableValue"
+                                type="xta-core:IsServiceAvailableValueType">
+                        <xs:annotation>
+                            <xs:documentation>Enthält das Ergebnis der Dienstanfrage: ob der Dienst angeboten wird oder
+                                nicht oder ob diese Information generell nicht bekannt ist.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="ServiceParameter" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Dieses Element enthält im Erfolgsfall die benötigten technischen Parameter
+                                für die elektronische Kommunikation mit dem Leser, z.B. das öffentliche Zertifikat des
+                                Lesers zur Inhaltsdatenverschlüsselung. Das Feld ist zu füllen, falls der angefragte
+                                Dienst angeboten und in diesem Kontext der Parameter benötigt wird. Vom Fachszenario ist
+                                zu beschreiben, welche Parameter für die Erreichbarkeit der Dienste in diesem
+                                Fachszenario anzuwenden sind.
+                            </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="ParameterType" type="xta-core:Code.ServiceParameterType">
+                                    <xs:annotation>
+                                        <xs:documentation>Dieses Element steht für die Art des Parameters, welche ins
+                                            passende Kindelement einzutragen bzw. eingetragen ist. Die vorgesehenen
+                                            Parameterarten werden auf der Basis einer Codeliste interpretiert, welche
+                                            durch die Attribute listURI und listVersionID referenziert ist.
+                                        </xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element name="Resource"
+                                            type="xs:base64Binary"
+                                            xmime:expectedContentTypes="application/octet-stream">
+                                    <xs:annotation>
+                                        <xs:documentation>Hier ist der Parameter enthalten bzw. einnzutragen in
+                                            technisch neutraler Darstellung.
+                                        </xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="LookupServiceType">
+        <xs:annotation>
+            <xs:documentation>Mit einer Dienstanfrage prüft der Autor die Erreichbarkeit eines Lesers für die Benutzung
+                eines konkreten fachlichen Dienstes (z.B. eine Rückmeldung im Meldewesen). Mit der Anfrage werden ebenso
+                die für die technische Kommunikation notwendigen Parameter ermittelt (z.B. Verschlüsselungszertifikate).
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Reader" type="xta-core:PartyType">
+                <xs:annotation>
+                    <xs:documentation>Dies ist die fachliche Identifizierung des Lesers. Der Wert entspricht z.B. dem
+                        fachlichen Behördenschlüssel.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Service" minOccurs="0" type="xta-core:NonEmptyURIType">
+                <xs:annotation>
+                    <xs:documentation>Eindeutige Identifikation eines fachlichen Dienstes durch eine Ressourcenkennung
+                        (URI nach RFC 3986). Für Fachstandards mit DVDV-Bezug ist die Dienstbezeichnung aus dem DVDV zu
+                        verwenden. Die Dienstbezeichnung ist weniger differenziert als der Typ der Fachnachricht. In der
+                        Regel sind mehrere Nachrichtentypen in einer Service-WSDL zusammengefasst. Beispielhafte Werte:
+                        als URL http://www.osci.de/xmeld181/xmeld181Rueckmeldung.wsdl als URN
+                        urn:xoev-de:xunternehmen:standard:handwerk_1.1/xu-haw11onlinedienst2handwerkskammer.wsdl
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="MessageBoxStatusType">
+        <xs:annotation>
+            <xs:documentation>Diese Struktur enthält den Status des Postfachs in Bezug auf eine konkrete Anfrage.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="MessagesRemaining">
+                <xs:annotation>
+                    <xs:documentation>Eine Auswahl der Zustände des Postfachs.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="NoMessageAvailable"
+                                    default="http://www.osci.eu/ws/2008/05/transport/MessageBox/reasons/NoMatch"
+                                    type="xta-core:NonEmptyURIType">
+                            <xs:annotation>
+                                <xs:documentation>Dieses Element ist zu befüllen, falls keine Fachnachrichten im
+                                    Postfach zur Verfügung stehen. Hier sind URI-Werte gemäß folgender Systematik
+                                    einzutragen: Keine Treffer für Filterkriterien:
+                                    http://www.osci.eu/ws/2008/05/transport/MessageBox/reasons/NoMatch Weiterer
+                                    spezifischer Grund: beliebige, vereinbarte weitere URI.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="MessagesPending" type="xs:nonNegativeInteger">
+                            <xs:annotation>
+                                <xs:documentation>Dieses Element bezeichnet die Anzahl der Fachnachrichten, die dem
+                                    Nachrichtenselektor entsprechen, jedoch nicht ausgegeben wurden. Sollten keine
+                                    weiteren Fachnachrichten mehr vorliegen, wird hier der Wert 0 übermittelt.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Extensions"
+                        minOccurs="0"
+                        maxOccurs="unbounded"
+                        type="xta-core:ExtensionsType">
+                <xs:annotation>
+                    <xs:documentation>Eine Liste von Erweiterungen (Extensions), welche die Funktion des XTA Kerns nach
+                        eigener Spezifikation ergänzen. Die Liste kann aus mehreren Erweiterungen bestehen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="MessageFetchType">
+        <xs:annotation>
+            <xs:documentation>Steuerungsdaten für Abholaufträge und -bestätigungen durch den Leser.</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="XTAMessageID" type="xta-core:XTAMessageIDType">
+                <xs:annotation>
+                    <xs:documentation>Der eindeutige Identifikator des Transportauftrags.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Extensions" type="xta-core:ExtensionsType">
+                <xs:annotation>
+                    <xs:documentation>Eine Liste von Erweiterungen (Extensions), welche die Funktion des XTA Kerns nach
+                        eigener Spezifikation ergänzen. Die Liste kann aus mehreren Erweiterungen bestehen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="ContentContainerReply">
+        <xs:annotation>
+            <xs:documentation>Dieses Element enthält die fachliche Antwort (neue Fachnachricht) in der synchronen
+                Kommunikation zwischen Empfänger und Leser und entsprechend analog zwischen Sender und Autor. Wird eine
+                Antwort vom Leser gefordert, ist diese im Kindelement ContentContainer enthalten. Falls keine Antwort
+                vom Leser gefordert wird, ist das Kindelement ContentContainer nicht in diesem Element enthalten.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ContentContainer"
+                            minOccurs="0"
+                            type="xta-core:ContentContainerType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="LookupQuery">
+        <xs:annotation>
+            <xs:documentation>Liste von Dienstanfragen.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="LookupService"
+                            maxOccurs="unbounded"
+                            type="xta-core:LookupServiceType">
+                    <xs:annotation>
+                        <xs:documentation>Eine Anfrage enthält Daten zum potentiellen Leser und dem vom Leser
+                            angebotenen Dienst.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="LookupStatus">
+        <xs:annotation>
+            <xs:documentation>Eine Liste mit Ergebnissen zu den Dienstanfragen.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="LookupServiceResult"
+                            maxOccurs="unbounded"
+                            type="xta-core:LookupServiceResultType">
+                    <xs:annotation>
+                        <xs:documentation>Ein Ergebnis enthält Informationen zur Erreichbarkeit eines Lesers.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="MessageBoxStatus" type="xta-core:MessageBoxStatusType">
+        <xs:annotation>
+            <xs:documentation>Element des Typs MessageBoxStatusType.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="MessageFetch" type="xta-core:MessageFetchType">
+        <xs:annotation>
+            <xs:documentation>Element des Typs MessageFetchType.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="MessageMetaDataReply">
+        <xs:annotation>
+            <xs:documentation>Dieses Element enthält die Metadaten einer fachlichen Antwort in der synchronen
+                Kommunikation zwischen Empfänger und Leser und entsprechend analog zwischen Sender und Autor. Wird eine
+                Antwort vom Leser gefordert, so sind die Metadaten der Antwort im Kindelement MessageMetaData enthalten.
+                Falls keine Antwort vom Leser gefordert wird, bleibt das Element MessageMetaDataReply leer.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="MessageMetaData"
+                            minOccurs="0"
+                            type="xta-core:MessageMetaDataType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

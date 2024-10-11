@@ -1,0 +1,41 @@
+@startuml
+participant "Autor (asynchron)" as autor #LightGreen
+participant "Sender (asynchron)" as sender
+activate autor
+
+autor -> sender: checkAccountActive
+note right 
+muss zu einem beliebigen 
+Zeitpunkt aufgerufen werden
+end note
+activate sender
+return
+
+autor -> sender: lookupService
+note right 
+muss zu einem beliebigen 
+Zeitpunkt aufgerufen werden
+end note
+activate sender
+return
+
+autor -> sender: createMessageID
+activate sender
+return
+
+autor -> sender: sendMessage
+note right
+muss nach createMessageID 
+aufgerufen werden
+end note
+activate sender
+return
+
+autor -> sender: getTransportReport
+note right
+muss nach sendMessage
+aufgerufen werden
+end note
+activate sender
+return
+@enduml

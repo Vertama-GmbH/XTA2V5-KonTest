@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+           xmlns:xta-core="https://xoev.de/transport/xta/core/3.1.1"
+           xmlns:xoev-code="http://xoev.de/schemata/code/1_0"
+           targetNamespace="https://xoev.de/transport/xta/core/3.1.1"
+           version="3.1.1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+    <xs:annotation>
+        <xs:appinfo>
+            <standard>
+                <nameLang>XTA 2 - Interoperabilitätsstandard zur Einbindung von IT-Fachapplikationen in eine
+                    Infrastruktur für Nachrichtenübermittlung
+                </nameLang>
+                <nameKurz>XTA 2</nameKurz>
+                <nameTechnisch>xta2</nameTechnisch>
+                <kennung>urn:xoev-de:kosit:standard:xta2</kennung>
+                <beschreibung>XTA 2 ist ein vom IT-Planungsrat empfohlener Interoperabilitätsstandard. Das Modul XTA
+                    Webservice vereinheitlicht die funktionalen Schnittstellen zwischen Fach- und Transportverfahren, um
+                    die Übermittlung von Nachrichten – also den Transport – zu standardisieren. Das Modul XTA Service
+                    Profile ist das Instrument zur einheitlichen Definition und Konfiguration der regelgeleiteten
+                    Anforderungen an den Transport. Weitere Information können von der Webseite der KoSIT abgerufen
+                    werden.
+                </beschreibung>
+            </standard>
+            <versionStandard>
+                <status>Final – 26. Juli 2024</status>
+                <version>5.1.1</version>
+                <beschreibung>Das Modul "XTA Webservice" wurde umfangreich überarbeitet und dessen Bestandteile stärker
+                    differenziert: Es wurden Erweiterungsmechanismen eingeführt und viele Funktionen in eigene
+                    Erweiterungen verschoben. Durch die Erweiterungsmöglichkeiten wurde ein Kern des Moduls erschaffen,
+                    der eine einfachere und langfristig stabile Implementierung der Kernfunktionen erlaubt. Die Module
+                    "XTA Webservice" und "XTA Service Profile" wurden technisch besser voreinander getrennt und die
+                    gesamte Spezifikation wurde textuell überarbeitet. Weitere Information können von der Webseite der
+                    KoSIT abgerufen werden.
+                </beschreibung>
+                <versionXOEVProfil>1.5.1</versionXOEVProfil>
+                <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                <versionXGenerator>3.1.1</versionXGenerator>
+                <versionModellierungswerkzeug>19.0 SP4</versionModellierungswerkzeug>
+                <nameModellierungswerkzeug>MagicDraw</nameModellierungswerkzeug>
+            </versionStandard>
+        </xs:appinfo>
+        <xs:documentation>Hier wird die Sammlung von Code-Datentypen dargestellt, welche der XTA-WS definiert und
+            verwendet.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:import schemaLocation="../externe_Schemata/xoev-code.xsd"
+               namespace="http://xoev.de/schemata/code/1_0"/>
+    <xs:complexType name="Code.BusinessScenario">
+        <xs:annotation>
+            <xs:documentation>Dieser Typ gestattet die Kennzeichnung eines Geschäftsszenarios, um den Leser zu
+                befähigen, bereitliegende Fachnachrichten zu filtern ohne sie lesen bzw. analysieren zu müssen. Die
+                KoSIT gibt für den Standard XTA eine Codeliste heraus, die für einschlägige Arten von Geschäftsszenarios
+                verwendet werden kann, soweit kompatible Werte vorhanden sind. Sie kann im XRepository
+                (www.xrepository.de) unter Angabe ihrer Kennung urn:de:xta:codeliste:business.scenario abgerufen werden.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xs:token" form="unqualified"/>
+                </xs:sequence>
+                <xs:attribute name="listURI" type="xs:anyURI" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID" type="xs:normalizedString" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.CertificateUsage">
+        <xs:annotation>
+            <xs:documentation>Dieser Typ gestattet die Angabe des Nutzungszwecks des übertragenen Zertifikats. Die KoSIT
+                gibt für den Standard XTA eine Codeliste heraus, welche Einträge für einschlägige Nutzungszwecke der
+                übertragenen Zertifikate auflistet. Sie kann im XRepository (www.xrepository.de) unter Angabe ihrer
+                Kennung urn:xoev-de:kosit:codeliste:xta.core.certificate-usage abgerufen werden.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xs:token" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI" type="xs:anyURI" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID" type="xs:normalizedString" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.Directory">
+        <xs:annotation>
+            <xs:documentation>Dieser Typ gestattet die Kennzeichnung des zu nutzenden Verzeichnisdienstes, der für die
+                weitere Identifizierung / Adressierung des Kommunikationspartners genutzt werden kann. Die KoSIT gibt
+                eine Codeliste heraus, die für einschlägige Arten von Verzeichnisdiensten verwendet werden kann, soweit
+                kompatible Werte vorhanden sind. Sie kann im XRepository (www.xrepository.de) unter Angabe ihrer Kennung
+                urn:xoev-de:kosit:codeliste:xta.core.directory abgerufen werden.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xs:token" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI" type="xs:anyURI" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID" type="xs:normalizedString" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.Fehlernummer">
+        <xs:annotation>
+            <xs:documentation>Dieser Typ gestattet die Angabe von Fehlernummern zur Beschreibung der Fehlersituation.
+                Die KoSIT gibt für den Kern von XTA eine Codeliste heraus, welche Einträge für Fehlernummern auflistet
+                und diese den Exceptions zuordnet. Sie kann im XRepository (www.xrepository.de) unter Angabe ihrer
+                Kennung urn:xoev-de:kosit:codeliste:xta.core.fehlernummer abgerufen werden. Die XTA Erweiterungen können
+                eigene Exceptions und Codelisten definieren. In die Attribute des vorliegenden Typs sind entsprechend
+                ihre Kennung und die Nummer der ausgewählten Version einzutragen.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xs:token" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI" type="xs:anyURI" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID" type="xs:normalizedString" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.IdentifierContext">
+        <xs:annotation>
+            <xs:documentation>Dieser Typ gestattet die Auszeichnung des Kontextes der Nachrichtenidentifikation. Die
+                KoSIT gibt für den Standard XTA eine Codeliste heraus, die für einschlägige Arten von Kontexten für
+                Nachrichtenidentifikatoren verwendet werden kann, soweit kompatible Werte vorhanden sind. Sie kann im
+                XRepository (www.xrepository.de) unter Angabe ihrer Kennung
+                urn:xoev-de:kosit:codeliste:xta.core.identifier-context abgerufen werden.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xs:token" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI" type="xs:anyURI" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID" type="xs:normalizedString" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.RecordType">
+        <xs:annotation>
+            <xs:documentation>Dieser Typ gestattet die Angabe der Bedeutung einer Meldung, welche im Transportbericht
+                einem Abarbeitungsereignis eines Transportauftrags zugeordnet ist. Die Meldungen werden als Fehler-,
+                Warn- oder Informationseinträge eingeordnet. Die KoSIT gibt für den Standard XTA eine Codeliste heraus,
+                die für einschlägige Arten von Reports verwendet werden kann, soweit kompatible Werte vorhanden sind.
+                Sie kann im XRepository (www.xrepository.de) unter Angabe ihrer Kennung
+                urn:xoev-de:kosit:codeliste:xta.core.record-type abgerufen werden.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xs:token" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>In diesem Element ist ein Schlüssel aus der referenzierten Codeliste
+                                einzutragen.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI" type="xs:anyURI" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Hier wird die URI einer Codeliste eingetragen, die dadurch hier eingebunden
+                            ist. Es ist die Codeliste dafür auszuwählen, auf deren Basis der übermittelte Schlüssel
+                            durch den Leser der Fachnachricht interpretiert werden soll.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID" type="xs:normalizedString" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Die Version der Codeliste, welche der Interpretation des übermittelten
+                            Schlüssels zu Grunde gelegt werden soll.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.ReportType">
+        <xs:annotation>
+            <xs:documentation>Dieser Typ gestattet die Kennzeichnung der Art eines zusätzlichen Reports. Es wird eine zu
+                wählende Codeliste eingebunden, die mögliche Arten von zusätzlichen Berichten nennt. Mit einen
+                Codelisteneintrag wird ein spezielles Format, welches innerhalb oder außerhalb von XTA definiert wird,
+                angegeben. Die KoSIT gibt für den Standard XTA eine Codeliste heraus, die für einschlägige Arten von
+                Reports verwendet werden kann, soweit kompatible Werte vorhanden sind. Sie kann im XRepository
+                (www.xrepository.de) unter Angabe ihrer Kennung urn:de:xta:codeliste:report.type abgerufen werden.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xs:token" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>In diesem Element ist ein Schlüssel aus der referenzierten Codeliste
+                                einzutragen.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI" type="xs:anyURI" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Hier wird die URI einer Codeliste eingetragen, die dadurch hier eingebunden
+                            ist. Es ist die Codeliste dafür auszuwählen, auf deren Basis der übermittelte Schlüssel
+                            durch den Leser der Fachnachricht interpretiert werden soll.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID" type="xs:normalizedString" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Die Version der Codeliste, welche der Interpretation des übermittelten
+                            Schlüssel zu Grunde gelegt werden soll.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.ServiceParameterType">
+        <xs:annotation>
+            <xs:documentation>Dieser Typ gestattet die Kennzeichnung der Art eines Parameters für die technische
+                Erreichbarkeit des Dienstes, der adressiert werden soll.Die KoSIT gibt für den Standard XTA eine
+                Codeliste heraus, die für einschlägige Parameterarten verwendet werden kann, soweit kompatible Werte
+                vorhanden sind. Sie kann im XRepository (www.xrepository.de) unter Angabe ihrer Kennung
+                urn:de:xta:codeliste:service.parameter.type abgerufen werden.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xs:token" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>In diesem Element ist ein Schlüssel aus der referenzierten Codeliste
+                                einzutragen.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI" type="xs:anyURI" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Hier wird die URI einer Codeliste eingetragen, die dadurch hier eingebunden
+                            ist. Es ist die Codeliste dafür auszuwählen, auf deren Basis der übermittelte Schlüssel
+                            durch den Leser der Fachnachricht interpretiert werden soll.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID" type="xs:normalizedString" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Die Version der Codeliste, welche der Interpretation des übermittelten
+                            Schlüssel zu Grunde gelegt werden soll.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

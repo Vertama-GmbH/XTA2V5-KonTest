@@ -1,0 +1,31 @@
+@startuml
+!pragma layout smetana
+class XtaProtocol {
+  ProtocolMetadata metadata
+  List<ScenarioProtocol> scenarioProtocols
+}
+class ProtocolMetadata {
+}
+class ScenarioProtocol {
+  ScenarioDefinition scenarioDefinition
+  List<ScenarioProtocolEvent> scenarioProtocolEvents
+}
+class ScenarioDefinition {
+}
+class ScenarioEventDefinition {
+}
+class ScenarioProtocolEvent {
+  ScenarioEventDefinition eventDefinition
+  boolean partOfTheScenario
+  ScenarioProtocolEventResult eventResult
+}
+class ScenarioProtocolEventResult {
+}
+
+XtaProtocol --> "1" ProtocolMetadata
+XtaProtocol --> "0..*" ScenarioProtocol
+ScenarioProtocol --> "1" ScenarioDefinition
+ScenarioProtocol --> "1..*" ScenarioProtocolEvent
+ScenarioProtocolEvent --> "0..1" ScenarioEventDefinition
+ScenarioProtocolEvent --> "1" ScenarioProtocolEventResult
+@enduml

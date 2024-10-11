@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<title>[[ #{page.control.title} ]]</title>
+</head>
+<body>
+
+	<div layout:fragment="content" class="row">
+		<div class="col-md-12">
+			<h1>[[ #{page.control.header} ]]</h1>
+
+			<div>
+				<div class="row">
+					<div class="col-md-12">
+						<h3>Report</h3>
+						<form id="reportForm">
+							<button class="btn btn-primary" type="submit" id="clearProtocol"
+								th:text="#{page.control.reportForm.button.clearProtocol}">Report zurücksetzen</button>
+						</form>
+					</div>
+				</div>
+
+				<hr>
+				<div class="row">
+					<div class="col-md-6">
+						<h3>Szenario</h3>
+						<form id="selectScenarioForm">
+							<div class="form-group">
+								<label for="selectScenario" th:text="#{page.control.selectScenarioForm.label.selectScenario}">Scenario
+									wählen</label> <select class="form-control" id="scenarioSelect" name="scenarioSelect">
+									<option
+										th:attr="data-running=${currentScenarioDefinition != null && currentScenarioDefinition.name == scenario.name}"
+										th:each="scenario : ${scenarioList}"
+										th:value="${scenario.getJson()}"
+										th:label="${scenario.displayName}"></option>
+								</select> <label for="scenarioDescription" th:text="#{page.control.selectScenarioForm.label.scenarioDescription}">Szenariobeschreibung</label>
+								<textarea class="form-control" id="scenarioDescription" rows="2" readonly
+									th:text="${#lists.size(scenarioList) > 0 ? scenarioList[0].description : ''}"></textarea>
+							</div>
+							<button class="btn btn-primary" type="submit" id="startScenario"
+								th:text="#{page.control.selectScenarioForm.button.startScenario}">Start Scenario</button>
+						</form>
+						<p />
+
+						<form id="currentScenarioForm">
+						<!-- using a variable for else since the message cant be put into the else condition -->
+							<div class="form-group" th:with="noscenario=#{page.control.messages.noScenario}">
+								<label for="currentScenario" th:text="#{page.control.currentScenarioForm.label.currentScenario}">Aktuelles
+									Scenario</label> <input class="form-control" type="text" id="currentScenario" name="currentScenario" readonly required
+									th:value="${currentScenarioDefinition != null ? currentScenarioDefinition.displayName : noscenario}"/>
+							</div>
+							<button class="btn btn-primary" type="submit" id="restartCurrentScenario"
+								th:disabled="${currentScenarioDefinition == null}"
+								th:text="#{page.control.currentScenarioForm.button.restartCurrentScenario}">Restart Scenario</button>
+						</form>
+					</div>
+					<div class="col-md-6">
+					   <p>[[ #{page.control.messages.roleTestEnvironment1} ]] <span style="color: #23C823; font-weight: bold;">[[ #{page.control.messages.roleTestEnvironment2} ]]</span> [[ #{page.control.messages.roleTestEnvironment3} ]]</p>
+						<img id="scenarioImage" alt="scenario" th:src="${#lists.size(scenarioList) > 0 ? '/static/scenarios/' + scenarioList[0].image : ''}">
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div layout:fragment="optional">
+		<script type="text/javascript" th:inline="javascript">
+			$(document).ready(function() {
+				$('#clearProtocol').click(function(event) {
+					// cancel standard action
+					event.preventDefault();
+
+					var button = $(event.relatedTarget); // Button that triggered the model
+					var action = button.data('action'); // Extract info from data-* attributes
+					var path = '/rest/api/mgmt/clearProtocol';
+					console.log('load content from ' + path);
+					$.ajax({
+						url : path,
+						dataType : 'html',
+						success : function(data) {
+							$('input[name="currentScenario"]').val('Kein Szenario gewählt');
+							$('#restartCurrentScenario').prop("disabled", true);
+						}
+					});
+				});
+				$('#scenarioSelect').change(function(event) {
+					var jsonStr = $("#scenarioSelect").val();
+					var scenario = $.parseJSON(jsonStr);
+					$('#scenarioDescription').val(scenario.description);
+					$('#scenarioImage').attr("src", "/static/scenarios/" + scenario.image);
+				});
+				$('#startScenario').click(function(event) {
+					// cancel standard action
+					event.preventDefault();
+
+					var button = $(event.relatedTarget); // Button that triggered the model
+					var action = button.data('action'); // Extract info from data-* attributes
+					var jsonStr = $("#scenarioSelect").val();
+					var scenario = $.parseJSON(jsonStr);
+					var scenarioLabel = $('#scenarioSelect :selected').attr('label');
+					var path = '/rest/api/mgmt/startScenario?scenario=' + scenario.name;
+					console.log('load content from ' + path);
+					$.ajax({
+						url : path,
+						dataType : 'html'
+					}).done(function(data) {
+						// success
+						$('input[name="currentScenario"]').val(scenarioLabel);
+						$('#restartCurrentScenario').prop("disabled", false);
+					}).fail(function(data) {
+					// error
+					});
+				});
+				$('#restartCurrentScenario').click(function(event) {
+					// cancel standard action
+					event.preventDefault();
+
+					var button = $(event.relatedTarget); // Button that triggered the model
+					var action = button.data('action'); // Extract info from data-* attributes
+					var path = '/rest/api/mgmt/restartCurrentScenario';
+					console.log('load content from ' + path);
+					$.ajax({
+						url : path,
+						dataType : 'html',
+						success : function(data) {
+
+						}
+					});
+				});
+			});
+		</script>
+	</div>
+</body>
+
+
+</html>

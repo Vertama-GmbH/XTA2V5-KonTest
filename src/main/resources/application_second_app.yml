@@ -1,0 +1,68 @@
+spring:
+  application: 
+    name: xta-test-app
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  devtools:
+    livereload:
+      port: 35730
+
+server:
+  port: 9443
+  ssl:
+    # enthaelt den privaten und oeffentlichen Schluessel der Anwendung
+    key-store: classpath:store/xta-test-app_keystore.p12
+    key-store-password: password
+    key-store-type: pkcs12
+    # Alias im KeyStore
+    key-alias: xta-test-application
+    key-password: password
+    # enthaelt alle vertrauenswuerdigen Zertifikate
+    trust-store: classpath:store/xta-test-app_truststore.jks
+    trust-store-password: password
+    trust-store-type: JKS
+    # want, need, none; see org.springframework.boot.web.server.ClientAuth
+    # wird ein Client Zertifikat benoetigt
+    client-auth: want
+  thymeleaf.cache: false
+
+app:
+  logRequestResponse: true
+  server:
+    http-port: 9080
+    redirect-to-https: false
+  client:
+    server-url: 
+      transportBasePort: https://localhost:8443/services/XTACore
+      senderBasePort: https://localhost:8443/services/XTACore
+      senderSyncPort: https://localhost:8443/services/XTACore
+      senderAsyncPort: https://localhost:8443/services/XTACore
+      recipientAsyncPort: https://localhost:8443/services/XTACore
+      readerSyncPort: https://localhost:8443/services/XTACore
+    check-hostname-in-certificate: true
+    # not implemented
+    #accept-all-servers: false
+    # KeyStore fuer das Client Zertifikat und den privaten Client Schluessel
+    key-store: classpath:store/john_smith_xta_tester.p12
+    key-store-password: password
+    # key-alias: alias
+    #key-store-type: pkcs12
+    key-password: password
+    # TrustStore, der das vertrauenswuerdige Zertifikat der Applikation oder das Root Zertifikat enthaelt
+    trust-store: classpath:store/xta-test-app_truststore.jks
+    trust-store-password: password
+    #trust-store-type: JKS
+
+logging:
+  level:
+    ROOT: TRACE
+    # no auto configuration report
+    org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener: INFO
+    org.springframework.security: WARN
+    org.springframework.web: INFO
+    org.apache.axiom: INFO
+    de.xoev.xta.test.app.soap: DEBUG
+    org.apache.axis2: INFO
+    

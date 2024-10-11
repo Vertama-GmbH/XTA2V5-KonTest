@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="308px" preserveAspectRatio="none" style="width:454px;height:308px;background:#FFFFFF;" version="1.1" viewBox="0 0 454 308" width="454px" zoomAndPan="magnify"><defs><filter height="300%" id="f1ekk7e0s38dqj" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#f1ekk7e0s38dqj)" height="203.1094" style="stroke:#A80036;stroke-width:1.0;" width="10" x="79.5" y="51.6094"/><rect fill="#FFFFFF" filter="url(#f1ekk7e0s38dqj)" height="27.1758" style="stroke:#A80036;stroke-width:1.0;" width="10" x="84.5" y="131.4883"/><rect fill="#FFFFFF" filter="url(#f1ekk7e0s38dqj)" height="35.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="84.5" y="210.3672"/><rect fill="#FFFFFF" filter="url(#f1ekk7e0s38dqj)" height="14" style="stroke:#A80036;stroke-width:1.0;" width="10" x="232" y="73.9609"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="84" x2="84" y1="41.6094" y2="263.7188"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="237" x2="237" y1="41.6094" y2="263.7188"/><rect fill="#FEFECE" filter="url(#f1ekk7e0s38dqj)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="155" x="5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="141" x="12" y="26.5332">Empfänger (synchron)</text><rect fill="#FEFECE" filter="url(#f1ekk7e0s38dqj)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="155" x="5" y="262.7188"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="141" x="12" y="284.252">Empfänger (synchron)</text><rect fill="#90EE90" filter="url(#f1ekk7e0s38dqj)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="122" x="174" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="108" x="181" y="26.5332">Leser (synchron)</text><rect fill="#90EE90" filter="url(#f1ekk7e0s38dqj)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="122" x="174" y="262.7188"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="108" x="181" y="284.252">Leser (synchron)</text><rect fill="#FFFFFF" filter="url(#f1ekk7e0s38dqj)" height="203.1094" style="stroke:#A80036;stroke-width:1.0;" width="10" x="79.5" y="51.6094"/><rect fill="#FFFFFF" filter="url(#f1ekk7e0s38dqj)" height="27.1758" style="stroke:#A80036;stroke-width:1.0;" width="10" x="84.5" y="131.4883"/><rect fill="#FFFFFF" filter="url(#f1ekk7e0s38dqj)" height="35.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="84.5" y="210.3672"/><rect fill="#FFFFFF" filter="url(#f1ekk7e0s38dqj)" height="14" style="stroke:#A80036;stroke-width:1.0;" width="10" x="232" y="73.9609"/><polygon fill="#A80036" points="220,69.9609,230,73.9609,220,77.9609,224,73.9609" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="89.5" x2="226" y1="73.9609" y2="73.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="89" x="96.5" y="69.1045">deliverMessage</text><polygon fill="#A80036" points="100.5,83.9609,90.5,87.9609,100.5,91.9609,96.5,87.9609" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="94.5" x2="236" y1="87.9609" y2="87.9609"/><polygon fill="#A80036" points="105.5,127.4883,95.5,131.4883,105.5,135.4883,101.5,131.4883" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="99.5" x2="236" y1="131.4883" y2="131.4883"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="118" x="111.5" y="126.6318">checkAccountActive</text><path d="M242,100.9609 L242,142.9609 L424,142.9609 L424,110.9609 L414,100.9609 L242,100.9609 " fill="#FBFB77" filter="url(#f1ekk7e0s38dqj)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M414,100.9609 L414,110.9609 L424,110.9609 L414,100.9609 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="151" x="248" y="119.4561">muss zu einem beliebigen</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="161" x="248" y="135.8076">Zeitpunkt aufgerufen werden</text><polygon fill="#A80036" points="225,154.6641,235,158.6641,225,162.6641,229,158.6641" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="89.5" x2="231" y1="158.6641" y2="158.6641"/><polygon fill="#A80036" points="105.5,206.3672,95.5,210.3672,105.5,214.3672,101.5,210.3672" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="99.5" x2="236" y1="210.3672" y2="210.3672"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="110" x="111.5" y="205.5107">getTransportReport</text><path d="M242,171.6641 L242,230.6641 L445,230.6641 L445,181.6641 L435,171.6641 L242,171.6641 " fill="#FBFB77" filter="url(#f1ekk7e0s38dqj)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M435,171.6641 L435,181.6641 L445,181.6641 L435,171.6641 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="151" x="248" y="190.1592">muss zu einem beliebigen</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="178" x="248" y="206.5107">Zeitpunkt nach deliverMessage</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="104" x="248" y="222.8623">aufgerufen werden</text><polygon fill="#A80036" points="225,241.7188,235,245.7188,225,249.7188,229,245.7188" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="89.5" x2="231" y1="245.7188" y2="245.7188"/><!--MD5=[540832d80b48ee472e1028ea6778e43e]
+@startuml
+participant "Empfänger (synchron)" as empfaenger
+participant "Leser (synchron)" as leser #LightGreen
+
+activate empfaenger
+
+empfaenger -> leser: deliverMessage
+activate leser
+return
+
+
+
+leser -> empfaenger: checkAccountActive
+note right 
+muss zu einem beliebigen 
+Zeitpunkt aufgerufen werden
+end note
+activate empfaenger
+return 
+
+leser -> empfaenger: getTransportReport
+note right 
+muss zu einem beliebigen 
+Zeitpunkt nach deliverMessage 
+aufgerufen werden
+end note
+activate empfaenger
+return
+
+@enduml
+
+PlantUML version 1.2022.0(Tue Jan 11 17:16:42 CET 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: de
+Country: DE
+--></g></svg>

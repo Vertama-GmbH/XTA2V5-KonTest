@@ -1,0 +1,78 @@
+stages:
+  - package
+  - upload
+  - release
+
+variables:
+  # This will suppress any download for dependencies and plugins or upload messages which would clutter the console log.
+  # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
+  MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true"
+  # As of Maven 3.3.0 instead of this you may define these options in `.mvn/maven.config` so the same config is used
+  # when running from the command line.
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+  RELEASE_ARTIFACT: "XTA2V5-KonTest-App"
+  PACKAGE_REGISTRY_URL: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/xta-test-app"
+
+# This template uses JDK 17 for verifying and deploying images
+image: maven:3.9.6-eclipse-temurin-17-alpine
+
+# Cache downloaded dependencies and plugins between builds.
+# To keep cache across branches add 'key: "$CI_JOB_NAME"'
+cache:
+  paths:
+    - .m2/repository
+    - $CI_JOB_NAME
+
+build:
+  stage: package
+  variables:
+    HTTP_TESTS_DISABLED: 'true'
+  before_script:
+    - apk add --update zip
+  script:
+    - mvn $MAVEN_CLI_OPTS clean package -Pasciidoctor
+    - cp -r target/html .
+    - rm -R html/theme
+    - rm -R soapui/*.adoc
+    - mkdir pdf
+    - cp target/pdf/*.pdf ./pdf
+    - cp target/soapui/*.pdf ./soapui
+    - cp -r target/*.jar .
+    - cp build/resources/application-local.yml .
+    - cp src/main/resources/configDefault.yaml ./config.yaml
+    - cp src/main/resources/store/*.p12 .
+    - cp src/main/resources/store/*.jks .
+    - cp src/main/resources/store/*.p12 ./soapui
+    - cp src/main/resources/store/*.jks ./soapui
+    - mkdir source
+    - cp -r src ./source
+    - cp pom.xml ./source
+    # Create a Zip File for release
+    - zip -r ${RELEASE_ARTIFACT}.zip html pdf *.jar application-local.yml *.p12 *.jks soapui source LICENSE.txt
+  artifacts:
+    name: ${RELEASE_ARTIFACT}
+    paths:
+      - ${RELEASE_ARTIFACT}.zip
+
+upload:
+  stage: upload
+  image: curlimages/curl:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - echo "uploading ${RELEASE_ARTIFACT}-$CI_COMMIT_TAG"
+    - echo "uploading artifacts ..."
+    - |
+      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file ${RELEASE_ARTIFACT}.zip ${PACKAGE_REGISTRY_URL}/$CI_COMMIT_TAG/${RELEASE_ARTIFACT}-$CI_COMMIT_TAG.zip
+
+
+release:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - echo "releasing ${RELEASE_ARTIFACT}-$CI_COMMIT_TAG"
+    - |
+      release-cli create --name "Release $CI_COMMIT_TAG" --tag-name $CI_COMMIT_TAG \
+        --assets-link "{\"name\":\"${RELEASE_ARTIFACT}-$CI_COMMIT_TAG\",\"url\":\"${PACKAGE_REGISTRY_URL}/$CI_COMMIT_TAG/${RELEASE_ARTIFACT}-$CI_COMMIT_TAG.zip\"}"

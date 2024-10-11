@@ -1,0 +1,1229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:s12="http://www.w3.org/2003/05/soap-envelope"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/"
+             xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+             xmlns:wsa="http://www.w3.org/2005/08/addressing"
+             xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+             xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+             xmlns:wsp="http://www.w3.org/ns/ws-policy"
+             xmlns:wspmtom="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization"
+             xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:xta-core="https://xoev.de/transport/xta/core/3.1.1"
+             targetNamespace="https://xoev.de/transport/xta/core/3.1.1"
+             name="XTACore">
+    <documentation>
+        <xsd:appinfo>
+            <standard>
+                <nameLang>XTA 2 - Interoperabilitätsstandard zur Einbindung von IT-Fachapplikationen in eine
+                    Infrastruktur für Nachrichtenübermittlung
+                </nameLang>
+                <nameKurz>XTA 2</nameKurz>
+                <nameTechnisch>xta2</nameTechnisch>
+                <kennung>urn:xoev-de:kosit:standard:xta2</kennung>
+                <beschreibung>XTA 2 ist ein vom IT-Planungsrat empfohlener Interoperabilitätsstandard. Das Modul XTA
+                    Webservice vereinheitlicht die funktionalen Schnittstellen zwischen Fach- und Transportverfahren, um
+                    die Übermittlung von Nachrichten – also den Transport – zu standardisieren. Das Modul XTA Service
+                    Profile ist das Instrument zur einheitlichen Definition und Konfiguration der regelgeleiteten
+                    Anforderungen an den Transport. Weitere Information können von der Webseite der KoSIT abgerufen
+                    werden.
+                </beschreibung>
+            </standard>
+            <versionStandard>
+                <status>Final – 26. Juli 2024</status>
+                <version>5.1.1</version>
+                <beschreibung>Das Modul "XTA Webservice" wurde umfangreich überarbeitet und dessen Bestandteile stärker
+                    differenziert: Es wurden Erweiterungsmechanismen eingeführt und viele Funktionen in eigene
+                    Erweiterungen verschoben. Durch die Erweiterungsmöglichkeiten wurde ein Kern des Moduls erschaffen,
+                    der eine einfachere und langfristig stabile Implementierung der Kernfunktionen erlaubt. Die Module
+                    "XTA Webservice" und "XTA Service Profile" wurden technisch besser voreinander getrennt und die
+                    gesamte Spezifikation wurde textuell überarbeitet. Weitere Information können von der Webseite der
+                    KoSIT abgerufen werden.
+                </beschreibung>
+                <versionXOEVProfil>1.5.1</versionXOEVProfil>
+                <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                <versionXGenerator>3.1.1</versionXGenerator>
+                <versionModellierungswerkzeug>19.0 SP4</versionModellierungswerkzeug>
+                <nameModellierungswerkzeug>MagicDraw</nameModellierungswerkzeug>
+            </versionStandard>
+        </xsd:appinfo>
+    </documentation>
+    <wsp:Policy wsu:Id="TransportBindingPolicy">
+        <wsp:All>
+            <sp:TransportBinding>
+                <wsp:Policy>
+                    <sp:TransportToken>
+                        <wsp:Policy>
+                            <sp:HttpsToken/>
+                        </wsp:Policy>
+                    </sp:TransportToken>
+                    <sp:AlgorithmSuite>
+                        <wsp:Policy>
+                            <sp:Basic256/>
+                        </wsp:Policy>
+                    </sp:AlgorithmSuite>
+                </wsp:Policy>
+            </sp:TransportBinding>
+            <wsam:Addressing wsp:Optional="false">
+                <wsp:Policy>
+                    <wsam:AnonymousResponses/>
+                </wsp:Policy>
+            </wsam:Addressing>
+            <wspmtom:OptimizedMimeSerialization/>
+        </wsp:All>
+    </wsp:Policy>
+    <!-- Datenstrukturen -->
+    <types>
+        <xsd:schema targetNamespace="https://xoev.de/transport/xta/core/3.1.1">
+            <xsd:include schemaLocation="../xsd/XTA-Webservice.xsd"/>
+            <xsd:include schemaLocation="../xsd/XTA-Webservice-Exceptions.xsd"/>
+        </xsd:schema>
+    </types>
+    <!-- Nachrichten -->
+    <message name="CloseRequest">
+        <part name="MessageFetch" element="xta-core:MessageFetch"/>
+    </message>
+    <message name="CreateMessageIDResponse">
+        <part name="XTAMessageID" element="xta-core:XTAMessageID"/>
+    </message>
+    <message name="DeliverMessageRequest">
+        <part name="ContentContainer" element="xta-core:ContentContainer"/>
+    </message>
+    <message name="DeliverMessageResponse">
+        <part name="ContentContainerReply" element="xta-core:ContentContainerReply"/>
+    </message>
+    <message name="EmptyBody"/>
+    <message name="ExternalServiceUnavailableException">
+        <part name="externalServiceUnavailableException"
+              element="xta-core:ExternalServiceUnavailableException"/>
+    </message>
+    <message name="GetMessageRequest">
+        <part name="MessageFetch" element="xta-core:MessageFetch"/>
+    </message>
+    <message name="GetMessageResponse">
+        <part name="ContentContainer" element="xta-core:ContentContainer"/>
+    </message>
+    <message name="GetStatusListRequest">
+        <part name="MessageSelector" element="xta-core:MessageSelector"/>
+    </message>
+    <message name="GetStatusListResponse">
+        <part name="MessageStatusList" element="xta-core:MessageStatusList"/>
+    </message>
+    <message name="GetTransportReportRequest">
+        <part name="XTAMessageID" element="xta-core:XTAMessageID"/>
+    </message>
+    <message name="GetTransportReportResponse">
+        <part name="ReportResult" element="xta-core:ReportResult"/>
+    </message>
+    <message name="InvalidMessageIDException">
+        <part name="invalidMessageIDException"
+              element="xta-core:InvalidMessageIDException"/>
+    </message>
+    <message name="LookupServiceRequest">
+        <part name="LookupQuery" element="xta-core:LookupQuery"/>
+    </message>
+    <message name="LookupServiceResponse">
+        <part name="LookupStatus" element="xta-core:LookupStatus"/>
+    </message>
+    <message name="MessageBoxStatus">
+        <part name="MessageBoxStatus" element="xta-core:MessageBoxStatus"/>
+    </message>
+    <message name="MessageSchemaViolationException">
+        <part name="messageSchemaViolationException"
+              element="xta-core:MessageSchemaViolationException"/>
+    </message>
+    <message name="MessageVirusDetectionException">
+        <part name="messageVirusDetectionException"
+              element="xta-core:MessageVirusDetectionException"/>
+    </message>
+    <message name="NotImplementedException">
+        <part name="notImplementedException"
+              element="xta-core:NotImplementedException"/>
+    </message>
+    <message name="ParameterIsNotValidException">
+        <part name="parameterIsNotValidException"
+              element="xta-core:ParameterIsNotValidException"/>
+    </message>
+    <message name="ParameterNotSupportedException">
+        <part name="parameterNotSupportedException"
+              element="xta-core:ParameterNotSupportedException"/>
+    </message>
+    <message name="PermissionDeniedException">
+        <part name="permissionDeniedException"
+              element="xta-core:PermissionDeniedException"/>
+    </message>
+    <message name="SendMessageRequest">
+        <part name="ContentContainer" element="xta-core:ContentContainer"/>
+    </message>
+    <message name="SendMessageSyncRequest">
+        <part name="ContentContainer" element="xta-core:ContentContainer"/>
+    </message>
+    <message name="SendMessageSyncResponse">
+        <part name="ContentContainerReply" element="xta-core:ContentContainerReply"/>
+    </message>
+    <message name="SyncAsyncException">
+        <part name="syncAsyncException" element="xta-core:SyncAsyncException"/>
+    </message>
+    <message name="TechnicalProblemException">
+        <part name="technicalProblem" element="xta-core:TechnicalProblemException"/>
+    </message>
+    <message name="UnsupportedExtensionException">
+        <part name="unsupportedExtensionException"
+              element="xta-core:UnsupportedExtensionException"/>
+    </message>
+    <message name="XTAHeader">
+        <part name="MessageBoxStatus" element="xta-core:MessageBoxStatus"/>
+        <part name="MessageMetaData" element="xta-core:MessageMetaData"/>
+        <part name="MessageMetaDataReply" element="xta-core:MessageMetaDataReply"/>
+        <part name="Party" element="xta-core:Party"/>
+    </message>
+    <!-- Interfaces -->
+    <portType name="core.reader">
+        <documentation>In diesem Schnittstellentyp sind alle Methoden zusammengefasst, die vom Leser dem Empfänger im
+            synchronen Kommunikationsszenario zur Verfügung gestellt werden müssen.
+        </documentation>
+        <operation name="deliverMessage">
+            <documentation>Mit der Methode deliverMessage leitet der Empfänger eine fachliche Antwort (neue
+                Fachnachricht) an den Leser weiter. Die Antwort des Lesers wird an den Empfänger zurückgegeben.
+            </documentation>
+            <input name="deliverMessageRequest"
+                   message="xta-core:DeliverMessageRequest"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.reader/deliverMessage">
+                <documentation>Hiermit muss die Fachnachricht und eine beliebige Anzahl von Anhängen (Attachments)
+                    übertragen werden.
+                </documentation>
+            </input>
+            <output name="deliverMessageResponse"
+                    message="xta-core:DeliverMessageResponse"
+                    wsam:Action="https://xoev.de/transport/xta/core/core.reader/deliverMessageResponse">
+                <documentation>Hiermit kann die fachliche Antwort (neue Fachnachricht) des Lesers übertragen werden.
+                    Dabei sind folgende Fälle zu unterscheiden: Falls im Fachszenario eine synchrone Antwort gefordert
+                    wurde, befindet sich diese im Kindelement ContentContainer. In der Header-Struktur
+                    MessageMetaDataReply muss das Kindelement MessageMetaData enthalten sein. Falls im Fachszenario
+                    keine synchrone Antwort gefordert wird, bleibt die Struktur ContentContainerReply leer, d.h. sie
+                    enthält kein Kindelement ContentContainer. Auch die Header-Struktur MessageMetaDataReply bleibt
+                    leer.
+                </documentation>
+            </output>
+            <fault name="MessageSchemaViolationException"
+                   message="xta-core:MessageSchemaViolationException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.reader/MessageSchemaViolationException">
+                <documentation>Die Exception signalisiert eine nicht schemakonforme Fachnachricht.</documentation>
+            </fault>
+            <fault name="MessageVirusDetectionException"
+                   message="xta-core:MessageVirusDetectionException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.reader/MessageVirusDetectionException">
+                <documentation>Die Exception signalisiert schadhaften Code in einer der übergebenen Strukturen
+                    (Fachnachricht oder Transportauftrag).
+                </documentation>
+            </fault>
+            <fault name="NotImplementedException"
+                   message="xta-core:NotImplementedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.reader/NotImplementedException">
+                <documentation>Die Exception signalisiert, dass diese Methode nicht implementiert wurde.</documentation>
+            </fault>
+            <fault name="ParameterIsNotValidException"
+                   message="xta-core:ParameterIsNotValidException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.reader/ParameterIsNotValidException">
+                <documentation>Die Exception signalisiert fehlende oder fehlerhafte Eingabeparameter.</documentation>
+            </fault>
+            <fault name="ParameterNotSupportedException"
+                   message="xta-core:ParameterNotSupportedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.reader/ParameterNotSupportedException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit spezifikationsgemäßen, aber von
+                    der Implementierung nicht unterstützen Parametern.
+                </documentation>
+            </fault>
+            <fault name="PermissionDeniedException"
+                   message="xta-core:PermissionDeniedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.reader/PermissionDeniedException">
+                <documentation>Die Exception signalisiert einen Autorisierungsfehler.</documentation>
+            </fault>
+            <fault name="SyncAsyncException"
+                   message="xta-core:SyncAsyncException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.reader/SyncAsyncException">
+                <documentation>Die Exception signalisiert, dass eine Fachnachricht, die nur für die synchrone
+                    Weiterleitung gültig ist und für die asynchrone Weiterleitung übergeben wurde oder eine
+                    Fachnachricht für die synchrone Weiterleitung übergeben wurde und nur für die asynchrone
+                    Weiterleitung gültig ist.
+                </documentation>
+            </fault>
+            <fault name="TechnicalProblemException"
+                   message="xta-core:TechnicalProblemException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.reader/TechnicalProblemException">
+                <documentation>Die Exception signalisiert einen allgemeinen Fehler während der Verarbeitung.
+                </documentation>
+            </fault>
+            <fault name="UnsupportedExtensionException"
+                   message="xta-core:UnsupportedExtensionException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.reader/UnsupportedExtensionException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit nicht unterstützten Erweiterungen
+                    der Kernparameter (Extensions/Extension).
+                </documentation>
+            </fault>
+        </operation>
+    </portType>
+    <portType name="core.recipient">
+        <documentation>In diesem Schnittstellentyp sind alle Methoden zusammengefasst, die vom Empfänger dem Leser im
+            asynchronen Kommunikationsszenario zur Verfügung gestellt werden müssen.
+        </documentation>
+        <operation name="close">
+            <documentation>Mit dem Aufruf der Methode close signalisiert der Leser, dass die entsprechende Fachnachricht
+                ordnungsgemäß abgeholt wurde. Die Nachricht gilt als erfolgreich zugestellt.
+            </documentation>
+            <input name="closeRequest"
+                   message="xta-core:CloseRequest"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/close">
+                <documentation>Hiermit muss die XTAMessageID des zur Fachnachricht gehörenden Transportauftrags
+                    angegeben werden. Sobald der erfolgreiche Abruf durch den Leser bestätigt wird, setzt der Empfänger
+                    den Zeitstempel Reception in MessageMetaData auf seine Systemzeit.
+                </documentation>
+            </input>
+            <output name="closeResponse"
+                    message="xta-core:EmptyBody"
+                    wsam:Action="https://xoev.de/transport/xta/core/core.recipient/closeResponse">
+                <documentation>Keine Body-Informationen.</documentation>
+            </output>
+            <fault name="InvalidMessageIDException"
+                   message="xta-core:InvalidMessageIDException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/InvalidMessageIDException">
+                <documentation>Die Exception signalisiert, dass zu der angegebenen XTAMessageID keine
+                    Protokollinformationen für die Autorisierung vorliegen.
+                </documentation>
+            </fault>
+            <fault name="NotImplementedException"
+                   message="xta-core:NotImplementedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/NotImplementedException">
+                <documentation>Die Exception signalisiert, dass diese Methode nicht implementiert wurde.</documentation>
+            </fault>
+            <fault name="ParameterIsNotValidException"
+                   message="xta-core:ParameterIsNotValidException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/ParameterIsNotValidException">
+                <documentation>Die Exception signalisiert fehlende oder fehlerhafte Eingabeparameter.</documentation>
+            </fault>
+            <fault name="ParameterNotSupportedException"
+                   message="xta-core:ParameterNotSupportedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/ParameterNotSupportedException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit spezifikationsgemäßen, aber von
+                    der Implementierung nicht unterstützen Parametern.
+                </documentation>
+            </fault>
+            <fault name="PermissionDeniedException"
+                   message="xta-core:PermissionDeniedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/PermissionDeniedException">
+                <documentation>Die Exception signalisiert einen Autorisierungsfehler.</documentation>
+            </fault>
+            <fault name="TechnicalProblemException"
+                   message="xta-core:TechnicalProblemException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/TechnicalProblemException">
+                <documentation>Die Exception signalisiert einen allgemeinen Fehler während der Verarbeitung.
+                </documentation>
+            </fault>
+            <fault name="UnsupportedExtensionException"
+                   message="xta-core:UnsupportedExtensionException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/UnsupportedExtensionException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit nicht unterstützten Erweiterungen
+                    der Kernparameter (Extensions/Extension).
+                </documentation>
+            </fault>
+        </operation>
+        <operation name="getMessage">
+            <documentation>Mit dieser Methode wird die Abholung einer Nachricht beim Empfänger anhand einer XTAMessageID
+                beauftragt. In einer konformen Implementierung ist es vorgesehen, dass zum Abruf der Fachnachricht die
+                XTAMessageID aus MessageStatusList (Output der Methode getStatusList) im GetMessageRequest übergeben
+                wird. Andere Möglichkeiten des Abrufs können innerhalb eigenständiger Erweiterungen beschrieben und
+                zwischen den Kommunikationspartnern abgestimmt verwendet werden.
+            </documentation>
+            <input name="getMessageRequest"
+                   message="xta-core:GetMessageRequest"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/getMessage">
+                <documentation>Hiermit muss die XTAMessageID des zur Fachnachricht gehörenden Transportauftrags
+                    angegeben werden.
+                </documentation>
+            </input>
+            <output name="getMessageResponse"
+                    message="xta-core:GetMessageResponse"
+                    wsam:Action="https://xoev.de/transport/xta/core/core.recipient/getMessageResponse">
+                <documentation>Hiermit wird die Fachnachricht mit zugehörigen Metainformationen übertragen. Hierbei ist
+                    zu beachten, dass für eine abgeholte Fachnachricht der Zeitstempel Reception erst gesetzt wird,
+                    nachdem der Abholauftrag durch den Leser mit der Methode close geschlossen wurde.
+                </documentation>
+            </output>
+            <fault name="InvalidMessageIDException"
+                   message="xta-core:InvalidMessageIDException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/InvalidMessageIDException">
+                <documentation>Die Exception signalisiert, dass zu der angegebenen XTAMessageID keine
+                    Protokollinformationen für die Autorisierung vorliegen.
+                </documentation>
+            </fault>
+            <fault name="NotImplementedException"
+                   message="xta-core:NotImplementedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/NotImplementedException">
+                <documentation>Die Exception signalisiert, dass diese Methode nicht implementiert wurde.</documentation>
+            </fault>
+            <fault name="ParameterIsNotValidException"
+                   message="xta-core:ParameterIsNotValidException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/ParameterIsNotValidException">
+                <documentation>Die Exception signalisiert fehlende oder fehlerhafte Eingabeparameter.</documentation>
+            </fault>
+            <fault name="ParameterNotSupportedException"
+                   message="xta-core:ParameterNotSupportedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/ParameterNotSupportedException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit spezifikationsgemäßen, aber von
+                    der Implementierung nicht unterstützen Parametern.
+                </documentation>
+            </fault>
+            <fault name="PermissionDeniedException"
+                   message="xta-core:PermissionDeniedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/PermissionDeniedException">
+                <documentation>Die Exception signalisiert einen Autorisierungsfehler.</documentation>
+            </fault>
+            <fault name="TechnicalProblemException"
+                   message="xta-core:TechnicalProblemException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/TechnicalProblemException">
+                <documentation>Die Exception signalisiert einen allgemeinen Fehler während der Verarbeitung.
+                </documentation>
+            </fault>
+            <fault name="UnsupportedExtensionException"
+                   message="xta-core:UnsupportedExtensionException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/UnsupportedExtensionException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit nicht unterstützten Erweiterungen
+                    der Kernparameter (Extensions/Extension).
+                </documentation>
+            </fault>
+        </operation>
+        <operation name="getStatusList">
+            <documentation>Die Methode liefert eine Liste mit Informationen über die beim Empfänger den
+                Selektionskriterien entsprechenden vorliegenden Fachnachrichten. Neben den Selektionskriterien für die
+                Filterung der Nachrichten muss auch die maximale Länge der Ergebnisliste angegeben werden. Die
+                Reihenfolge der zurückgegebenen Nachrichten wird mittels dem Eingangszeitpunkt festgelegt (nach
+                Delivery, siehe ).
+            </documentation>
+            <input name="getStatusListRequest"
+                   message="xta-core:GetStatusListRequest"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/getStatusList">
+                <documentation>Hiermit wird die Auswahl- oder Filterung von Fachnachrichten aus einem Postfach
+                    vorgenommen.
+                </documentation>
+            </input>
+            <output name="getStatusListResponse"
+                    message="xta-core:GetStatusListResponse"
+                    wsam:Action="https://xoev.de/transport/xta/core/core.recipient/getStatusListResponse">
+                <documentation>Hiermit wird die Ergebnisliste unter Berücksichtigung der gesetzten Auswahl- oder
+                    Filterkritierien übertragen. Liegen für die Auswahlkriterien keine Fachnachrichten vor, ist die
+                    Liste leer.
+                </documentation>
+            </output>
+            <fault name="NotImplementedException"
+                   message="xta-core:NotImplementedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/NotImplementedException">
+                <documentation>Die Exception signalisiert, dass diese Methode nicht implementiert wurde.</documentation>
+            </fault>
+            <fault name="ParameterNotSupportedException"
+                   message="xta-core:ParameterNotSupportedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/ParameterNotSupportedException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit spezifikationsgemäßen, aber von
+                    der Implementierung nicht unterstützen Parametern.
+                </documentation>
+            </fault>
+            <fault name="PermissionDeniedException"
+                   message="xta-core:PermissionDeniedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/PermissionDeniedException">
+                <documentation>Die Exception signalisiert einen Autorisierungsfehler.</documentation>
+            </fault>
+            <fault name="TechnicalProblemException"
+                   message="xta-core:TechnicalProblemException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/TechnicalProblemException">
+                <documentation>Die Exception signalisiert einen allgemeinen Fehler während der Verarbeitung.
+                </documentation>
+            </fault>
+            <fault name="UnsupportedExtensionException"
+                   message="xta-core:UnsupportedExtensionException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.recipient/UnsupportedExtensionException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit nicht unterstützten Erweiterungen
+                    der Kernparameter (Extensions/Extension).
+                </documentation>
+            </fault>
+        </operation>
+    </portType>
+    <portType name="core.sender">
+        <documentation>In diesem Schnittstellentyp sind alle Methoden zusammengefasst, die vom Sender dem Author im
+            synchronen Kommunikationsszenario zur Verfügung gestellt werden müssen.
+        </documentation>
+        <operation name="createMessageID">
+            <documentation>Die Methode createMessageID liefert eine eindeutige XTAMessageID mittels der ein
+                Transportauftrag eindeutig identifiziert wird. Der Autor lässt die XTAMessageID vor der Beauftragung des
+                Transports durch den Sender erstellen, um sie dann für den Transport dem Sender zu übergeben.
+            </documentation>
+            <input name="createMessageIDRequest"
+                   message="xta-core:EmptyBody"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/createMessageID">
+                <documentation>Keine Body-Informationen.</documentation>
+            </input>
+            <output name="createMessageIDResponse"
+                    message="xta-core:CreateMessageIDResponse"
+                    wsam:Action="https://xoev.de/transport/xta/core/core.sender/createMessageIDResponse">
+                <documentation>Hiermit muss die eindeutige XTAMessageID des Transportauftrags angegeben werden.
+                </documentation>
+            </output>
+            <fault name="NotImplementedException"
+                   message="xta-core:NotImplementedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/NotImplementedException">
+                <documentation>Die Exception signalisiert, dass diese Methode nicht implementiert wurde.</documentation>
+            </fault>
+            <fault name="ParameterNotSupportedException"
+                   message="xta-core:ParameterNotSupportedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/ParameterNotSupportedException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit spezifikationsgemäßen, aber von
+                    der Implementierung nicht unterstützen Parametern.
+                </documentation>
+            </fault>
+            <fault name="PermissionDeniedException"
+                   message="xta-core:PermissionDeniedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/PermissionDeniedException">
+                <documentation>Die Exception signalisiert einen Autorisierungsfehler.</documentation>
+            </fault>
+            <fault name="TechnicalProblemException"
+                   message="xta-core:TechnicalProblemException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/TechnicalProblemException">
+                <documentation>Die Exception signalisiert einen allgemeinen Fehler während der Verarbeitung.
+                </documentation>
+            </fault>
+            <fault name="UnsupportedExtensionException"
+                   message="xta-core:UnsupportedExtensionException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/UnsupportedExtensionException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit nicht unterstützten Erweiterungen
+                    der Kernparameter (Extensions/Extension).
+                </documentation>
+            </fault>
+        </operation>
+        <operation name="lookupService">
+            <documentation>Zur Formulierung eines Transportauftrags wird die Adressinformation des Lesers benötigt. Die
+                Ermittlung der technischen Adresse und wenn notwendig, weiterer für den Versand notwendige Informationen
+                ist Aufgabe dieser Methode. Zusätzlich wird mit der Methode abgefragt, ob der Leser grundsätzlich einen
+                Dienst elektronisch anbietet. Die Methode greift dabei auf einen Verzeichnisdienst zurück, der diese
+                Informationen enthält. In der Ausprägung DVDV wird die Adresse des zuständigen Intermediärs inklusive
+                benötigter öffentlicher Schlüssel zusammen mit der Auskunft, ob der Leser einen bestimmten Dienst
+                anbietet, zurückgegeben.
+            </documentation>
+            <input name="lookupServiceRequest"
+                   message="xta-core:LookupServiceRequest"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/lookupService">
+                <documentation>Hiermit müssen die angebotenen Dienste ausgewählt werden.</documentation>
+            </input>
+            <output name="lookupServiceResponse"
+                    message="xta-core:LookupServiceResponse"
+                    wsam:Action="https://xoev.de/transport/xta/core/core.sender/lookupServiceResponse">
+                <documentation>Hiermit müssen Informationen zur Verfügbarkeit der angefragten Dienste und für die
+                    Kommunikation notwendige Zusatzinformationen angegeben werden.
+                </documentation>
+            </output>
+            <fault name="ExternalServiceUnavailableException"
+                   message="xta-core:ExternalServiceUnavailableException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/ExternalServiceUnavailableException">
+                <documentation>Die Exception signalisiert einen Fehler aufgrund von Nichterreichbarkeit eines externen
+                    Dienstes (z.B. Verzeichnisdienste und PKI-Systeme).
+                </documentation>
+            </fault>
+            <fault name="NotImplementedException"
+                   message="xta-core:NotImplementedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/NotImplementedException">
+                <documentation>Die Exception signalisiert, dass diese Methode nicht implementiert wurde.</documentation>
+            </fault>
+            <fault name="ParameterIsNotValidException"
+                   message="xta-core:ParameterIsNotValidException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/ParameterIsNotValidException">
+                <documentation>Die Exception signalisiert fehlende oder fehlerhafte Eingabeparameter.</documentation>
+            </fault>
+            <fault name="ParameterNotSupportedException"
+                   message="xta-core:ParameterNotSupportedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/ParameterNotSupportedException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit spezifikationsgemäßen, aber von
+                    der Implementierung nicht unterstützen Parametern.
+                </documentation>
+            </fault>
+            <fault name="PermissionDeniedException"
+                   message="xta-core:PermissionDeniedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/PermissionDeniedException">
+                <documentation>Die Exception signalisiert einen Autorisierungsfehler.</documentation>
+            </fault>
+            <fault name="TechnicalProblemException"
+                   message="xta-core:TechnicalProblemException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/TechnicalProblemException">
+                <documentation>Die Exception signalisiert einen allgemeinen Fehler während der Verarbeitung.
+                </documentation>
+            </fault>
+            <fault name="UnsupportedExtensionException"
+                   message="xta-core:UnsupportedExtensionException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/UnsupportedExtensionException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit nicht unterstützten Erweiterungen
+                    der Kernparameter (Extensions/Extension).
+                </documentation>
+            </fault>
+        </operation>
+        <operation name="sendMessage">
+            <documentation>Mit dieser Methode wird ein Transportauftrag für den asynchronen Versand einer Fachnachricht
+                erteilt.
+            </documentation>
+            <input name="sendMessageRequest"
+                   message="xta-core:SendMessageRequest"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/sendMessage">
+                <documentation>Hiermit muss die Fachnachricht und eine beliebige Anzahl von Anhängen (Attachments)
+                    übertragen werden.
+                </documentation>
+            </input>
+            <output name="sendMessageResponse"
+                    message="xta-core:EmptyBody"
+                    wsam:Action="https://xoev.de/transport/xta/core/core.sender/sendMessageResponse">
+                <documentation>Keine Body-Informationen.</documentation>
+            </output>
+            <fault name="MessageSchemaViolationException"
+                   message="xta-core:MessageSchemaViolationException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/MessageSchemaViolationException">
+                <documentation>Die Exception signalisiert eine nicht schemakonforme Fachnachricht.</documentation>
+            </fault>
+            <fault name="MessageVirusDetectionException"
+                   message="xta-core:MessageVirusDetectionException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/MessageVirusDetectionException">
+                <documentation>Die Exception signalisiert schadhaften Code in einer der übergebenen Strukturen
+                    (Fachnachricht oder Transportauftrag).
+                </documentation>
+            </fault>
+            <fault name="NotImplementedException"
+                   message="xta-core:NotImplementedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/NotImplementedException">
+                <documentation>Die Exception signalisiert, dass diese Methode nicht implementiert wurde.</documentation>
+            </fault>
+            <fault name="ParameterIsNotValidException"
+                   message="xta-core:ParameterIsNotValidException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/ParameterIsNotValidException">
+                <documentation>Die Exception signalisiert fehlende oder fehlerhafte Eingabeparameter.</documentation>
+            </fault>
+            <fault name="ParameterNotSupportedException"
+                   message="xta-core:ParameterNotSupportedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/ParameterNotSupportedException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit spezifikationsgemäßen, aber von
+                    der Implementierung nicht unterstützen Parametern.
+                </documentation>
+            </fault>
+            <fault name="PermissionDeniedException"
+                   message="xta-core:PermissionDeniedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/PermissionDeniedException">
+                <documentation>Die Exception signalisiert einen Autorisierungsfehler.</documentation>
+            </fault>
+            <fault name="SyncAsyncException"
+                   message="xta-core:SyncAsyncException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/SyncAsyncException">
+                <documentation>Die Exception signalisiert, dass eine Fachnachricht, die nur für die synchrone
+                    Weiterleitung gültig ist und für die asynchrone Weiterleitung übergeben wurde oder eine
+                    Fachnachricht für die synchrone Weiterleitung übergeben wurde und nur für die asynchrone
+                    Weiterleitung gültig ist.
+                </documentation>
+            </fault>
+            <fault name="TechnicalProblemException"
+                   message="xta-core:TechnicalProblemException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/TechnicalProblemException">
+                <documentation>Die Exception signalisiert einen allgemeinen Fehler während der Verarbeitung.
+                </documentation>
+            </fault>
+            <fault name="UnsupportedExtensionException"
+                   message="xta-core:UnsupportedExtensionException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/UnsupportedExtensionException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit nicht unterstützten Erweiterungen
+                    der Kernparameter (Extensions/Extension).
+                </documentation>
+            </fault>
+        </operation>
+        <operation name="sendMessageSync">
+            <documentation>Mit dieser Methode wird ein Transportauftrag für den synchronen Versand einer Fachnachricht
+                erteilt. Die Methode übermittelt die Fachnachricht und liefert die eingegangene fachliche Antwort (neue
+                Fachnachricht). Die Methode wartet solange, bis die Antwort vom Adressaten zurückgekommen ist. Die
+                Methode realisiert zwei unterschiedliche Kommunikationsszenarien. In Abhängigkeit der Parameter liefert
+                sendMessageSync eine fachliche Antwort oder nicht.
+            </documentation>
+            <input name="sendMessageSyncRequest"
+                   message="xta-core:SendMessageSyncRequest"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/sendMessageSync">
+                <documentation>Hiermit muss die Fachnachricht und eine beliebige Anzahl von Anhängen (Attachments)
+                    übertragen werden.
+                </documentation>
+            </input>
+            <output name="sendMessageSyncResponse"
+                    message="xta-core:SendMessageSyncResponse"
+                    wsam:Action="https://xoev.de/transport/xta/core/core.sender/sendMessageSyncResponse">
+                <documentation>Hiermit kann die fachliche Antwort (neue Fachnachricht) des Lesers übertragen werden.
+                    Dabei sind folgende Fälle zu unterscheiden: Falls im Fachszenario eine synchrone Antwort gefordert
+                    wurde, befindet sich diese im Kindelement ContentContainer. In der Header-Struktur
+                    MessageMetaDataReply muss das Kindelement MessageMetaData enthalten sein. Falls im Fachszenario
+                    keine synchrone Antwort gefordert wird, bleibt die Struktur ContentContainerReply leer, d.h. sie
+                    enthält kein Kindelement ContentContainer. Auch die Header-Struktur MessageMetaDataReply bleibt
+                    leer.
+                </documentation>
+            </output>
+            <fault name="ExternalServiceUnavailableException"
+                   message="xta-core:ExternalServiceUnavailableException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/ExternalServiceUnavailableException">
+                <documentation>Die Exception signalisiert einen Fehler aufgrund von Nichterreichbarkeit eines externen
+                    Dienstes (z.B. Verzeichnisdienste und PKI-Systeme).
+                </documentation>
+            </fault>
+            <fault name="MessageSchemaViolationException"
+                   message="xta-core:MessageSchemaViolationException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/MessageSchemaViolationException">
+                <documentation>Die Exception signalisiert eine nicht schemakonforme Fachnachricht.</documentation>
+            </fault>
+            <fault name="MessageVirusDetectionException"
+                   message="xta-core:MessageVirusDetectionException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/MessageVirusDetectionException">
+                <documentation>Die Exception signalisiert schadhaften Code in einer der übergebenen Strukturen
+                    (Fachnachricht oder Transportauftrag).
+                </documentation>
+            </fault>
+            <fault name="NotImplementedException"
+                   message="xta-core:NotImplementedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/NotImplementedException">
+                <documentation>Die Exception signalisiert, dass diese Methode nicht implementiert wurde.</documentation>
+            </fault>
+            <fault name="ParameterIsNotValidException"
+                   message="xta-core:ParameterIsNotValidException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/ParameterIsNotValidException">
+                <documentation>Die Exception signalisiert fehlende oder fehlerhafte Eingabeparameter.</documentation>
+            </fault>
+            <fault name="ParameterNotSupportedException"
+                   message="xta-core:ParameterNotSupportedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/ParameterNotSupportedException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit spezifikationsgemäßen, aber von
+                    der Implementierung nicht unterstützen Parametern.
+                </documentation>
+            </fault>
+            <fault name="PermissionDeniedException"
+                   message="xta-core:PermissionDeniedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/PermissionDeniedException">
+                <documentation>Die Exception signalisiert einen Autorisierungsfehler.</documentation>
+            </fault>
+            <fault name="SyncAsyncException"
+                   message="xta-core:SyncAsyncException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/SyncAsyncException">
+                <documentation>Die Exception signalisiert, dass eine Fachnachricht, die nur für die synchrone
+                    Weiterleitung gültig ist und für die asynchrone Weiterleitung übergeben wurde oder eine
+                    Fachnachricht für die synchrone Weiterleitung übergeben wurde und nur für die asynchrone
+                    Weiterleitung gültig ist.
+                </documentation>
+            </fault>
+            <fault name="TechnicalProblemException"
+                   message="xta-core:TechnicalProblemException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/TechnicalProblemException">
+                <documentation>Die Exception signalisiert einen allgemeinen Fehler während der Verarbeitung.
+                </documentation>
+            </fault>
+            <fault name="UnsupportedExtensionException"
+                   message="xta-core:UnsupportedExtensionException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.sender/UnsupportedExtensionException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit nicht unterstützten Erweiterungen
+                    der Kernparameter (Extensions/Extension).
+                </documentation>
+            </fault>
+        </operation>
+    </portType>
+    <portType name="core.transport.base">
+        <documentation>In diesem Schnittstellentyp sind alle Methoden zusammengefasst, die vom Sender dem Author und vom
+            Empfänger dem Leser zur Verfügung gestellt werden müssen.
+        </documentation>
+        <operation name="checkAccountActive">
+            <documentation>Die Methode checkAccoutActive prüft, ob der Webservice verfügbar ist und ob der angegebene
+                Account eingerichtet ist. Kehrt die Methode ohne Fehler (Exception) zurück, ist der XTA-WS erreichbar
+                und der angegebene Account eingerichtet und aktiviert.
+            </documentation>
+            <input name="checkAccountActiveRequest"
+                   message="xta-core:EmptyBody"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/checkAccountActive">
+                <documentation>Keine Body-Informationen.</documentation>
+            </input>
+            <output name="checkAccountActiveResponse"
+                    message="xta-core:EmptyBody"
+                    wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/checkAccountActiveResponse">
+                <documentation>Keine Body-Informationen.</documentation>
+            </output>
+            <fault name="NotImplementedException"
+                   message="xta-core:NotImplementedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/NotImplementedException">
+                <documentation>Die Exception signalisiert, dass diese Methode nicht implementiert wurde.</documentation>
+            </fault>
+            <fault name="ParameterNotSupportedException"
+                   message="xta-core:ParameterNotSupportedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/ParameterNotSupportedException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit spezifikationsgemäßen, aber von
+                    der Implementierung nicht unterstützen Parametern.
+                </documentation>
+            </fault>
+            <fault name="PermissionDeniedException"
+                   message="xta-core:PermissionDeniedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/PermissionDeniedException">
+                <documentation>Die Exception signalisiert einen Autorisierungsfehler.</documentation>
+            </fault>
+            <fault name="TechnicalProblemException"
+                   message="xta-core:TechnicalProblemException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/TechnicalProblemException">
+                <documentation>Die Exception signalisiert einen allgemeinen Fehler während der Verarbeitung.
+                </documentation>
+            </fault>
+            <fault name="UnsupportedExtensionException"
+                   message="xta-core:UnsupportedExtensionException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/UnsupportedExtensionException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit nicht unterstützten Erweiterungen
+                    der Kernparameter (Extensions/Extension).
+                </documentation>
+            </fault>
+        </operation>
+        <operation name="getTransportReport">
+            <documentation>Der Verlauf der Bearbeitung von Transportaufträgen wird in einem Transportbericht (siehe
+                TransportReportType) erfasst. Ein Transportbericht enthält alle relevanten Informationen zum
+                ausgeführten Nachrichtentransport und kann zum Beispiel als Nachweis für eine Zustellung verwendet
+                werden. Vor Vollendung des Nachrichtentransports wird der jeweils zum Zeitpunkt des Abrufs aktuelle
+                Bearbeitungsstand zurückgegeben.
+            </documentation>
+            <input name="getTransportReportRequest"
+                   message="xta-core:GetTransportReportRequest"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/getTransportReport">
+                <documentation>Hiermit muss die eindeutige XTAMessageID des Transportauftrags angegeben werden, zu dem
+                    ein Bericht abgerufen werden soll.
+                </documentation>
+            </input>
+            <output name="getTransportReportResponse"
+                    message="xta-core:GetTransportReportResponse"
+                    wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/getTransportReportResponse">
+                <documentation>Hiermit muss der zum Transportauftrag zugehörige, angeforderte Transportbericht
+                    übertragen werden.
+                </documentation>
+            </output>
+            <fault name="InvalidMessageIDException"
+                   message="xta-core:InvalidMessageIDException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/InvalidMessageIDException">
+                <documentation>Die Exception signalisiert, dass zu der angegebenen XTAMessageID keine
+                    Protokollinformationen für die Autorisierung vorliegen.
+                </documentation>
+            </fault>
+            <fault name="NotImplementedException"
+                   message="xta-core:NotImplementedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/NotImplementedException">
+                <documentation>Die Exception signalisiert, dass diese Methode nicht implementiert wurde.</documentation>
+            </fault>
+            <fault name="ParameterNotSupportedException"
+                   message="xta-core:ParameterNotSupportedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/ParameterNotSupportedException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit spezifikationsgemäßen, aber von
+                    der Implementierung nicht unterstützen Parametern.
+                </documentation>
+            </fault>
+            <fault name="PermissionDeniedException"
+                   message="xta-core:PermissionDeniedException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/PermissionDeniedException">
+                <documentation>Die Exception signalisiert einen Autorisierungsfehler.</documentation>
+            </fault>
+            <fault name="TechnicalProblemException"
+                   message="xta-core:TechnicalProblemException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/TechnicalProblemException">
+                <documentation>Die Exception signalisiert einen allgemeinen Fehler während der Verarbeitung.
+                </documentation>
+            </fault>
+            <fault name="UnsupportedExtensionException"
+                   message="xta-core:UnsupportedExtensionException"
+                   wsam:Action="https://xoev.de/transport/xta/core/core.transport.base/UnsupportedExtensionException">
+                <documentation>Die Exception signalisiert den Aufruf einer Methode mit nicht unterstützten Erweiterungen
+                    der Kernparameter (Extensions/Extension).
+                </documentation>
+            </fault>
+        </operation>
+    </portType>
+    <!-- Bindung von Protokoll und Interface -->
+    <binding name="readerHttpsBinding" type="xta-core:core.reader">
+        <documentation>https binding for the senderPort</documentation>
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsp:PolicyReference URI="#TransportBindingPolicy"/>
+        <operation name="deliverMessage">
+            <soap:operation soapActionRequired="true"
+                            soapAction="https://xoev.de/transport/xta/core/core.reader/deliverMessage"
+                            style="document"/>
+            <input>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="MessageMetaData"/>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="Party"/>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:header use="literal"
+                             message="xta-core:XTAHeader"
+                             part="MessageMetaDataReply"/>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="MessageSchemaViolationException">
+                <soap:fault name="MessageSchemaViolationException" use="literal"/>
+            </fault>
+            <fault name="MessageVirusDetectionException">
+                <soap:fault name="MessageVirusDetectionException" use="literal"/>
+            </fault>
+            <fault name="NotImplementedException">
+                <soap:fault name="NotImplementedException" use="literal"/>
+            </fault>
+            <fault name="ParameterIsNotValidException">
+                <soap:fault name="ParameterIsNotValidException" use="literal"/>
+            </fault>
+            <fault name="ParameterNotSupportedException">
+                <soap:fault name="ParameterNotSupportedException" use="literal"/>
+            </fault>
+            <fault name="PermissionDeniedException">
+                <soap:fault name="PermissionDeniedException" use="literal"/>
+            </fault>
+            <fault name="SyncAsyncException">
+                <soap:fault name="SyncAsyncException" use="literal"/>
+            </fault>
+            <fault name="TechnicalProblemException">
+                <soap:fault name="TechnicalProblemException" use="literal"/>
+            </fault>
+            <fault name="UnsupportedExtensionException">
+                <soap:fault name="UnsupportedExtensionException" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+    <binding name="recipientHttpsBinding" type="xta-core:core.recipient">
+        <documentation>https binding for the senderPort</documentation>
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsp:PolicyReference URI="#TransportBindingPolicy"/>
+        <operation name="close">
+            <soap:operation soapActionRequired="true"
+                            soapAction="https://xoev.de/transport/xta/core/core.recipient/close"
+                            style="document"/>
+            <input>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="Party"/>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="InvalidMessageIDException">
+                <soap:fault name="InvalidMessageIDException" use="literal"/>
+            </fault>
+            <fault name="NotImplementedException">
+                <soap:fault name="NotImplementedException" use="literal"/>
+            </fault>
+            <fault name="ParameterIsNotValidException">
+                <soap:fault name="ParameterIsNotValidException" use="literal"/>
+            </fault>
+            <fault name="ParameterNotSupportedException">
+                <soap:fault name="ParameterNotSupportedException" use="literal"/>
+            </fault>
+            <fault name="PermissionDeniedException">
+                <soap:fault name="PermissionDeniedException" use="literal"/>
+            </fault>
+            <fault name="TechnicalProblemException">
+                <soap:fault name="TechnicalProblemException" use="literal"/>
+            </fault>
+            <fault name="UnsupportedExtensionException">
+                <soap:fault name="UnsupportedExtensionException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getMessage">
+            <soap:operation soapActionRequired="true"
+                            soapAction="https://xoev.de/transport/xta/core/core.recipient/getMessage"
+                            style="document"/>
+            <input>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="Party"/>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="MessageBoxStatus"/>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="MessageMetaData"/>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="InvalidMessageIDException">
+                <soap:fault name="InvalidMessageIDException" use="literal"/>
+            </fault>
+            <fault name="NotImplementedException">
+                <soap:fault name="NotImplementedException" use="literal"/>
+            </fault>
+            <fault name="ParameterIsNotValidException">
+                <soap:fault name="ParameterIsNotValidException" use="literal"/>
+            </fault>
+            <fault name="ParameterNotSupportedException">
+                <soap:fault name="ParameterNotSupportedException" use="literal"/>
+            </fault>
+            <fault name="PermissionDeniedException">
+                <soap:fault name="PermissionDeniedException" use="literal"/>
+            </fault>
+            <fault name="TechnicalProblemException">
+                <soap:fault name="TechnicalProblemException" use="literal"/>
+            </fault>
+            <fault name="UnsupportedExtensionException">
+                <soap:fault name="UnsupportedExtensionException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getStatusList">
+            <soap:operation soapActionRequired="true"
+                            soapAction="https://xoev.de/transport/xta/core/core.recipient/getStatusList"
+                            style="document"/>
+            <input>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="Party"/>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="MessageBoxStatus"/>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="NotImplementedException">
+                <soap:fault name="NotImplementedException" use="literal"/>
+            </fault>
+            <fault name="ParameterNotSupportedException">
+                <soap:fault name="ParameterNotSupportedException" use="literal"/>
+            </fault>
+            <fault name="PermissionDeniedException">
+                <soap:fault name="PermissionDeniedException" use="literal"/>
+            </fault>
+            <fault name="TechnicalProblemException">
+                <soap:fault name="TechnicalProblemException" use="literal"/>
+            </fault>
+            <fault name="UnsupportedExtensionException">
+                <soap:fault name="UnsupportedExtensionException" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+    <binding name="senderHttpsBinding" type="xta-core:core.sender">
+        <documentation>https binding for the senderPort</documentation>
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsp:PolicyReference URI="#TransportBindingPolicy"/>
+        <operation name="createMessageID">
+            <soap:operation soapActionRequired="true"
+                            soapAction="https://xoev.de/transport/xta/core/core.sender/createMessageID"
+                            style="document"/>
+            <input>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="Party"/>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="NotImplementedException">
+                <soap:fault name="NotImplementedException" use="literal"/>
+            </fault>
+            <fault name="ParameterNotSupportedException">
+                <soap:fault name="ParameterNotSupportedException" use="literal"/>
+            </fault>
+            <fault name="PermissionDeniedException">
+                <soap:fault name="PermissionDeniedException" use="literal"/>
+            </fault>
+            <fault name="TechnicalProblemException">
+                <soap:fault name="TechnicalProblemException" use="literal"/>
+            </fault>
+            <fault name="UnsupportedExtensionException">
+                <soap:fault name="UnsupportedExtensionException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="lookupService">
+            <soap:operation soapActionRequired="true"
+                            soapAction="https://xoev.de/transport/xta/core/core.sender/lookupService"
+                            style="document"/>
+            <input>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="Party"/>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="ExternalServiceUnavailableException">
+                <soap:fault name="ExternalServiceUnavailableException" use="literal"/>
+            </fault>
+            <fault name="NotImplementedException">
+                <soap:fault name="NotImplementedException" use="literal"/>
+            </fault>
+            <fault name="ParameterIsNotValidException">
+                <soap:fault name="ParameterIsNotValidException" use="literal"/>
+            </fault>
+            <fault name="ParameterNotSupportedException">
+                <soap:fault name="ParameterNotSupportedException" use="literal"/>
+            </fault>
+            <fault name="PermissionDeniedException">
+                <soap:fault name="PermissionDeniedException" use="literal"/>
+            </fault>
+            <fault name="TechnicalProblemException">
+                <soap:fault name="TechnicalProblemException" use="literal"/>
+            </fault>
+            <fault name="UnsupportedExtensionException">
+                <soap:fault name="UnsupportedExtensionException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="sendMessage">
+            <soap:operation soapActionRequired="true"
+                            soapAction="https://xoev.de/transport/xta/core/core.sender/sendMessage"
+                            style="document"/>
+            <input>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="MessageMetaData"/>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="Party"/>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="MessageSchemaViolationException">
+                <soap:fault name="MessageSchemaViolationException" use="literal"/>
+            </fault>
+            <fault name="MessageVirusDetectionException">
+                <soap:fault name="MessageVirusDetectionException" use="literal"/>
+            </fault>
+            <fault name="NotImplementedException">
+                <soap:fault name="NotImplementedException" use="literal"/>
+            </fault>
+            <fault name="ParameterIsNotValidException">
+                <soap:fault name="ParameterIsNotValidException" use="literal"/>
+            </fault>
+            <fault name="ParameterNotSupportedException">
+                <soap:fault name="ParameterNotSupportedException" use="literal"/>
+            </fault>
+            <fault name="PermissionDeniedException">
+                <soap:fault name="PermissionDeniedException" use="literal"/>
+            </fault>
+            <fault name="SyncAsyncException">
+                <soap:fault name="SyncAsyncException" use="literal"/>
+            </fault>
+            <fault name="TechnicalProblemException">
+                <soap:fault name="TechnicalProblemException" use="literal"/>
+            </fault>
+            <fault name="UnsupportedExtensionException">
+                <soap:fault name="UnsupportedExtensionException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="sendMessageSync">
+            <soap:operation soapActionRequired="true"
+                            soapAction="https://xoev.de/transport/xta/core/core.sender/sendMessageSync"
+                            style="document"/>
+            <input>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="MessageMetaData"/>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="Party"/>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:header use="literal"
+                             message="xta-core:XTAHeader"
+                             part="MessageMetaDataReply"/>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="ExternalServiceUnavailableException">
+                <soap:fault name="ExternalServiceUnavailableException" use="literal"/>
+            </fault>
+            <fault name="MessageSchemaViolationException">
+                <soap:fault name="MessageSchemaViolationException" use="literal"/>
+            </fault>
+            <fault name="MessageVirusDetectionException">
+                <soap:fault name="MessageVirusDetectionException" use="literal"/>
+            </fault>
+            <fault name="NotImplementedException">
+                <soap:fault name="NotImplementedException" use="literal"/>
+            </fault>
+            <fault name="ParameterIsNotValidException">
+                <soap:fault name="ParameterIsNotValidException" use="literal"/>
+            </fault>
+            <fault name="ParameterNotSupportedException">
+                <soap:fault name="ParameterNotSupportedException" use="literal"/>
+            </fault>
+            <fault name="PermissionDeniedException">
+                <soap:fault name="PermissionDeniedException" use="literal"/>
+            </fault>
+            <fault name="SyncAsyncException">
+                <soap:fault name="SyncAsyncException" use="literal"/>
+            </fault>
+            <fault name="TechnicalProblemException">
+                <soap:fault name="TechnicalProblemException" use="literal"/>
+            </fault>
+            <fault name="UnsupportedExtensionException">
+                <soap:fault name="UnsupportedExtensionException" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+    <binding name="transport.baseHttpsBinding" type="xta-core:core.transport.base">
+        <documentation>https binding for the senderPort</documentation>
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsp:PolicyReference URI="#TransportBindingPolicy"/>
+        <operation name="checkAccountActive">
+            <soap:operation soapActionRequired="true"
+                            soapAction="https://xoev.de/transport/xta/core/core.transport.base/checkAccountActive"
+                            style="document"/>
+            <input>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="Party"/>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="NotImplementedException">
+                <soap:fault name="NotImplementedException" use="literal"/>
+            </fault>
+            <fault name="ParameterNotSupportedException">
+                <soap:fault name="ParameterNotSupportedException" use="literal"/>
+            </fault>
+            <fault name="PermissionDeniedException">
+                <soap:fault name="PermissionDeniedException" use="literal"/>
+            </fault>
+            <fault name="TechnicalProblemException">
+                <soap:fault name="TechnicalProblemException" use="literal"/>
+            </fault>
+            <fault name="UnsupportedExtensionException">
+                <soap:fault name="UnsupportedExtensionException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getTransportReport">
+            <soap:operation soapActionRequired="true"
+                            soapAction="https://xoev.de/transport/xta/core/core.transport.base/getTransportReport"
+                            style="document"/>
+            <input>
+                <soap:header use="literal" message="xta-core:XTAHeader" part="Party"/>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="InvalidMessageIDException">
+                <soap:fault name="InvalidMessageIDException" use="literal"/>
+            </fault>
+            <fault name="NotImplementedException">
+                <soap:fault name="NotImplementedException" use="literal"/>
+            </fault>
+            <fault name="ParameterNotSupportedException">
+                <soap:fault name="ParameterNotSupportedException" use="literal"/>
+            </fault>
+            <fault name="PermissionDeniedException">
+                <soap:fault name="PermissionDeniedException" use="literal"/>
+            </fault>
+            <fault name="TechnicalProblemException">
+                <soap:fault name="TechnicalProblemException" use="literal"/>
+            </fault>
+            <fault name="UnsupportedExtensionException">
+                <soap:fault name="UnsupportedExtensionException" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+    <!-- Endpoints des Services -->
+    <service name="XTACore">
+        <port name="reader" binding="xta-core:readerHttpsBinding">
+            <soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+            <wsa:EndpointReference>
+                <wsa:Address>REPLACE_WITH_ACTUAL_URL</wsa:Address>
+            </wsa:EndpointReference>
+        </port>
+        <port name="recipient" binding="xta-core:recipientHttpsBinding">
+            <soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+            <wsa:EndpointReference>
+                <wsa:Address>REPLACE_WITH_ACTUAL_URL</wsa:Address>
+            </wsa:EndpointReference>
+        </port>
+        <port name="sender" binding="xta-core:senderHttpsBinding">
+            <soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+            <wsa:EndpointReference>
+                <wsa:Address>REPLACE_WITH_ACTUAL_URL</wsa:Address>
+            </wsa:EndpointReference>
+        </port>
+        <port name="transport.base" binding="xta-core:transport.baseHttpsBinding">
+            <soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+            <wsa:EndpointReference>
+                <wsa:Address>REPLACE_WITH_ACTUAL_URL</wsa:Address>
+            </wsa:EndpointReference>
+        </port>
+    </service>
+</definitions>

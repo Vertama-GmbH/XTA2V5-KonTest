@@ -1,0 +1,62 @@
+module de.xoev.xta.test.app {
+
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.dataformat.yaml;
+    requires cxf.xjc.runtime;
+    requires io.swagger.v3.oas.annotations;
+    requires io.swagger.v3.oas.models;
+    requires jakarta.activation;
+    requires jakarta.annotation;
+    requires jakarta.validation;
+    requires jakarta.xml.bind;
+    requires jakarta.xml.ws;
+    requires lombok;
+    requires org.apache.commons.io;
+    requires org.apache.commons.lang3;
+    requires org.apache.cxf.binding.soap;
+    requires org.apache.cxf.core;
+    requires org.apache.cxf.frontend.jaxws;
+    requires org.apache.cxf.frontend.simple;
+    requires org.apache.cxf.logging;
+    requires org.apache.cxf.transport.http;
+    requires org.apache.cxf.xkms.common;
+    requires org.apache.groovy;
+    requires org.apache.httpcomponents.client5.httpclient5;
+    requires org.apache.httpcomponents.core5.httpcore5;
+    requires org.apache.logging.log4j;
+    requires org.apache.tomcat.embed.core;
+    requires org.mapstruct;
+    requires spring.beans;
+    requires spring.boot.autoconfigure;
+    requires spring.boot;
+    requires spring.context;
+    requires transitive spring.core;
+    requires spring.security.config;
+    requires spring.security.core;
+    requires spring.security.web;
+    requires spring.web;
+    requires spring.webmvc;
+
+    exports de.xoev.xta.test.app;
+    exports de.xoev.xta.test.app.model;
+    exports de.xoev.xta.test.app.config;
+    exports de.xoev.xta.test.app.service to spring.beans;
+    exports de.xoev.xta.test.app.controller to spring.beans, spring.web;
+    exports de.xoev.xta.test.app.server to spring.beans, org.apache.cxf.core;
+    exports de.xoev.xta.test.app.service.interceptor to spring.beans;
+    exports de.xoev.xta.test.app.util to spring.core;
+    exports genv5.de.xoev.transport.xta.core.x311;
+    exports genv5.de.xoev.schemata.code.x10;
+
+    opens de.xoev.xta.test.app to spring.core;
+    opens de.xoev.xta.test.app.config to spring.core;
+    opens de.xoev.xta.test.app.controller to spring.core;
+    opens de.xoev.xta.test.app.server to spring.core;
+    opens de.xoev.xta.test.app.service to spring.core;
+    opens de.xoev.xta.test.app.service.interceptor to spring.core;
+    opens genv5.de.xoev.transport.xta.core.x311;
+    opens genv5.de.xoev.schemata.code.x10;
+    opens store;
+    opens wsdl.wsdl;
+    opens templates;
+}

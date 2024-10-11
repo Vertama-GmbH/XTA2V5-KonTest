@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">XTA
+        2 Konformitätstester</title>
+
+    <link rel="icon" sizes="16x16" th:href="@{/static/kosit_favicon.ico}">
+
+    <link rel="stylesheet" th:href="@{/static/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/static/style.css}"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/jquery.dataTables.css}">
+
+    <script th:src="@{/static/jquery.min.js}"></script>
+    <!-- https://www.jqueryscript.net/form/form-data-json-object.html -->
+    <!-- <script th:src="@{/static/formToJson.min.js}"></script> -->
+    <script th:src="@{/static/bootstrap.bundle.min.js}"></script>
+    <!-- https://github.com/jquery-validation/jquery-validation -->
+    <!-- <script th:src="@{/static/jquery.validate.min.js}"></script> -->
+    <!-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script> -->
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Main Navigation -->
+<!-- Build a left sidebar: https://bootstrapious.com/p/bootstrap-sidebar -->
+<nav
+        class="navbar navbar-expand-md navbar-dark navbar-custom fixed-top ps-3 d-print-none">
+    <a class="navbar-brand" th:href="@{/view/home}" th:utext="#{page.commons.apptitle}">XTA 2 Konformitätstestester
+        <sup><small>v5</small></sup></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <!-- active --> <a class="nav-link" th:href="@{/view/home}" th:text="#{page.home.title}">Home</a>
+            </li>
+            <li class="nav-item">
+                <!-- active --> <a class="nav-link" th:href="@{/view/control}"
+                                   th:text="#{page.control.title}">Steuerung</a>
+            </li>
+            <li class="nav-item">
+                <!-- active --> <a class="nav-link" th:href="@{/view/settings}"
+                                   th:text="#{page.settings.messages.title}">Einstellungen</a>
+            </li>
+            <li class="nav-item">
+                <!-- active --> <a class="nav-link"
+                                   th:href="@{/view/customization}" th:text="#{page.contentConfiguration.title}">Content-Anpassung</a>
+            </li>
+            <li class="nav-item">
+                <!-- active --> <a class="nav-link" th:href="@{/view/report}"
+                                   th:text="#{page.control.reportForm.title}">Report</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" hidden="true"
+                                    href="/swagger-ui.html" target="_blank">Swagger-UI</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Content Section -->
+<section id="content" class="my-5">
+    <div class="container">
+        <section layout:fragment="content">
+            <p>This is filled by the content template.</p>
+        </section>
+    </div>
+</section>
+
+<!-- prevent footer from covering content, do not show in print view -->
+<div style="min-height: 100px" class="d-print-none"></div>
+
+<!-- Footer -->
+<footer class="mt-auto page-footer font-small fixed-bottom d-print-none">
+    <th:block layout:fragment="additionalFooter"/>
+    <div class="footer-copyright text-center py-3">
+        <div class="text-gray">
+            Copyright &copy; 2021-[[${#dates.year(#dates.createNow())}]] [[ #{page.imprint.company }]] | <a
+                class="text-gray" href="https://www.xoev.de/" target="blank"
+                th:text="#{page.imprint.url}">www.xoev.de</a> | Version [[${version}]] | Build [[${buildTimestamp}]]
+        </div>
+    </div>
+</footer>
+
+<!-- Optional Section -->
+<th:block layout:fragment="optional"/>
+
+<script type="text/javascript">
+    function active_menu() {
+        const url = window.location.href;
+        $('li.nav-item a').filter(function () {
+            return this.href === url;
+        }).addClass('active');
+    }
+
+    active_menu();
+</script>
+</body>
+</html>

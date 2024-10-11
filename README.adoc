@@ -1,0 +1,49 @@
+:toc:
+:toc-title: Inhalt
+:toclevels: 3
+
+Wichtige Hinweise und weitere Information zu dem Thema XTA-Konformitätstester sind https://www.xoev.de/xta/konformitaetstester[hier] verfügbar.
+
+## Build
+
+.Bauen des Projektes ohne Zip Erstellung
+[source,bash]
+----
+$ mvn clean package
+----
+
+.Bauen des Projektes mit Zip Erstellung
+[source,bash]
+----
+$ mvn clean package -Pzip
+----
+
+== ASCIIDOC
+
+Für die Projektdokumentation wird ASCIIDOC verwendet. ASCIIDOC bietet viel mehr 
+Möglichkeiten bei der Dokumentation als Markdown.
+
+=== Editor
+
+Es gibt die verschiedensten Editoren für ASCIIDOC Dateien 
+(siehe https://docs.asciidoctor.org/asciidoctor/latest/tooling/[Link]). Der Eclipse 
+ASCIDOC Editor hat Probleme SVG Dateien korrekt im Preview anzuzeigen. Der Editor für 
+Visual Studio Code hat diese Probleme nicht.
+
+== PlantUML
+
+Für die Erstellung von Klassendiagrammen und Sequenzdiagrammen wird 
+https://plantuml.com[PlantUML] verwendet. Die Diagramme werden in die ASCIIDOC Dokumente 
+als SVG Grafik eingebunden. Dies ist wichtig, da anderenfalls die Diagramme im GitLab 
+Projekt nicht dargestellt werden. Das Rendern von PlantUML Diagrammen ist im GitLab nicht 
+aktiviert.
+
+=== Umwandeln in eine SVG Grafik
+
+Die Umwandlung in SVG erfolgt durch den Build mit dem Profil "asciidoctor". 
+
+[source,bash]
+----
+$ mvn clean package -Pasciidoctor
+----
+

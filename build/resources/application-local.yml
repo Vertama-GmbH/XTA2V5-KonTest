@@ -1,0 +1,42 @@
+spring:
+  application: 
+    name: xta-test-app
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      
+      
+server:
+  port: 8443
+  ssl:
+    # enthaelt den privaten und oeffentlichen Schluessel der Anwendung (SSL-Zertifikat für Webbrowser)
+    key-store: file:./xta-test-app_keystore.p12
+    key-store-password: password
+    key-store-type: pkcs12
+    # Alias im KeyStore
+    key-alias: xta-test-application
+    key-password: password
+    # enthaelt alle vertrauenswuerdigen Zertifikate oder Oberzertifikate
+    trust-store: file:./xta-test-app_truststore.jks
+    trust-store-password: password
+    trust-store-type: JKS
+    # want, need, none; see org.springframework.boot.web.server.ClientAuth
+    # wird ein Client Zertifikat benoetigt
+    client-auth: want
+
+app:
+  logRequestResponse: true
+  server:
+    # Extra Port, auf welchem der Server hören soll (für http)
+    http-port: 8080
+
+logging:
+  level:
+    ROOT: INFO
+    # no auto configuration report
+    org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener: INFO
+    org.springframework.security: WARN
+    org.springframework.web: INFO
+    org.apache.cxf: INFO
+    

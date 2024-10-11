@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration name="log4j2Config" status="WARN">
+    <!-- schema: https://github.com/apache/logging-log4j2/blob/master/log4j-core/src/main/resources/Log4j-config.xsd -->
+
+    <!-- environment variables -->
+    <!-- LOG_LEVEL_STDOUT: the log level for stdout, so log to stdout can be limited or deactivated -->
+
+    <Appenders>
+        <!-- Log to console in standard format -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%date %-5level [%t] %c{1.} - %msg%n" />
+            <filters>
+                <ThresholdFilter level="${env:LOG_LEVEL_STDOUT:-debug}" onMatch="ACCEPT"
+                    onMismatch="DENY" />
+            </filters>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <!-- By default all logs from de.xoev.xta loggers are sent to Console -->
+        <Logger name="de.xoev.xta" level="debug" additivity="false">
+            <AppenderRef ref="Console" level="${env:LOG_LEVEL_STDOUT:-debug}" />
+        </Logger>
+
+        <!-- By default only error and fail levels logs from all other loggers are sent to Console appender. -->
+        <Root level="debug">
+            <AppenderRef ref="Console" />
+        </Root>
+    </Loggers>
+
+</Configuration>

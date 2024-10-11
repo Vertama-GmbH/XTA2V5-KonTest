@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+           xmlns:xta-sp="https://xoev.de/transport/xta/serviceprofile/1.3.1"
+           targetNamespace="https://xoev.de/transport/xta/serviceprofile/1.3.1"
+           version="1.3.1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+   <xs:annotation>
+      <xs:appinfo>
+         <standard>
+            <nameLang>XTA 2 - Interoperabilitätsstandard zur Einbindung von IT-Fachapplikationen in eine Infrastruktur für Nachrichtenübermittlung</nameLang>
+            <nameKurz>XTA 2</nameKurz>
+            <nameTechnisch>xta2</nameTechnisch>
+            <kennung>urn:xoev-de:kosit:standard:xta2</kennung>
+            <beschreibung>XTA 2 ist ein vom IT-Planungsrat empfohlener Interoperabilitätsstandard. Das Modul XTA Webservice vereinheitlicht die funktionalen Schnittstellen zwischen Fach- und Transportverfahren, um die Übermittlung von Nachrichten – also den Transport – zu standardisieren. Das Modul XTA Service Profile ist das Instrument zur einheitlichen Definition und Konfiguration der regelgeleiteten Anforderungen an den Transport. Weitere Information können von der Webseite der KoSIT abgerufen werden.</beschreibung>
+         </standard>
+         <versionStandard>
+            <status>Final – 26. Juli 2024</status>
+            <version>5.1.1</version>
+            <beschreibung>Das Modul "XTA Webservice" wurde umfangreich überarbeitet und dessen Bestandteile stärker differenziert: Es wurden Erweiterungsmechanismen eingeführt und viele Funktionen in eigene Erweiterungen verschoben. Durch die Erweiterungsmöglichkeiten wurde ein Kern des Moduls erschaffen, der eine einfachere und langfristig stabile Implementierung der Kernfunktionen erlaubt. Die Module "XTA Webservice" und "XTA Service Profile" wurden technisch besser voreinander getrennt und die gesamte Spezifikation wurde textuell überarbeitet. Weitere Information können von der Webseite der KoSIT abgerufen werden.</beschreibung>
+            <versionXOEVProfil>1.5.1</versionXOEVProfil>
+            <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+            <versionXGenerator>3.1.1</versionXGenerator>
+            <versionModellierungswerkzeug>19.0 SP4</versionModellierungswerkzeug>
+            <nameModellierungswerkzeug>MagicDraw</nameModellierungswerkzeug>
+         </versionStandard>
+      </xs:appinfo>
+   </xs:annotation>
+   <xs:include schemaLocation="XTA-ServiceProfile-Datentypen.xsd"/>
+   <xs:element name="InfrastrukturProfil">
+      <xs:annotation>
+         <xs:documentation>Legt Eigenschaften, der für einen Transport benötigten bzw. einzusetzenden Infrastrukturkomponenten, zusammenfassend im Element infrastrukturkategorie fest.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xta-sp:InfrastrukturProfilType"/>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="KryptographieProfil">
+      <xs:annotation>
+         <xs:documentation>Legt Anforderungen an die kryptographische Absicherung von Fachnachrichten zusammenfassend im Element kryptoSuiten fest.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xta-sp:KryptographieProfilType"/>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="SchutzProfil">
+      <xs:annotation>
+         <xs:documentation>Das Schutzprofil beschreibt Schutzziele des Datenschutzes zusammenfassend im Element schutzkategorie und der Datensicherheit im Element sicherheitskategorie.</xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xta-sp:SchutzProfilType"/>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="ServiceProfil">
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="xta-sp:ServiceProfilType"/>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>

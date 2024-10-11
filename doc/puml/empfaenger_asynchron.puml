@@ -1,0 +1,45 @@
+@startuml
+participant "Leser (asynchron)" as leser #LightGreen
+participant "Empfänger (asynchron)" as empfaenger
+
+activate leser
+
+leser -> empfaenger: checkAccountActive
+note right 
+muss zu einem beliebigen 
+Zeitpunkt aufgerufen werden
+end note
+activate empfaenger
+return
+
+leser -> empfaenger: getStatusList
+activate empfaenger
+return
+
+
+leser -> empfaenger: getMessage
+note right
+muss nach getStatusList
+aufgerufen werden
+end note
+activate empfaenger
+return
+
+leser -> empfaenger: close
+note right
+muss nach getMessage
+aufgerufen werden
+end note
+activate empfaenger
+return
+
+leser -> empfaenger: getTransportReport
+note right 
+muss zu einem beliebigen
+Zeitpunkt nach getStatusList
+aufgerufen werden
+end note
+activate empfaenger
+return
+
+@enduml

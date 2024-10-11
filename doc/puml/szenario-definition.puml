@@ -1,0 +1,26 @@
+@startuml
+!pragma layout smetana
+class ScenarioDefinition {
+  String name
+  String displayName
+  String description
+  List<ScenarioEventDefinition> eventDescriptions
+}
+class ScenarioEventDefinition {
+  boolean optional
+  boolean multipleCallable
+  ExecutionType executionType
+  List<ScenarioEventType> requiredPreviousEventTypes
+}
+enum ScenarioEventType
+enum ExecutionType {
+  ACTIVE
+  PASSIV
+  PASSIV_ACTIVE
+}
+
+ScenarioDefinition --> "1..*" ScenarioEventDefinition
+ScenarioEventDefinition --> "1" ScenarioEventType
+ScenarioEventDefinition --> "0..*" ScenarioEventType
+ScenarioEventDefinition --> "1" ExecutionType
+@enduml

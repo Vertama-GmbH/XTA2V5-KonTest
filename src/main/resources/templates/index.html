@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<title>[[ #{page.home.title} ]]</title>
+</head>
+<body>
+
+	<div layout:fragment="content" class="row">
+		<div class="col-md-12">
+			<h1>[[ #{page.home.header} ]]</h1>
+
+			<p>[[ #{page.home.description1} ]]</p>
+			<p>[[ #{page.home.description2} ]]</p>
+		</div>
+	</div>
+
+</body>
+</html>

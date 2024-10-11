@@ -1,0 +1,3446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+           xmlns:xta-sp="https://xoev.de/transport/xta/serviceprofile/1.3.1"
+           xmlns:xoev-code="http://xoev.de/schemata/code/1_0"
+           targetNamespace="https://xoev.de/transport/xta/serviceprofile/1.3.1"
+           version="1.3.1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+    <xs:annotation>
+        <xs:appinfo>
+            <standard>
+                <nameLang>XTA 2 - Interoperabilitätsstandard zur Einbindung von IT-Fachapplikationen in eine
+                    Infrastruktur für Nachrichtenübermittlung
+                </nameLang>
+                <nameKurz>XTA 2</nameKurz>
+                <nameTechnisch>xta2</nameTechnisch>
+                <kennung>urn:xoev-de:kosit:standard:xta2</kennung>
+                <beschreibung>XTA 2 ist ein vom IT-Planungsrat empfohlener Interoperabilitätsstandard. Das Modul XTA
+                    Webservice vereinheitlicht die funktionalen Schnittstellen zwischen Fach- und Transportverfahren, um
+                    die Übermittlung von Nachrichten – also den Transport – zu standardisieren. Das Modul XTA Service
+                    Profile ist das Instrument zur einheitlichen Definition und Konfiguration der regelgeleiteten
+                    Anforderungen an den Transport. Weitere Information können von der Webseite der KoSIT abgerufen
+                    werden.
+                </beschreibung>
+            </standard>
+            <versionStandard>
+                <status>Final – 26. Juli 2024</status>
+                <version>5.1.1</version>
+                <beschreibung>Das Modul "XTA Webservice" wurde umfangreich überarbeitet und dessen Bestandteile stärker
+                    differenziert: Es wurden Erweiterungsmechanismen eingeführt und viele Funktionen in eigene
+                    Erweiterungen verschoben. Durch die Erweiterungsmöglichkeiten wurde ein Kern des Moduls erschaffen,
+                    der eine einfachere und langfristig stabile Implementierung der Kernfunktionen erlaubt. Die Module
+                    "XTA Webservice" und "XTA Service Profile" wurden technisch besser voreinander getrennt und die
+                    gesamte Spezifikation wurde textuell überarbeitet. Weitere Information können von der Webseite der
+                    KoSIT abgerufen werden.
+                </beschreibung>
+                <versionXOEVProfil>1.5.1</versionXOEVProfil>
+                <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                <versionXGenerator>3.1.1</versionXGenerator>
+                <versionModellierungswerkzeug>19.0 SP4</versionModellierungswerkzeug>
+                <nameModellierungswerkzeug>MagicDraw</nameModellierungswerkzeug>
+            </versionStandard>
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:import schemaLocation="../externe_Schemata/xoev-code.xsd"
+               namespace="http://xoev.de/schemata/code/1_0"/>
+    <xs:complexType name="Code.Abgabestation">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Abgabestation</nameLang>
+                    <nameKurz>Abgabestation</nameKurz>
+                    <nameTechnisch>abgabestation</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:abgabestation</kennung>
+                    <beschreibung>Diese Codeliste beschreibt die Knoten der Infrastruktur, an denen eine Nachricht final
+                        abgeliefert werden kann. So lässt sich bspw. steuern, ob direkt zuzustellen ist oder ob eine
+                        Ablage ins Postfach vorgesehen ist.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xta-sp:Codelist.Abgabestation" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:abgabestation">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.Abweichverhalten">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Abweichverhalten</nameLang>
+                    <nameKurz>Abweichverhalten</nameKurz>
+                    <nameTechnisch>abweichverhalten</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:abweichverhalten</kennung>
+                    <beschreibung>Diese Codeliste enthält die verschiedenen Vorgaben für das Abweichverhalten, das
+                        anzuwenden ist, wenn die zugehörige Vorgabe nicht erfüllt wird. Die Vorgabe wird im
+                        Serviceprofil festgelegt.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.Abweichverhalten"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:abweichverhalten">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.EreignisArtType">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Ereignisart</nameLang>
+                    <nameKurz>Ereignisart</nameKurz>
+                    <nameTechnisch>ereignisart</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:ereignisart</kennung>
+                    <beschreibung>Diese Codeliste definiert die für den ServiceReport zu protokollierenden
+                        Ereignisarten.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xta-sp:Codelist.EreignisArt" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:ereignisart">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.GeltungsbereichInfrastrukturprofil-Parameter">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Geltungsbereich Infrastruktur-Parameter</nameLang>
+                    <nameKurz>Geltungsbereich Infrastruktur-Parameter</nameKurz>
+                    <nameTechnisch>geltungsbereich.infrastrukturprofil-parameter</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:geltungsbereich.infrastrukturprofil-parameter
+                    </kennung>
+                    <beschreibung>Diese Codeliste definiert Kommunikationsstrecken für den Geltungsbereich eines
+                        Infrastrukturprofils.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.Geltungsbereich.Infrastrukturprofil-Parameter"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:geltungsbereich.infrastrukturprofil-parameter">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.GeltungsbereichSchutzprofil-Parameter">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Geltungsbereich Schutzprofil-Parameter</nameLang>
+                    <nameKurz>Geltungsbereich Schutzprofil-Parameter</nameKurz>
+                    <nameTechnisch>geltungsbereich.schutzprofil-parameter</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:geltungsbereich.schutzprofil-parameter</kennung>
+                    <beschreibung>Diese Codeliste definiert Kommunikationsstrecken auf die sich ein Schutzprofil
+                        beziehen kann.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.GeltungsbereichSchutzprofil-Parameter"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:geltungsbereich.schutzprofil-parameter">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.Kanal">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Kanal</nameLang>
+                    <nameKurz>Kanal</nameKurz>
+                    <nameTechnisch>kanal</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:kanal</kennung>
+                    <beschreibung>Diese Codeliste definiert die möglichen Netze über die eine Nachricht zwischen Sender
+                        und Empfänger übermittelt werden darf.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xta-sp:Codelist.Kanal" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:kanal">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.Kommunikationstyp">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Kommunikation Typ</nameLang>
+                    <nameKurz>Kommunikation Typ</nameKurz>
+                    <nameTechnisch>kommunikationstyp</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:kommunikationstyp</kennung>
+                    <beschreibung>Diese Codeliste definiert mögliche Kommunikationsszenarien.</beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.Kommunikationstyp"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:kommunikationstyp">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.KryptographischeAlgorithmen">
+        <xs:annotation>
+            <xs:appinfo>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xs:token" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:kosit:codeliste:xta.serviceprofile.kryptographische-algorithmen">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID" type="xs:normalizedString" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.KryptographischeSchluessellaenge">
+        <xs:annotation>
+            <xs:appinfo>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xs:token" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:kosit:codeliste:xta.serviceprofile.kryptographische-schluessellaengen">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID" type="xs:normalizedString" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.NachweisVerlaesslichkeit">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Nachweis Verlässlichkeit</nameLang>
+                    <nameKurz>Nachweis Verlässlichkeit</nameKurz>
+                    <nameTechnisch>nachweis.verlaesslichkeit</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:nachweis.verlaesslichkeit</kennung>
+                    <beschreibung>Die Codeliste definiert die Stufen der Verlässlichkeit einer Organisation.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.NachweisVerlaesslichkeit"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:nachweis.verlaesslichkeit">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.QualitaetAuthentizitaet">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Qualität Authentizität</nameLang>
+                    <nameKurz>Qualität Authentizität</nameKurz>
+                    <nameTechnisch>authentizitaetqualitaet</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:authentizitaetqualitaet</kennung>
+                    <beschreibung>Diese Codeliste definiert Niveaus, mit dem die Authentizität der
+                        Nachrichtenkommunikation abgesichert werden soll.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.QualitaetAuthentizitaet"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:authentizitaetqualitaet">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.QualitaetKryptographie">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Qualität Kryptographie</nameLang>
+                    <nameKurz>Qualität Kryptographie</nameKurz>
+                    <nameTechnisch>kryptographie.qualitaet</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:kryptographie.qualitaet</kennung>
+                    <beschreibung>Diese Codeliste enthält die Schlüssel zur Angabe des geforderten Schutzniveaus einer
+                        kryptographisch zu sichernden Kommunikation. Die hier verwendeten Abstufungen basieren auf den
+                        vom BSI im Kontext der Schutzbedarf-Feststellung definierten Begriffen zum IT-Grundschutz .
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.QualitaetKryptographie"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:kryptographie.qualitaet">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.QualitaetLoeschen">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Qualität Löschen</nameLang>
+                    <nameKurz>Qualität Löschen</nameKurz>
+                    <nameTechnisch>loeschen.qualitaet</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:loeschen.qualitaet</kennung>
+                    <beschreibung>Diese Codeliste definiert Anforderungen an das Löschen.</beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.QualitaetLoeschen"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:loeschen.qualitaet">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.QualitaetProtokollierung">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Qualität Protokollierung</nameLang>
+                    <nameKurz>Qualität Protokollierung</nameKurz>
+                    <nameTechnisch>protokollierung.qualitaet</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:protokollierung.qualitaet</kennung>
+                    <beschreibung>Diese Codeliste legt Ausprägungen der Protokollierung fest.</beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.QualitaetProtokollierung"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:protokollierung.qualitaet">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.QualitaetUnveraenderbarkeit">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Qualität Unveränderbarkeit</nameLang>
+                    <nameKurz>Qualität Unveränderbarkeit</nameKurz>
+                    <nameTechnisch>unveraenderbarkeit.qualitaet</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:unveraenderbarkeit.qualitaet</kennung>
+                    <beschreibung>Diese Codeliste definiert den Umfang, in dem die Unveränderbarkeit (Integrität)
+                        geschützt wird.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.QualitaetUnveraenderbarkeit"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:unveraenderbarkeit.qualitaet">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.QualitaetVerfuegbarkeit">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Qualität Verfügbarkeit</nameLang>
+                    <nameKurz>Qualität Verfügbarkeit</nameKurz>
+                    <nameTechnisch>verfuegbarkeit.qualitaet</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:verfuegbarkeit.qualitaet</kennung>
+                    <beschreibung>Diese Codeliste definiert Verfügbarkeitsstufen.</beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.QualitaetVerfuegbarkeit"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:verfuegbarkeit.qualitaet">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.QualitaetVertraulichkeit">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Qualität Vertraulichkeit</nameLang>
+                    <nameKurz>Qualität Vertraulichkeit</nameKurz>
+                    <nameTechnisch>vertraulichkeit.qualitaet</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:vertraulichkeit.qualitaet</kennung>
+                    <beschreibung>Diese Codeliste definiert Vertraulichkeitsniveaus.</beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.QualitaetVertraulichkeit"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:vertraulichkeit.qualitaet">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.StartzeitpunktLoeschfrist">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Startzeitpunkt Löschfrist</nameLang>
+                    <nameKurz>Startzeitpunkt Löschfrist</nameKurz>
+                    <nameTechnisch>startzeitpunkt-loeschfrist</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:startzeitpunkt-loeschfrist</kennung>
+                    <beschreibung>Diese Codeliste beschreibt Startzeitpunkte für Löschfristen.</beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.StartzeitpunktLoeschfrist"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:startzeitpunkt-loeschfrist">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.TechnischeQuittungen">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Technische Quittungen</nameLang>
+                    <nameKurz>Technische Quittungen</nameKurz>
+                    <nameTechnisch>technische.quittungen</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:technische.quittungen</kennung>
+                    <beschreibung>Diese Codeliste enthält die Schlüssel für die Arten technischer Quittungen, welche in
+                        einer XTA-Infrastruktur vorgesehen sind (siehe XTA Rahmenbedingungen).
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.TechnischeQuittungen"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:technische.quittungen">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.TransportnachrichtenFormat">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Transportnachrichten Format</nameLang>
+                    <nameKurz>Transportnachrichten Format</nameKurz>
+                    <nameTechnisch>transportnachrichten.format</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:transportnachrichten.format</kennung>
+                    <beschreibung>Diese Codeliste nennt verfügbare Nachrichtenformate für Transportnachrichten.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.TransportnachrichtenFormat"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:transportnachrichten.format">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.Transportprotokoll">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Transportprotokoll</nameLang>
+                    <nameKurz>Transportprotokoll</nameKurz>
+                    <nameTechnisch>transportprotokoll</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:transportprotokoll</kennung>
+                    <beschreibung>Diese Codeliste nennt verfügbare Übertragungsprotokolle, welche die Kommunikation von
+                        Daten zwischen Partnern festlegen.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.Transportprotokoll"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:transportprotokoll">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.VerzeichnisAdressierung">
+        <xs:annotation>
+            <xs:documentation>Dieser Typ gestattet die Kennzeichnung des zu nutzenden Verzeichnisdienstes, der für die
+                weitere Adressierung des Kommunikationspartners genutzt werden kann. Die KoSIT gibt eine Codeliste
+                heraus, die für einschlägige Arten von Verzeichnisdiensten verwendet werden kann, soweit kompatible
+                Werte vorhanden sind. Sie kann im XRepository (www.xrepository.de) unter Angabe ihrer Kennung
+                urn:xoev-de:kosit:codeliste:xta.core.directory abgerufen werden.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xs:token" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI" type="xs:anyURI" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID" type="xs:normalizedString" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.VerzeichnisIdentifizierung">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Verzeichnis für Identifizierung</nameLang>
+                    <nameKurz>Verzeichnis für Identifizierung</nameKurz>
+                    <nameTechnisch>verzeichnis.identifzierung</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:verzeichnis.identifzierung</kennung>
+                    <beschreibung>Diese Codeliste enthält die Schlüssel für Verzeichnislösungen zur Verwaltung von
+                        elektronischen Identitäten (Bezeichnungen und kryptographische Token für Identität und
+                        Identitätsnachweis).
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.VerzeichnisIdentifizierung"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:verzeichnis.identifzierung">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.XTARolle">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>XTA-Rolle</nameLang>
+                    <nameKurz>XTA-Rolle</nameKurz>
+                    <nameTechnisch>xta-rolle</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:xta-rolle</kennung>
+                    <beschreibung>Diese Codeliste benennt die Rollen, die in einer XTA-Kommunikationsinfrastruktur am
+                        Prozess der Nachrichtenübermittlung beteiligt sind.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xta-sp:Codelist.XTA-Rolle" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:xta-rolle">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.ZertifikatHerausgeber">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>XTA-SP Zertifikat Herausgeber</nameLang>
+                    <nameKurz>XTA-SP Zertifikat Herausgeber</nameKurz>
+                    <nameTechnisch>xta.serviceprofile.zertifikat-herausgeber</nameTechnisch>
+                    <kennung>urn:xoev-de:kosit:codeliste:xta.serviceprofile.zertifikat-herausgeber</kennung>
+                    <beschreibung>Diese Codeliste enthält gültige Werte für die Angabe des Herausgebers von Zertifikaten
+                        in einer Public Key Infrastruktur.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.ZertifikatHerausgeber"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:kosit:codeliste:xta.serviceprofile.zertifikat-herausgeber">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.ZertifikatMedium">
+        <xs:annotation>
+            <xs:documentation>Dieser Typ gestattet die Kennzeichnung des zu nutzenden Zertifikatmediums. Die KoSIT gibt
+                für den Standard XTA eine Codeliste heraus, die verwendet werden kann, soweit kompatible Werte vorhanden
+                sind. Sie kann im XRepository (www.xrepository.de) unter Angabe ihrer Kennung
+                urn:xoev-de:kosit:codeliste:xta.core.certificate-medium abgerufen werden. In die Attribute des
+                vorliegenden Typs sind entsprechend ihre Kennung und die Nummer der ausgewählten Version einzutragen.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xs:token" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI" type="xs:anyURI" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID" type="xs:normalizedString" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.ZertifikatNiveau">
+        <xs:annotation>
+            <xs:documentation>Dieser Typ gestattet die Kennzeichnung des zu nutzenden Zertifikatniveaus. Die KoSIT gibt
+                für den Standard XTA eine Codeliste heraus, die verwendet werden kann, soweit kompatible Werte vorhanden
+                sind. Sie kann im XRepository (www.xrepository.de) unter Angabe ihrer Kennung
+                urn:xoev-de:kosit:codeliste:xta.core.certificate-level abgerufen werden. In die Attribute des
+                vorliegenden Typs sind entsprechend ihre Kennung und die Nummer der ausgewählten Version einzutragen.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xs:token" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI" type="xs:anyURI" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID" type="xs:normalizedString" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.ZertifikatStatus">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Zertifikat Status</nameLang>
+                    <nameKurz>Zertifikat Status</nameKurz>
+                    <nameTechnisch>zertifikat.status</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:zertifikat.status</kennung>
+                    <beschreibung>Diese Codeliste enthält die Schlüssel für den Status eines Zertifikats.</beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code"
+                                type="xta-sp:Codelist.ZertifikatStatus"
+                                form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:zertifikat.status">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Code.Zustellfrist">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Zustellfrist</nameLang>
+                    <nameKurz>Zustellfrist</nameKurz>
+                    <nameTechnisch>zustellfrist</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:zustellfrist</kennung>
+                    <beschreibung>Diese Codeliste enthält Werte, die als Zustellfrist verwendet werden können.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xoev-code:Code">
+                <xs:sequence>
+                    <xs:element name="code" type="xta-sp:Codelist.Zustellfrist" form="unqualified">
+                        <xs:annotation>
+                            <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                            <xs:documentation>In diesem XML-Element wird der Code einer Codeliste übermittelt.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="listURI"
+                              type="xs:anyURI"
+                              use="optional"
+                              fixed="urn:xoev-de:xta:serviceprofile:codeliste:zustellfrist">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Mit diesem XML-Attribut wird die Kennung der Codeliste übermittelt, in deren
+                            Kontext der jeweilige Code zu interpretieren ist. Die Kennung identifiziert die Codeliste,
+                            nicht jedoch deren Version eindeutig. Wird bereits im Rahmen des XÖV-Standards eine Kennung
+                            vorgegeben (es handelt sich in diesem Fall um einen Code-Typ 1, 2 oder 3) darf auf eine
+                            nochmalige Angabe der Kennung bei der Übermittlung eines Codes verzichtet werden. Aus diesem
+                            Grund ist das XML-Attribut listURI zunächst als optional deklariert.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="listVersionID"
+                              type="xs:normalizedString"
+                              use="optional"
+                              fixed="1.0">
+                    <xs:annotation>
+                        <xs:documentation>Dokumentation aus XOEV-Bibliothek:</xs:documentation>
+                        <xs:documentation>Die konkrete Version der zu nutzenden Codeliste wird mit diesem XML-Attribut
+                            übertragen. Analog zum listURI ist die Bestimmung der Version einer Codeliste bei der
+                            Übertragung eines Codes zwingend. Die Version kann jedoch ebenfalls bereits im XÖV-Standard
+                            festgelegt werden (es handelt sich in diesem Fall um einen Code-Typ 1 oder 2).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="Codelist.Abgabestation">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Abgabestation</nameLang>
+                    <nameKurz>Abgabestation</nameKurz>
+                    <nameTechnisch>abgabestation</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:abgabestation</kennung>
+                    <beschreibung>Diese Codeliste beschreibt die Knoten der Infrastruktur, an denen eine Nachricht final
+                        abgeliefert werden kann. So lässt sich bspw. steuern, ob direkt zuzustellen ist oder ob eine
+                        Ablage ins Postfach vorgesehen ist.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="empfänger">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Abgabestation ist die Rolle 'Empfänger'
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="leser">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Abgabestation ist die Rolle 'Leser'</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="relay">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Abgabestation ist der Knoten 'Relay des Empfängers (Postfach)'
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.Abweichverhalten">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Abweichverhalten</nameLang>
+                    <nameKurz>Abweichverhalten</nameKurz>
+                    <nameTechnisch>abweichverhalten</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:abweichverhalten</kennung>
+                    <beschreibung>Diese Codeliste enthält die verschiedenen Vorgaben für das Abweichverhalten, das
+                        anzuwenden ist, wenn die zugehörige Vorgabe nicht erfüllt wird. Die Vorgabe wird im
+                        Serviceprofil festgelegt.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="ablehnen">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Die Vorgabe ist nicht erfüllt. Der Arbeitsschritt, in dem die
+                            Vorgabe nicht erfüllt wurde, gilt als abgeschlossen und die Bearbeitung der Nachricht wird
+                            abgelehnt. Soweit für die Servicequalität nichts anderes angegeben ist, muss zusätzlich zum
+                            Eintrag im ServiceReport ein Eintrag im TransportReport mit dem Status 3 erfolgen (rot) und
+                            die ErrorList wird um einen entsprechenden Eintrag erweitert (vgl. MessageStatusType).
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="akzeptieren">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Die Vorgabe ist nicht erfüllt. Der Arbeitsschritt, in dem die
+                            Vorgabe nicht erfüllt wurde, gilt als abgeschlossen und die Bearbeitung der Nachricht wird
+                            fortgesetzt. Soweit für die Servicequalität nichts anderes angegeben ist, muss zusätzlich
+                            zum Eintrag im ServiceReport ein Eintrag im TransportReport mit dem Status 2 erfolgen (gelb)
+                            und die WarnList wird um einen entsprechenden Eintrag erweitert (vgl. MessageStatusType).
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.EreignisArt">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Ereignisart</nameLang>
+                    <nameKurz>Ereignisart</nameKurz>
+                    <nameTechnisch>ereignisart</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:ereignisart</kennung>
+                    <beschreibung>Diese Codeliste definiert die für den ServiceReport zu protokollierenden
+                        Ereignisarten.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="abbruchZustellversuche">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender zu protokollieren, wenn dieser die
+                            Zustellversuche abbricht, weil die maximale Anzahl an Zustellversuchen überschritten wurde.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="abfrageVerzeichnisdienst">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender zu protokollieren, wenn dieser
+                            einen Verzeichnisdienst abfragt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="abholbestaetigung">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Empfänger zu protokollieren, wenn der
+                            Leser die Abholung einer Nachricht bestätigt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="abholenDurchLeser">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Empfänger zu protokollieren, wenn ein
+                            Leser eine Nachricht abholt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="aufloesungTransportverschluesselung">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Empfänger zu protokollieren, wenn dieser
+                            eine Transportverschlüsselung auflöst.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="nachrichtEmpfangen">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Empfänger zu protokollieren, wenn dieser
+                            eine Nachricht annimmt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="nachrichtLoeschen">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender oder Empfänger zu protokollieren,
+                            wenn diese eine Nachricht löschen. Bei wem dieses Ereignis ausgelöst wird, wird im Element
+                            XTA-Rolle dokumentiert.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="nachrichtVersenden">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender zu protokollieren, wenn dieser eine
+                            Nachricht versendet.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="notifikationGesendet">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Empfänger zu protokollieren, wenn dieser
+                            eine Notifikation an den Leser sendet.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="onlineZertifikatspruefung">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Empfänger zu protokollieren, wenn dieser
+                            eine Online-Zertifikatsprüfung vornimmt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="protokollAbgerufen">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender oder Empfänger zu protokollieren,
+                            wenn eine Nachricht den Schutzbedarf &lt;quote&gt;hoch&lt;/quote&gt; hat und sie Gegenstand
+                            eines Service Report ist. Bei wem dieses Ereignis ausgelöst wird, wird im Element XTA-Rolle
+                            dokumentiert.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="protokollierungGeloescht">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender oder Empfänger zu protokollieren,
+                            wenn Nachweise nach Erreichen der Löschfrist automatisch vom XTA-Server geloescht werden.
+                            Bei wem dieses Ereignis ausgelöst wird, wird im Element XTA-Rolle dokumentiert.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pruefungTransportsignatur">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender zu protokollieren, wenn dieser eine
+                            Transportsignatur prüft.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="quittungsempfang">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender zu protokollieren, wenn dieser eine
+                            Quittung empfängt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="quittungsversand">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Empfänger zu protokollieren, wenn dieser
+                            eine Quittung versendet.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="serviceQualitaetVerletzt">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender oder Emfpänger zu protokollieren,
+                            wenn eine Servicequalität nicht erbracht werden kann. Bei wem dieses Ereignis ausgelöst
+                            wird, wird im Element XTA-Rolle dokumentiert.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="transportauftragsIDErstellen">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender zu protokollieren, wenn dieser eine
+                            TransportauftragsID erstellt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="transportsignaturAnbringen">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender zu protokollieren, wenn dieser eine
+                            Transportsignatur anbringt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="transportverschluesselungAnbringen">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender zu protokollieren, wenn dieser eine
+                            Transportverschlüsselung anbringt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="verifikationAutor">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Empfänger zu protokollieren, wenn dieser
+                            den Autor einer Nachricht verifiziert.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="versandauftragErhalten">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender zu protokollieren, wenn dieser
+                            einen Versandauftrag erhält.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="versandauftragZurueckziehen">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender zu protokollieren, wenn der Autor
+                            einen erteilten Versandauftrag zurückzieht.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="weiterleitungAnLeser">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Empfänger zu protokollieren, wenn dieser
+                            eine synchrone Nachricht an den Leser weiterleitet.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="zustellfrist">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender zu protokollieren, wenn der Autor
+                            dem Sender eine Zustellfrist vorgibt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="zustellungstermin">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Dieses Ereignis ist vom Sender zu protokollieren, wenn der Autor
+                            dem Sender einen Zustellungstermin vorgibt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.Geltungsbereich.Infrastrukturprofil-Parameter">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Geltungsbereich Infrastruktur-Parameter</nameLang>
+                    <nameKurz>Geltungsbereich Infrastruktur-Parameter</nameKurz>
+                    <nameTechnisch>geltungsbereich.infrastrukturprofil-parameter</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:geltungsbereich.infrastrukturprofil-parameter
+                    </kennung>
+                    <beschreibung>Diese Codeliste definiert Kommunikationsstrecken für den Geltungsbereich eines
+                        Infrastrukturprofils.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="bundesweit">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Geltungsbereich ist der bundesweite Nachrichtenaustausch.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="kein">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Es ist kein Geltungsbereich definiert.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="landesintern">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Geltungsbereich ist landesinterner Nachrichtenaustausch.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="länderübergreifend">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Geltungsbereich ist der länderübergreifende
+                            Nachrichtenaustausch.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.GeltungsbereichSchutzprofil-Parameter">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Geltungsbereich Schutzprofil-Parameter</nameLang>
+                    <nameKurz>Geltungsbereich Schutzprofil-Parameter</nameKurz>
+                    <nameTechnisch>geltungsbereich.schutzprofil-parameter</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:geltungsbereich.schutzprofil-parameter</kennung>
+                    <beschreibung>Diese Codeliste definiert Kommunikationsstrecken auf die sich ein Schutzprofil
+                        beziehen kann.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="autor-empfänger">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Kommunikationsstrecke Autor - Empfänger
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="autor-leser">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Kommunikationsstrecke Autor - Leser</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="autor-sender">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Kommunikationsstrecke Autor - Sender
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="empfänger-leser">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Kommunikationsstrecke Empfänger - Leser
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="sender-empfänger">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Kommunikationsstrecke Sender - Empfänger
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.Kanal">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Kanal</nameLang>
+                    <nameKurz>Kanal</nameKurz>
+                    <nameTechnisch>kanal</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:kanal</kennung>
+                    <beschreibung>Diese Codeliste definiert die möglichen Netze über die eine Nachricht zwischen Sender
+                        und Empfänger übermittelt werden darf.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+            <xs:documentation>Ein Kanal beschreibt die Art der Verbindung oder des Netzes, über das Sender und Empfänger
+                kommunizieren.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="internet">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Übermittlung über das Internet.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="notarnet">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Übermittlung über das NotarNet.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="rz-intern">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Rechenzentrumsinterne Übermittlung.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="systemintern">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Systeminterne Übermittlung.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="verbindungsnetz">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Übermittlung über das Verbindungsnetz.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.Kommunikationstyp">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Kommunikation Typ</nameLang>
+                    <nameKurz>Kommunikation Typ</nameKurz>
+                    <nameTechnisch>kommunikationstyp</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:kommunikationstyp</kennung>
+                    <beschreibung>Diese Codeliste definiert mögliche Kommunikationsszenarien.</beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+            <xs:documentation>Hier wird der zeitliche Zusammenhang beschreiben, wie der Zeitpunkt des Versands einer
+                Fachnachricht mit dem des Empfangs zusammenhängt. Hiervon hängen auch die möglichen Antwortarten ab
+                (siehe Servicequalität Antwortart).
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="asynchron">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Die Kommunikation ist asynchron.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="synchron">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Die Kommunikation ist synchron.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.NachweisVerlaesslichkeit">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Nachweis Verlässlichkeit</nameLang>
+                    <nameKurz>Nachweis Verlässlichkeit</nameKurz>
+                    <nameTechnisch>nachweis.verlaesslichkeit</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:nachweis.verlaesslichkeit</kennung>
+                    <beschreibung>Die Codeliste definiert die Stufen der Verlässlichkeit einer Organisation.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="eigenerklärung">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Als Nachweis zählt eine Betreiber- oder Herstellererklärung mit
+                            einem entsprechenden Vertrag. Die Erklärung ist an einem definierten Ort hinterlegt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="zertifizierung">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Als Nachweis wird eine Zertifizierung gefordert. Der Betreiber
+                            oder Hersteller durchläuft erfolgreich einen Zertifizierungsprozess und hinterlegt den
+                            Zertifizierungsnachweis an einem definierten Ort.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.QualitaetAuthentizitaet">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Qualität Authentizität</nameLang>
+                    <nameKurz>Qualität Authentizität</nameKurz>
+                    <nameTechnisch>authentizitaetqualitaet</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:authentizitaetqualitaet</kennung>
+                    <beschreibung>Diese Codeliste definiert Niveaus, mit dem die Authentizität der
+                        Nachrichtenkommunikation abgesichert werden soll.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="hoch">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Prüfung mit Mitteln die eine Akkreditierung erfordern (z.B.
+                            Zertifikate).
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="normal">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Selbstbehauptung und Plausibilitätprüfung mit vertrauenswürdiger
+                            Dritter.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.QualitaetKryptographie">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Qualität Kryptographie</nameLang>
+                    <nameKurz>Qualität Kryptographie</nameKurz>
+                    <nameTechnisch>kryptographie.qualitaet</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:kryptographie.qualitaet</kennung>
+                    <beschreibung>Diese Codeliste enthält die Schlüssel zur Angabe des geforderten Schutzniveaus einer
+                        kryptographisch zu sichernden Kommunikation. Die hier verwendeten Abstufungen basieren auf den
+                        vom BSI im Kontext der Schutzbedarf-Feststellung definierten Begriffen zum IT-Grundschutz .
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="hoch">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Es handelt sich um kryptographisch abzusichernde Kommunikation des
+                            geforderten Schutzniveaus 'hoch'
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="normal">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Es handelt sich um kryptographisch abzusichernde Kommunikation des
+                            geforderten Schutzniveaus 'normal'
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.QualitaetLoeschen">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Qualität Löschen</nameLang>
+                    <nameKurz>Qualität Löschen</nameKurz>
+                    <nameTechnisch>loeschen.qualitaet</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:loeschen.qualitaet</kennung>
+                    <beschreibung>Diese Codeliste definiert Anforderungen an das Löschen.</beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="hoch">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Sicheres Löschen.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="normal">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Einfaches Löschen.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.QualitaetProtokollierung">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Qualität Protokollierung</nameLang>
+                    <nameKurz>Qualität Protokollierung</nameKurz>
+                    <nameTechnisch>protokollierung.qualitaet</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:protokollierung.qualitaet</kennung>
+                    <beschreibung>Diese Codeliste legt Ausprägungen der Protokollierung fest.</beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="hoch">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Revisionssichere Protokollierung.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="niedrig">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Optionale Protokollierung.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="normal">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>VerpflichtendeProtokollierung.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.QualitaetQuittung">
+        <xs:annotation>
+            <xs:appinfo>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="hoch">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Es ist eine technische Lesebestätigung vorgesehen (eine
+                            Information über die Weiterleitung bzw. Auslieferung an den nächsten Knoten in der
+                            Kommunikationskette).
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="normal">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Es ist eine technische Empfangsbestätigung vorgesehen.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.QualitaetUnveraenderbarkeit">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Qualität Unveränderbarkeit</nameLang>
+                    <nameKurz>Qualität Unveränderbarkeit</nameKurz>
+                    <nameTechnisch>unveraenderbarkeit.qualitaet</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:unveraenderbarkeit.qualitaet</kennung>
+                    <beschreibung>Diese Codeliste definiert den Umfang, in dem die Unveränderbarkeit (Integrität)
+                        geschützt wird.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="hoch">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Zusätzliche Schutzmaßnahmen.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="niedrig">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Optional.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="normal">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Systeminterne Mittel.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.QualitaetVerfuegbarkeit">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Qualität Verfügbarkeit</nameLang>
+                    <nameKurz>Qualität Verfügbarkeit</nameKurz>
+                    <nameTechnisch>verfuegbarkeit.qualitaet</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:verfuegbarkeit.qualitaet</kennung>
+                    <beschreibung>Diese Codeliste definiert Verfügbarkeitsstufen.</beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="extremhoch">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Es ist extrem hohe Verfügbarkeit vorgesehen (99,9 % im 7 * 24
+                            Stunden Betrieb).
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="hoch">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Es ist hohe Verfügbarkeit vorgesehen (98,5 % im 7 *
+                            24-Stunden-Betrieb)
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="normal">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Anforderung normale Verfügbarkeit (98,5 % im Tagesbetrieb)
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="sehrhoch">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Es ist sehr hohe Verfügbarkeit vorgesehen (99,5 % im 7 * 24
+                            Stunden Betrieb).
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.QualitaetVertraulichkeit">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Qualität Vertraulichkeit</nameLang>
+                    <nameKurz>Qualität Vertraulichkeit</nameKurz>
+                    <nameTechnisch>vertraulichkeit.qualitaet</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:vertraulichkeit.qualitaet</kennung>
+                    <beschreibung>Diese Codeliste definiert Vertraulichkeitsniveaus.</beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="hoch">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Hohe Vertraulichkeit.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="normal">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Normale Vertraulichkeit.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="öffentlich">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Keine Vertraulichkeit.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.StartzeitpunktLoeschfrist">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Startzeitpunkt Löschfrist</nameLang>
+                    <nameKurz>Startzeitpunkt Löschfrist</nameKurz>
+                    <nameTechnisch>startzeitpunkt-loeschfrist</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:startzeitpunkt-loeschfrist</kennung>
+                    <beschreibung>Diese Codeliste beschreibt Startzeitpunkte für Löschfristen.</beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="beziehungsende">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Die Löschfrist beginnt mit Ende der Vertragsbeziehung.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="erhebung">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Die Löschfrist beginnt mit Entgegennahme des Transportauftrags.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="vorgangsende">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Die Löschfrist beginnt mit Abschluss des Transportauftrags.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.TechnischeQuittungen">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Technische Quittungen</nameLang>
+                    <nameKurz>Technische Quittungen</nameKurz>
+                    <nameTechnisch>technische.quittungen</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:technische.quittungen</kennung>
+                    <beschreibung>Diese Codeliste enthält die Schlüssel für die Arten technischer Quittungen, welche in
+                        einer XTA-Infrastruktur vorgesehen sind (siehe XTA Rahmenbedingungen).
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="delivery">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Eine Quittung diesen Typs ist durch die Rolle Sender oder einen
+                            Knoten Relay zu erzeugen gdw. die Nachricht an die Rolle Empfänger ausgeliefert wurde bzw.
+                            sich - in asynchronen Kommunikationsszenarien - im Zugriffsbereich (Postkorb) des Empfängers
+                            befindet.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="fetch">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Eine Quittung diesen Typs ist durch die Rolle Empfänger zu
+                            erzeugen gdw. die Nachricht aus dem Postkorb abgeholt wurde.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="keineQuittung">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Es werden keine technischen Quittungen verlangt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="relay">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Eine Quittung diesen Typs ist durch einen Knoten &lt;emphasis
+                            role="italics"&gt;Relay&lt;/emphasis&gt; zu erzeugen gdw. die Nachricht erfolgreich
+                            weitergeleitet wurde.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="submission">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Eine Quittung diesen Typs ist durch die Rolle Sender zu erzeugen
+                            gdw. die Nachricht erfolgreich versendet wurde.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.TransportnachrichtenFormat">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Transportnachrichten Format</nameLang>
+                    <nameKurz>Transportnachrichten Format</nameKurz>
+                    <nameTechnisch>transportnachrichten.format</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:transportnachrichten.format</kennung>
+                    <beschreibung>Diese Codeliste nennt verfügbare Nachrichtenformate für Transportnachrichten.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="osci12">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>OSCI 1.2</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="osci2">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>OSCI 2</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="systemintern">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Es ist ein systeminternes Nachrichtenformat vorgesehen.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="xta11">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>XTA 1.1</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="xta2">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>XTA 2</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.Transportprotokoll">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Transportprotokoll</nameLang>
+                    <nameKurz>Transportprotokoll</nameKurz>
+                    <nameTechnisch>transportprotokoll</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:transportprotokoll</kennung>
+                    <beschreibung>Diese Codeliste nennt verfügbare Übertragungsprotokolle, welche die Kommunikation von
+                        Daten zwischen Partnern festlegen.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="ftp">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>FTP</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="http">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>HTTP</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="https">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>HTTPS</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="sftp">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>SFTP</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="smtp">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>SMTP</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="systemintern">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Es ist ein systemintern definiertes Protokoll vorgesehen.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.VerzeichnisIdentifizierung">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Verzeichnis für Identifizierung</nameLang>
+                    <nameKurz>Verzeichnis für Identifizierung</nameKurz>
+                    <nameTechnisch>verzeichnis.identifzierung</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:verzeichnis.identifzierung</kennung>
+                    <beschreibung>Diese Codeliste enthält die Schlüssel für Verzeichnislösungen zur Verwaltung von
+                        elektronischen Identitäten (Bezeichnungen und kryptographische Token für Identität und
+                        Identitätsnachweis).
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+            <xs:documentation>Das zu nutzende Verzeichnis für die zu verwendenden elektronischen Identitäten wird
+                spezifiziert. Normalerweise wird in diesen Verzeichnissen außer einer Bezeichnung der Identität auch
+                mindestens ein dazugehörendes Token gespeichert. Dadurch kann durch den Besitz des Tokens zusammen mit
+                diesem Verzeichnis die Identität nachgewiesen werden.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="dvdv">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Deutsches Verwaltungsdiensteverzeichnis (DVDV)
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pki">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Public Key Infrastruktur (PKI)</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="rz-intern">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Es wird als ein rechenzentrumsinternes Verzeichnis eingesetzt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="safe">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Verzeichnisdienst SAFE (Secure Access to Federated
+                            e-Justice/e-Government)
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="systemintern">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Es wird ein systeminternes Verzeichnis eingesetzt.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.XTA-Rolle">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>XTA-Rolle</nameLang>
+                    <nameKurz>XTA-Rolle</nameKurz>
+                    <nameTechnisch>xta-rolle</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:xta-rolle</kennung>
+                    <beschreibung>Diese Codeliste benennt die Rollen, die in einer XTA-Kommunikationsinfrastruktur am
+                        Prozess der Nachrichtenübermittlung beteiligt sind.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="autor">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>XTA-Rolle 'Autor'</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="empfänger">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>XTA-Rolle 'Empfänger'</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="leser">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>XTA-Rolle 'Leser'</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="sender">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>XTA-Rolle 'Sender'</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.ZertifikatHerausgeber">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>XTA-SP Zertifikat Herausgeber</nameLang>
+                    <nameKurz>XTA-SP Zertifikat Herausgeber</nameKurz>
+                    <nameTechnisch>xta.serviceprofile.zertifikat-herausgeber</nameTechnisch>
+                    <kennung>urn:xoev-de:kosit:codeliste:xta.serviceprofile.zertifikat-herausgeber</kennung>
+                    <beschreibung>Diese Codeliste enthält gültige Werte für die Angabe des Herausgebers von Zertifikaten
+                        in einer Public Key Infrastruktur.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="beliebig">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Keine Einschränkung.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="doi-hd">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>DOI CA Hoheitliche Dokumente</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pki1">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>PKI1-Verwaltung</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="testa">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>DOI (TESTA)</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="xjustiz-liste">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Die Herausgeberschaft ist eingeschränkt auf die Quellen, die in
+                            der Liste der Herausgeber der für XJustiz zugelassenen Zertifikate genannt werden (siehe
+                            z.B. Stand vom Jahr 2009
+                            https://www1.osci.de/sixcms/media.php/13/2009-05-28-zertifikatsherausgeber.pdf).
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.ZertifikatStatus">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Zertifikat Status</nameLang>
+                    <nameKurz>Zertifikat Status</nameKurz>
+                    <nameTechnisch>zertifikat.status</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:zertifikat.status</kennung>
+                    <beschreibung>Diese Codeliste enthält die Schlüssel für den Status eines Zertifikats.</beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="abgelaufen">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Das Zertifikat ist abgelaufen.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="gesperrt">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Das Zertifikat ist gesperrt.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="gültig">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Das Zertifikat ist gültig.</wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Codelist.Zustellfrist">
+        <xs:annotation>
+            <xs:appinfo>
+                <codeliste>
+                    <nameLang>Zustellfrist</nameLang>
+                    <nameKurz>Zustellfrist</nameKurz>
+                    <nameTechnisch>zustellfrist</nameTechnisch>
+                    <kennung>urn:xoev-de:xta:serviceprofile:codeliste:zustellfrist</kennung>
+                    <beschreibung>Diese Codeliste enthält Werte, die als Zustellfrist verwendet werden können.
+                    </beschreibung>
+                    <herausgebernameLang>Koordinierungsstelle für IT-Standards</herausgebernameLang>
+                    <herausgebernameKurz>KoSIT</herausgebernameKurz>
+                </codeliste>
+                <versionCodeliste>
+                    <version>1.0</version>
+                    <versionXOEVHandbuch>2.1</versionXOEVHandbuch>
+                </versionCodeliste>
+                <codelistenspalten>
+                    <codeSpalte>code</codeSpalte>
+                    <ersteBeschreibungsspalte>beschreibung</ersteBeschreibungsspalte>
+                </codelistenspalten>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="24h">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Zustellung in den Verfügungsbereich des Lesers innerhalb von einem
+                            Tag bzw. 24 Stunden.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="72h">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Zustellung in den Verfügungsbereich des Lesers innerhalb von drei
+                            Tagen bzw. 72 Stunden.
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="unverzüglich">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <wertErsteBeschreibungsspalte>Unverzügliche Zustellung (so schnell wie möglich, ohne dass
+                            schuldhaft verzögert wird).
+                        </wertErsteBeschreibungsspalte>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

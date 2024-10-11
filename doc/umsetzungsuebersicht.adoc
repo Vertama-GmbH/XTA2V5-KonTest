@@ -1,0 +1,129 @@
+= Umsetzungsübersicht 
+:toc:
+:toc-title: Inhalt
+:toclevels: 3
+:docinfo: shared
+
+== Vorwort
+
+Dieses Dokument enthält eine Übersicht der umgesetzten Funktionen/Funktionalitäten.
+
+* Die Spalte "Client-Test (Testserver)" enthält die Prüfungen und Antworten, welche man erhält, wenn man seinen eigenen Client testet und die Umgebung als Server fungiert.
+* Die Spalte "Server-Test (Testclient)" enthält die Prüfungen und Antworten, welche man erhält, wenn man seinen eigenen Server testet und die Umgebung als Client fungiert.
+
+== Tabelle umgesetzte Funktionen/Funktionalitäten
+[options="header",cols="1,1,1,1"]
+|===
+| Funktion | Client-Test (Testserver) | Server-Test (Testclient) | Bemerkung 
+//---
+| checkAccountActive
+a| * Prüfung Eingangsparameter
+* Rückgabe verpflichtender Parameter
+a| * Anfrage mit verpflichtenden Parametern
+* Prüfung auf SOAP Fehler in Antwort
+* Prüfung Rückgabe enthält verpflichtende Parameter
+| Eine Authentifizierung erfolgt nur über das Client-Zertifikat
+
+| lookupService
+a| * Rückgabe verpflichtender Parameter (nicht vollständig)
+a| * Prüfung auf SOAP Fehler in Antwort
+|
+
+| createMessageId
+a| * Prüfung Eingangsparameter
+* Rückgabe verpflichtender Parameter
+* MessageID wird generiert und gespeichert
+a| * Anfrage mit verpflichtenden Parametern
+* Prüfung auf SOAP Fehler in Antwort
+* Prüfung Rückgabe enthält verpflichtende Parameter
+* MessageID wird gespeichert
+|
+
+| sendMessage 
+a| * Prüfung Eingangsparameter
+* Prüfung ob MessageID übereinstimmt
+* Rückgabe verpflichtender Parameter
+a| * Anfrage mit verpflichtenden Parametern
+* gespeicherte MessageID wird verwendet
+* Prüfung auf SOAP Fehler in Antwort
+* Prüfung Rückgabe enthält verpflichtende Parameter
+|
+
+| sendMessageSync (Autor, Sender)
+a| * Prüfung Eingangsparameter
+* Prüfung MessageMetaData aus SOAP Header
+* Prüfung ob MessageID übereinstimmt
+* Rückgabe verpflichtender Parameter
+* Rückgabe MessageMetaData im SOAP Header
+a| * Anfrage mit verpflichtenden Parametern
+* Anfrage mit MessageMetaData im SOAP Header
+* gespeicherte MessageID wird verwendet
+* Prüfung auf SOAP Fehler in Antwort
+* Prüfung Rückgabe enthält verpflichtende Parameter
+* Prüfung Rückgabe enthält MessageMetaData im SOAP Header
+|
+
+| sendMessageSync (Empfänger, Leser)
+a| * Anfrage mit verpflichtenden Parametern
+* Anfrage mit MessageMetaData im SOAP Header
+* MessageID wird generiert
+* Prüfung auf SOAP Fehler in Antwort
+* Prüfung Rückgabe enthält verpflichtende Parameter
+* Prüfung Rückgabe enthält MessageMetaData im SOAP Header
+a| * Prüfung Eingangsparameter
+* Prüfung MessageMetaData aus SOAP Header
+* MessageID wird gespeichert
+* Aufruf von checkAccountActive und getTransportReport
+* Rückgabe verpflichtender Parameter
+* Rückgabe MessageMetaData im SOAP Header
+|
+
+| getTransportReport
+a| * Prüfung Eingangsparameter
+* Prüfung ob MessageID übereinstimmt
+* Rückgabe verpflichtender Parameter
+* *SignatureType enthält keine Daten*
+a| * Anfrage mit verpflichtenden Parametern
+* gespeicherte MessageID wird verwendet
+* Prüfung auf SOAP Fehler in Antwort
+* Prüfung Rückgabe enthält verpflichtende Parameter
+* *Inhalt des SignatureTypes wird nicht geprüft*
+* *keine Wiederholung der Abfrage falls Nachricht noch nicht versandt*
+|
+
+| getStatusList
+a| * Prüfung Eingangsparameter
+* generiert und speichert MessageID
+* generiert und speichert MsgBoxRequestID
+* Rückgabe verpflichtender Parameter
+* Parameter NoMessageAvailable wird nicht gesetzt
+a| * Anfrage mit verpflichtenden Parametern
+* MessageID wird gespeichert
+* MsgBoxRequestID wird gespeichert
+* Prüfung auf SOAP Fehler in Antwort
+* Prüfung Rückgabe enthält verpflichtende Parameter
+|
+
+| getMessage
+a| * Prüfung Eingangsparameter
+* Prüfung ob MessageID übereinstimmt
+* Rückgabe verpflichtender Parameter
+a| * Anfrage mit verpflichtenden Parametern
+* gespeicherte MsgBoxRequestID wird verwendet
+* Prüfung auf SOAP Fehler in Antwort
+* Prüfung Rückgabe enthält verpflichtende Parameter
+|
+
+| close
+a| * Prüfung Eingangsparameter
+* Prüfung ob MessageID übereinstimmt
+* Prüfung ob MsgBoxRequestID aus getStatusList übereinstimmt
+* Rückgabe verpflichtender Parameter
+a| * Anfrage mit verpflichtenden Parametern
+* gespeicherte MessageID wird verwendet
+* gespeicherte MsgBoxRequestID wird verwendet
+* Prüfung auf SOAP Fehler in Antwort
+* Prüfung Rückgabe enthält verpflichtende Parameter
+|
+|===
+

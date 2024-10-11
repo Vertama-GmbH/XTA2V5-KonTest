@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<head>
+<title>[[ #{page.contentConfiguration.title} ]]</title>
+</head>
+
+<body>
+	<div layout:fragment="content" class="row">
+		<div class="cust-radio col-md-12">
+			<h2>[[ #{page.contentConfiguration.descriptionHeader} ]]</h2>
+			[[ #{page.contentConfiguration.descriptionText} ]]
+		</div>
+		<div class="col-md-6">
+			<form id="configurationForm">
+				<div class="alert alert-success" id="successMessage" role="alert" style="display: none">[[ #{page.contentConfiguration.messages.success}]]</div>
+				<div class="alert alert-danger" id="errorMessage" role="alert" style="display: none">[[ #{page.contentConfiguration.messages.error} ]]</div>
+				<div class="form-group">
+
+					<fieldset id="customDefaultContainer" class="cust-radio">
+						<legend th:text="#{page.control.configurationForm.label.customDefaultContainer}" />
+
+                        <div class="d-flex flex-row">
+							<div class="custom-control custom-radio custom-control-inline pe-3 col-md-7">
+								<input type="radio" id="customDefault1" name="customDefault" class="custom-control-input" 
+								    value="false" th:field="*{customization.useCustomContainer}" data-bs-toggle="collapse"
+									data-bs-target=".customContainer.show" aria-expanded="false" aria-controls="customContainer"> <label class="custom-control-label" for="customDefault1"
+									th:text="#{page.control.configurationForm.label.customDefaultContainer.default}">false</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline ps-1 col-md-6">
+								<input type="radio" id="customDefault2" name="customDefault" class="custom-control-input" 
+								    value="true" th:field="*{customization.useCustomContainer}" data-bs-toggle="collapse"
+									data-bs-target=".customContainer:not(.show)" aria-expanded="true" aria-controls="customContainer"> <label class="custom-control-label" for="customDefault2"
+									th:text="#{page.control.configurationForm.label.customDefaultContainer.custom}">true</label>
+							</div>
+						</div>
+
+					</fieldset>
+					<div th:class="${customization.useCustomContainer ?'form-group customContainer collapse show' :'form-group customContainer collapse'}"
+						th:aria-expanded="${customization.useCustomContainer}">
+						<fieldset id="plainEncryptedContainer" class="cust-radio">
+							<legend th:text="#{page.control.configurationForm.label.plainEncryptedContainer}" />
+							<div class="d-flex flex-row">
+								<div class="custom-control custom-radio custom-control-inline  pe-3 col-md-7">
+									<input type="radio" id="plainEncrypted1" name="plainEncrypted" class="custom-control-input" value="false" th:field="*{customization.useEncyptedContainer}"> <label
+										class="custom-control-label" for="plainEncrypted1" th:text="#{page.control.configurationForm.label.plainEncryptedContainer.plain}">false</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline ps-1 col-md-6">
+									<input type="radio" id="plainEncrypted2" name="plainEncrypted" class="custom-control-input" value="true" th:field="*{customization.useEncyptedContainer}"> <label
+										class="custom-control-label" for="plainEncrypted2" th:text="#{page.control.configurationForm.label.plainEncryptedContainer.encrypted}">true</label>
+    							</div>
+							</div>
+
+						</fieldset>
+						<div id="encryptedContainer" th:class="${customization.useEncyptedContainer ?'form-group collapse show' :'form-group collapse'}"
+							th:aria-expanded="${customization.useEncyptedContainer}">
+							<legend>[[ #{page.contentConfiguration.messages.configEncrypted}]]</legend>
+
+							<label for="currentScenario" th:text="#{page.control.configurationForm.label.encryptedContent}">Verschlüsselter XML Inhalt</label>
+							<textarea class="form-control" name="encodedXMLContent" id="encodedXMLContent" cols="40" rows="15"
+								th:text="${customization.encodedXMLContent != null &&  !customization.encodedXMLContent.empty
+								    ? customization.encodedXMLContent
+								    : defaultEncryptedContainer }" />
+
+						</div>
+						<div id="plainContainer" th:class="${!customization.useEncyptedContainer ?'form-group collapse show' :'form-group collapse'}"
+							th:aria-expanded="${!customization.useEncyptedContainer}">
+							<fieldset id="plainFieldSet">
+								<legend>[[ #{page.contentConfiguration.messages.configUnencrypted}]]</legend>
+
+								<div class="form-group">
+									<label for="contentDescription" th:text="#{page.control.configurationForm.label.contentDescription}">Content Description</label> <input class="form-control" type="text"
+										id="contentDescription" name="contentDescription" required th:value="${customization.contentDescription}" />
+								</div>
+								<div class="form-group">
+									<label for="contentType" th:text="#{page.control.configurationForm.label.contentType}">Content Type</label> <input class="form-control" type="text" id="contentType"
+										name="contentType" required th:value="${customization.contentType}" />
+								</div>
+								<div class="form-group">
+									<label for="encoding" th:text="#{page.control.configurationForm.label.encoding}">Encoding</label> <input class="form-control" type="text" id="encoding" name="encoding"
+										required th:value="${customization.encoding}" />
+								</div>
+								<div class="form-group">
+									<label for="filename" th:text="#{page.control.configurationForm.label.filename}">Datei</label> <input class="form-control" type="file" id="filename" name="filename" />
+									<span th:text="${currentFile}">test</span>
+								</div>
+								<div class="form-group">
+									<label for="lang" th:text="#{page.control.configurationForm.label.lang}">Sprache</label> <input class="form-control" type="text" id="lang" name="lang" required
+										th:value="${customization.lang}" />
+
+								</div>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				<button class="btn btn-primary" type="submit" id="saveChanges" th:text="#{page.control.configurationForm.button.save}" />
+				<button class="btn btn-secondary" type="button" id="previewChanges" th:text="#{page.control.configurationForm.button.preview}" />
+			</form>
+			<div id="progress-wrp" class="collapse">
+				<div class="progress-bar"></div>
+				<div class="status">0%</div>
+			</div>
+		</div>
+		
+	</div>
+	<div layout:fragment="optional">
+		<script type="text/javascript" th:inline="javascript">
+			var Upload = function(file, data) {
+				this.file = file;
+				this.data = data
+			};
+
+			Upload.prototype.getType = function() {
+				return this.file.type;
+			};
+			Upload.prototype.getSize = function() {
+				return this.file.size;
+			};
+			Upload.prototype.getName = function() {
+				return this.file.name;
+			};
+			Upload.prototype.doUpload = function() {
+				var that = this;
+				$('#progress-wrp').toggleClass("show", true);
+				var formData = new FormData();
+
+				// add assoc key values, this will be posts values
+				formData.append("data", this.data);
+				if (this.file)
+					formData.append("file", this.file, this.getName());
+
+				var request = $.ajax({
+					type : "POST",
+					method : 'POST',
+					url : "/rest/api/mgmt/contentConfiguration",
+					xhr : function() {
+						var myXhr = $.ajaxSettings.xhr();
+						if (myXhr.upload) {
+							myXhr.upload.addEventListener('progress',
+									that.progressHandling, false);
+						}
+						return myXhr;
+					},
+
+					async : true,
+					data : formData,
+					cache : false,
+					contentType : false,
+					processData : false,
+					timeout : 120000
+				});
+
+				request.fail(function(xhr, textStatus, errorThrown) {
+					$('#progress-wrp').toggleClass("show", false);
+					// handle error
+					$('#successMessage').hide();
+					if (xhr.responseText) {
+						$('#errorMessage').html(JSON.parse(xhr.responseText).message);
+					} else {
+						$('#errorMessage').text(/*[[ #{page.contentConfiguration.messages.errorJs} ]]*/ "Fehler bei der Verarbeitung der Daten")
+					}
+					$('#errorMessage').show();
+				});
+				request.done(function(data, textStatus, jqXHR) {
+					$('#progress-wrp').toggleClass("show", false);
+					$('#successMessage').show();
+					$('#errorMessage').hide();
+				});
+			};
+
+			Upload.prototype.progressHandling = function(event) {
+				var percent = 0;
+				var position = event.loaded || event.position;
+				var total = event.total;
+				var progress_bar_id = "#progress-wrp";
+				if (event.lengthComputable) {
+					percent = Math.ceil(position / total * 100);
+				}
+				// update progressbars classes so it fits your code
+				$(progress_bar_id + " .progress-bar").css("width", percent + "%");
+				if (percent < 100 ) {
+					$(progress_bar_id + " .status").text(percent + "%");
+				}
+				else {
+					$(progress_bar_id + " .status").text(/*[[ #{page.contentConfiguration.messages.pleaseWait} ]]*/ "Bitte warten");
+				}
+			};
+
+			var Preview = function(file, data) {
+                this.file = file;
+                this.data = data
+            };
+
+            Preview.prototype.getType = function() {
+                return this.file.type;
+            };
+            Preview.prototype.getSize = function() {
+                return this.file.size;
+            };
+            Preview.prototype.getName = function() {
+                return this.file.name;
+            };
+            Preview.prototype.doUpload = function() {
+                var that = this;
+                $('#successMessage').hide();
+                $('#errorMessage').hide();
+                $('#progress-wrp').toggleClass("show", true);
+                var formData = new FormData();
+
+                // add assoc key values, this will be posts values
+                formData.append("data", this.data);
+                if (this.file)
+                    formData.append("file", this.file, this.getName());
+
+                var request = $.ajax({
+                    type : "POST",
+                    method : 'POST',
+                    url : "/rest/api/mgmt/contentConfigurationPreview",
+                    xhr : function() {
+                        var myXhr = $.ajaxSettings.xhr();
+                        if (myXhr.upload) {
+                            myXhr.upload.addEventListener('progress',
+                                    that.progressHandling, false);
+                        }
+                        return myXhr;
+                    },
+
+                    async : true,
+                    data : formData,
+                    cache : false,
+                    contentType : false,
+                    processData : false,
+                    timeout : 120000
+                });
+
+                request.fail(function(xhr, textStatus, errorThrown) {
+                    $('#progress-wrp').toggleClass("show", false);
+                    // handle error
+                    $('#successMessage').hide();
+                    if (xhr.responseText) {
+                        $('#errorMessage').html(JSON.parse(xhr.responseText).message);
+                    } else {
+                        $('#errorMessage').text(/*[[ #{page.contentConfiguration.messages.errorJs} ]]*/ "Fehler bei der Verarbeitung der Daten");
+                    }
+                    $('#errorMessage').show();
+                });
+                request.done(function(data, textStatus, jqXHR) {
+                	var response = JSON.parse(jqXHR.responseText);
+                	
+                	 var file = new Blob([response.preview], {type: 'application/xml'});
+                     var fileURL = URL.createObjectURL(file);
+                     
+                     const a = document.createElement("a");
+                     a.href = fileURL;
+                     a.setAttribute("download", "data.xml");
+                     document.body.appendChild(a);
+                     a.click();
+                     document.body.removeChild(a);
+                	
+                    //$('#previewContainer').text(response.preview);
+                    console.log(response.preview);
+                    $('#progress-wrp').toggleClass("show", false);
+                });
+            };
+
+            Preview.prototype.progressHandling = function(event) {
+                var percent = 0;
+                var position = event.loaded || event.position;
+                var total = event.total;
+                var progress_bar_id = "#progress-wrp";
+                if (event.lengthComputable) {
+                    percent = Math.ceil(position / total * 100);
+                }
+                // update progressbars classes so it fits your code
+                $(progress_bar_id + " .progress-bar").css("width", percent + "%");
+                if (percent < 100 ) {
+                	$(progress_bar_id + " .status").text(percent + "%");
+                }
+                else {
+                    $(progress_bar_id + " .status").text(/*[[ #{page.contentConfiguration.messages.pleaseWait} ]]*/ "Bitte warten");
+                }
+            };
+            
+			$(document).ready(
+				function() {
+					$("#plainEncryptedContainer")
+							.change(
+									function(event) {
+										const data = event.target.value;
+										if (data === "true") {
+											$('#encryptedContainer').toggleClass("show", true);
+											$('#encryptedContainer').prop("ariaExpanded", "true");
+											$('#plainContainer').toggleClass("show", false);
+											$('#plainContainer').prop("ariaExpanded", "false");
+										} else {
+											$('#encryptedContainer').toggleClass("show", false);
+											$('#encryptedContainer').prop("ariaExpanded", "false");
+											$('#plainContainer').toggleClass("show", true);
+											$('#plainContainer').prop("ariaExpanded", "true");
+										}
+
+									});
+					$("#saveChanges").click(
+						function(event) {
+							// cancel standard action
+							event.preventDefault();
+
+							var json = {};
+							let file = undefined;
+							json.useCustomContainer = $('input[name=useCustomContainer]:checked').val();
+							if (json.useCustomContainer === "true") {
+								json.useEncyptedContainer = $('input[name=useEncyptedContainer]:checked').val();
+								if (json.useEncyptedContainer === "false") {
+									json.contentDescription = $("#contentDescription").val();
+									json.contentType = $("#contentType").val();
+									json.encoding = $("#encoding").val();
+									json.filename = $("#filename").val();
+									file = $("#filename")[0].files[0];
+									if (!file) {
+										alert(/*[[ #{page.contentConfiguration.messages.noFileChoosen} ]]*/ "Keine Datei ausgewählt");
+										return;
+									}
+									if (file.size > 10 * 1024 * 1024) {
+										alert(/*[[ #{page.contentConfiguration.messages.maxSizeExceeded} ]]*/ "Die maximale Größe wurde überschritten");
+										return;
+									}
+									json.lang = $("#lang").val();
+								} else {
+									json.encodedXMLContent = $("#encodedXMLContent").val();
+								}
+							}
+							var data = JSON.stringify(json);
+							var upload = new Upload(file, data);
+							// execute upload
+							upload.doUpload();
+
+						});
+					$("#previewChanges").click(
+	                        function(event) {
+	                            // cancel standard action
+	                            event.preventDefault();
+
+	                            var json = {};
+	                            let file = undefined;
+	                            json.useCustomContainer = $('input[name=useCustomContainer]:checked').val();
+	                            if (json.useCustomContainer === "true") {
+	                                json.useEncyptedContainer = $('input[name=useEncyptedContainer]:checked').val();
+	                                if (json.useEncyptedContainer === "false") {
+	                                    json.contentDescription = $("#contentDescription").val();
+	                                    json.contentType = $("#contentType").val();
+	                                    json.encoding = $("#encoding").val();
+	                                    json.filename = $("#filename").val();
+	                                    file = $("#filename")[0].files[0];
+	                                    if (!file) {
+	                                        alert(/*[[ #{page.contentConfiguration.messages.errorJs} ]]*/ "Fehler bei der Verarbeitung der Daten");
+	                                        return;
+	                                    }
+	                                    if (file.size > 10 * 1024 * 1024) {
+	                                        alert(/*[[ #{page.contentConfiguration.messages.maxSizeExceeded} ]]*/ "Die maximale Größe wurde überschritten");
+	                                        return;
+	                                    }
+	                                    json.lang = $("#lang").val();
+	                                } else {
+	                                    json.encodedXMLContent = $("#encodedXMLContent").val();
+	                                }
+	                            }
+	                            var data = JSON.stringify(json);
+	                            var preview = new Preview(file, data);
+	                            // execute upload
+	                            preview.doUpload();
+
+	                        });
+				});
+		</script>
+	</div>
+</body>
+
+</html>

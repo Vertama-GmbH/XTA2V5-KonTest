@@ -1,0 +1,14 @@
+= Release Notes
+:toc:
+:toc-title: Inhalt
+:toclevels: 3
+:docinfo: shared
+
+
+== Release v0.1.0
+
+* Bereitstellung grundlegender Test-Funktionalität für alle in der XTA2 Version 5 definierten Endpoints
+
+* Unterstützung der Spezifikationsversion 5.1.1
+
+* SoapUI-Testprojekt für alle Endpoints

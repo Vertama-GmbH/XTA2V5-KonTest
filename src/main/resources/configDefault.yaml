@@ -1,0 +1,58 @@
+protocolMetadata:
+  softwareManufacturer: "Nortal AG"
+  softwareName: "Dummy Produkt"
+  softwareVersion: "1.0.0"
+  street: "Knesebeckstraße"
+  streetNo: "1"
+  zipCode: "10623"
+  city: "Berlin"
+  addressAddition: null
+clientProperties:
+  serverUrl:
+    transportBasePort: https://localhost:9443/services/XTACore/TransportBase
+    senderPort: https://localhost:9443/services/XTACore/Sender
+    recipientPort: https://localhost:9443/services/XTACore/Recipient
+    readerPort: https://localhost:9443/services/XTACore/Reader
+  checkHostnameInCertificate: true
+  keyStore: "classpath:store/john_smith_xta_tester.p12"
+  keyStorePassword: "password"
+  keyPassword: "password"
+  keyAlias: null
+  trustStore: "classpath:store/xta-test-app_truststore.jks"
+  trustStorePassword: "password"
+partyIdentifierConfig:
+  identifierScheme: "xoev"
+  name: "name"
+  value: "auth"
+  organizationCategory: "dbs:testumgebung"
+  directory: "directory"
+authorIdentifierConfig:
+  identifierScheme: "xoev"
+  name: "name"
+  value: "author"
+  organizationCategory: "dbs:testumgebung"
+  directory: "directory"
+readerIdentifierConfig:
+  identifierScheme: "xoev"
+  name: "name"
+  value: "reader"
+  organizationCategory: "dbs:testumgebung"
+  directory: "directory"
+senderIdentifierConfig:
+  identifierScheme: "xoev"
+  name: "name"
+  value: "sender"
+  organizationCategory: "dbs:testumgebung"
+  directory: "directory"
+qualifierConfig:
+  buiBusinessScenarioConfig:
+    defined: true
+    undefined: "Benutzerdefiniertes Szenario"
+    listURI: "urn:de:xta:codeliste:business.scenario_3.6"
+    listVersionID: "3.6"
+    code: "XMELD_DATA"
+  messageTypeConfig:
+    messageSchema: "http://www.osci.de/xmeld33"
+    value: "datenabruf.freieSuche.suchanfrage.1332"
+  service: "http://osci.de/xmeld33/xmeld33freieSuche.wsdl"
+  

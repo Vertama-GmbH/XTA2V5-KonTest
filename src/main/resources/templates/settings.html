@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>[[ #{page.settings.messages.title} ]]</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <form id="metatdataForm">
+
+        <h2>[[ #{page.settings.metatdataForm.sectionlabel} ]]</h2>
+
+        <th:block th:replace="~{components :: form_row(
+			id='protocol_softwareManufacturer',
+			labelText=#{page.settings.metatdataForm.label.softwareManufacturer},
+			inputType='text',
+			value=${metadata.getSoftwareManufacturer()},
+			tooltip=#{page.settings.metatdataForm.tooltip.softwareManufacturer},
+			required='true'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='protocol_softwareName',
+			labelText=#{page.settings.metatdataForm.label.softwareName},
+			inputType='text',
+			value=${metadata.getSoftwareName()},
+			tooltip=#{page.settings.metatdataForm.tooltip.softwareName},
+			required='true'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='protocol_softwareVersion',
+			labelText=#{page.settings.metatdataForm.label.softwareVersion},
+			inputType='text',
+			value=${metadata.getSoftwareVersion()},
+			tooltip=#{page.settings.metatdataForm.tooltip.softwareVersion},
+			required='true'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='protocol_street',
+			labelText=#{page.settings.metatdataForm.label.street},
+			inputType='text',
+			value=${metadata.getStreet()},
+			tooltip=#{page.settings.metatdataForm.tooltip.street},
+			required='true'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='protocol_streetNo',
+			labelText=#{page.settings.metatdataForm.label.streetNo},
+			inputType='text',
+			value=${metadata.getStreetNo()},
+			tooltip=#{page.settings.metatdataForm.tooltip.streetNo},
+			required='true'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='protocol_zipCode',
+			labelText=#{page.settings.metatdataForm.label.zipCode},
+			inputType='text',
+			value=${metadata.getZipCode()},
+			tooltip=#{page.settings.metatdataForm.tooltip.zipCode},
+			required='true'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='protocol_city',
+			labelText=#{page.settings.metatdataForm.label.city},
+			inputType='text',
+			value=${metadata.getCity()},
+			tooltip=#{page.settings.metatdataForm.tooltip.city},
+			required='true'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='protocol_addressAddition',
+			labelText=#{page.settings.metatdataForm.label.addressAddition},
+			inputType='textarea',
+			value=${metadata.addressAddition},
+			tooltip=#{page.settings.metatdataForm.tooltip.addressAddition},
+			required='false'
+		)}"/>
+
+        <h2>[[ #{page.settings.connectionSettingsForm.sectionlabel.connectionsettings} ]]</h2>
+
+        <th:block th:replace="~{components :: form_row(
+			id='connectionSettings_checkHostnameInCertificate',
+			labelText=#{page.settings.connectionSettingsForm.label.checkHostnameInCert},
+			inputType='checkbox',
+			value=${connectionSettings.isCheckHostnameInCertificate()},
+			tooltip=#{page.settings.connectionSettingsForm.tooltip.checkHostnameInCert},
+			required='false'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='connectionSettings_keyStore',
+			labelText=#{page.settings.connectionSettingsForm.label.keyStore},
+			inputType='text',
+			value=${connectionSettings.getKeyStore()},
+			tooltip=#{page.settings.connectionSettingsForm.tooltip.keyStore},
+			required='true'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='connectionSettings_keyStorePassword',
+			labelText=#{page.settings.connectionSettingsForm.label.keyStorePassword},
+			inputType='text',
+			value=${connectionSettings.getKeyStorePassword()},
+			tooltip=#{page.settings.connectionSettingsForm.tooltip.keyStorePassword},
+            required='false'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='connectionSettings_keyAlias',
+			labelText=#{page.settings.connectionSettingsForm.label.keyAlias},
+			inputType='text',
+			value=${connectionSettings.getKeyAlias()},
+			tooltip=#{page.settings.connectionSettingsForm.tooltip.keyAlias},
+            required='false'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='connectionSettings_keyPassword',
+			labelText=#{page.settings.connectionSettingsForm.label.keyPassword},
+			inputType='text',
+			value=${connectionSettings.getKeyPassword()},
+			tooltip=#{page.settings.connectionSettingsForm.tooltip.keyPassword},
+            required='false'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='connectionSettings_trustStore',
+			labelText=#{page.settings.connectionSettingsForm.label.trustStore},
+			inputType='text',
+			value=${connectionSettings.getTrustStore()},
+			tooltip=#{page.settings.connectionSettingsForm.tooltip.trustStore},
+            required='true'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='connectionSettings_trustStorePassword',
+			labelText=#{page.settings.connectionSettingsForm.label.trustStorePassword},
+			inputType='text',
+			value=${connectionSettings.getTrustStorePassword()},
+			tooltip=#{page.settings.connectionSettingsForm.tooltip.trustStorePassword},
+            required='false'
+		)}"/>
+
+        <h2>[[ #{page.settings.connectionSettingsForm.sectionlabel.endpoints} ]]</h2>
+
+        <th:block th:replace="~{components :: form_row(
+			id='connectionSettings_transportBasePort',
+			labelText=#{page.settings.connectionSettingsForm.label.transportBasePort},
+			inputType='text',
+		 	value=${connectionSettings.getServerUrl().getTransportBasePort()},
+			tooltip=#{page.settings.connectionSettingsForm.tooltip.transportBasePort},
+            required='true'
+			
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='connectionSettings_senderPort',
+			labelText=#{page.settings.connectionSettingsForm.label.senderPort},
+			inputType='text',
+			value=${connectionSettings.getServerUrl().getSenderPort()},
+			tooltip=#{page.settings.connectionSettingsForm.tooltip.senderPort},
+            required='true'
+			
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='connectionSettings_recipientPort',
+			labelText=#{page.settings.connectionSettingsForm.label.recipientPort},
+			inputType='text',
+			value=${connectionSettings.getServerUrl().getRecipientPort()},
+			tooltip=#{page.settings.connectionSettingsForm.tooltip.recipientPort},
+            required='true'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='connectionSettings_readerPort',
+			labelText=#{page.settings.connectionSettingsForm.label.readerPort},
+			inputType='text',
+			value=${connectionSettings.getServerUrl().getReaderPort()},
+			tooltip=#{page.settings.connectionSettingsForm.tooltip.readerPort},
+            required='true'
+		)}"/>
+
+        <h2 th:text="#{page.settings.settingsForm.label.partyIdentifier}">Party Identifier</h2>
+
+        <th:block th:replace="~{components :: form_row(
+			id='partyIdentifier_identifierScheme',
+			labelText=#{page.settings.settingsForm.label.identifierScheme},
+			inputType='text',
+			value=${partyIdentifier.getIdentifierScheme()},
+			tooltip=#{page.settings.settingsForm.tooltip.identifierScheme},
+            required='true'
+			
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='partyIdentifier_identifierName',
+			labelText=#{page.settings.settingsForm.label.identifierName},
+			inputType='text',
+			value=${partyIdentifier.getName()},
+            tooltip=#{page.settings.settingsForm.tooltip.identifierName},
+            required='false'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='partyIdentifier_organizationCategory',
+			labelText=#{page.settings.settingsForm.label.organizationCategory},
+			inputType='text',
+			value=${partyIdentifier.getOrganizationCategory()},
+            tooltip=#{page.settings.settingsForm.tooltip.organizationCategory},
+            required='false'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='partyIdentifier_value',
+			labelText=#{page.settings.settingsForm.label.value},
+			inputType='text',
+			value=${partyIdentifier.getValue()},
+            tooltip=#{page.settings.settingsForm.tooltip.value},,
+            required='true'
+		)}"/>
+
+        <!-- <th:block th:replace="~{components :: form_row(
+            id='partyIdentifier_directory',
+            labelText=#{page.settings.settingsForm.label.directory},
+            inputType='text',
+            value=${partyIdentifier.getDirectory()},
+            tooltip=#{page.settings.settingsForm.tooltip.directory},
+            required='false'
+        )}"/> -->
+
+        <h2 th:text="#{page.settings.settingsForm.label.authorIdentifier}">Author Identifier</h2>
+
+        <th:block th:replace="~{components :: form_row(
+			id='authorIdentifier_identifierScheme',
+			labelText=#{page.settings.settingsForm.label.identifierScheme},
+			inputType='text',
+			value=${authorIdentifier.getIdentifierScheme()},
+            tooltip=#{page.settings.settingsForm.tooltip.directory},,
+            required='true'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='authorIdentifier_identifierName',
+			labelText=#{page.settings.settingsForm.label.identifierName},
+			inputType='text',
+			value=${authorIdentifier.getName()},
+            tooltip=#{page.settings.settingsForm.tooltip.identifierName},
+            required='false'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='authorIdentifier_organizationCategory',
+			labelText=#{page.settings.settingsForm.label.organizationCategory},
+			inputType='text',
+			value=${authorIdentifier.getOrganizationCategory()},
+            tooltip=#{page.settings.settingsForm.tooltip.organizationCategory},
+            required='false'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+            id='authorIdentifier_value',
+            labelText=#{page.settings.settingsForm.label.value},
+            inputType='text',
+            value=${authorIdentifier.getValue()},
+            tooltip=#{page.settings.settingsForm.tooltip.value},
+            required='true'
+        )}"/>
+
+        <!-- <th:block th:replace="~{components :: form_row(
+            id='authorIdentifier_directory',
+            labelText=#{page.settings.settingsForm.label.directory},
+            inputType='text',
+            value=${authorIdentifier.getDirectory()},
+            tooltip=#{page.settings.settingsForm.tooltip.directory},
+            required='false'
+        )}"/> -->
+
+        <h2 th:text="#{page.settings.settingsForm.label.readerIdentifier}">Reader Identifier</h2>
+
+        <th:block th:replace="~{components :: form_row(
+            id='readerIdentifier_identifierScheme',
+            labelText=#{page.settings.settingsForm.label.identifierScheme},
+            inputType='text',
+            value=${readerIdentifier.getIdentifierScheme()},
+            tooltip=#{page.settings.settingsForm.tooltip.identifierScheme},
+            required='true'
+        )}"/>
+
+        <th:block th:replace="~{components :: form_row(
+            id='readerIdentifier_identifierName',
+            labelText=#{page.settings.settingsForm.label.identifierName},
+            inputType='text',
+            value=${readerIdentifier.getName()},
+            tooltip=#{page.settings.settingsForm.tooltip.identifierName},
+            required='false'
+        )}"/>
+
+        <th:block th:replace="~{components :: form_row(
+            id='readerIdentifier_organizationCategory',
+            labelText=#{page.settings.settingsForm.label.organizationCategory},
+            inputType='text',
+            value=${readerIdentifier.getOrganizationCategory()},
+            tooltip=#{page.settings.settingsForm.tooltip.organizationCategory},
+            required='false'
+        )}"/>
+
+        <th:block th:replace="~{components :: form_row(
+            id='readerIdentifier_value',
+            labelText=#{page.settings.settingsForm.label.value},
+            inputType='text',
+            value=${readerIdentifier.getValue()},
+            tooltip=#{page.settings.settingsForm.tooltip.value},
+            required='true'
+        )}"/>
+
+        <!-- <th:block th:replace="~{components :: form_row(
+            id='readerIdentifier_directory',
+            labelText=#{page.settings.settingsForm.label.directory},
+            inputType='text',
+            value=${readerIdentifier.getDirectory()},
+            tooltip=#{page.settings.settingsForm.tooltip.directory},
+            required='false'
+        )}"/> -->
+
+        <h2 th:text="#{page.settings.settingsForm.label.senderIdentifier}">Sender Identifier</h2>
+
+        <th:block th:replace="~{components :: form_row(
+            id='senderIdentifier_identifierScheme',
+            labelText=#{page.settings.settingsForm.label.identifierScheme},
+            inputType='text',
+            value=${senderIdentifier.getIdentifierScheme()},
+            tooltip=#{page.settings.settingsForm.tooltip.identifierScheme},
+            required='true'
+        )}"/>
+
+        <th:block th:replace="~{components :: form_row(
+            id='senderIdentifier_identifierName',
+            labelText=#{page.settings.settingsForm.label.identifierName},
+            inputType='text',
+            value=${senderIdentifier.getName()},
+            tooltip=#{page.settings.settingsForm.tooltip.identifierName},
+            required='false'
+        )}"/>
+
+        <th:block th:replace="~{components :: form_row(
+            id='senderIdentifier_organizationCategory',
+            labelText=#{page.settings.settingsForm.label.organizationCategory},
+            inputType='text',
+            value=${senderIdentifier.getOrganizationCategory()},
+            tooltip=#{page.settings.settingsForm.tooltip.organizationCategory},
+            required='false'
+        )}"/>
+
+        <th:block th:replace="~{components :: form_row(
+            id='senderIdentifier_value',
+            labelText=#{page.settings.settingsForm.label.value},
+            inputType='text',
+            value=${senderIdentifier.getValue()},
+            tooltip=#{page.settings.settingsForm.tooltip.value},
+            required='true'
+        )}"/>
+
+        <!-- <th:block th:replace="~{components :: form_row(
+            id='senderIdentifier_directory',
+            labelText=#{page.settings.settingsForm.label.directory},
+            inputType='text',
+            value=${senderIdentifier.getDirectory()},
+            tooltip=#{page.settings.settingsForm.tooltip.directory},
+            required='false'
+        )}"/> -->
+
+        <h2 th:text="#{page.settings.settingsForm.label.qualifier}">Qualifier</h2>
+
+        <th:block th:replace="~{components :: form_row(
+			id='qualifierConfig_service',
+			labelText=#{page.settings.qualifierSettingsForm.label.qualifierServiceName},
+			inputType='text',
+			value=${qualifierConfig.getService()},
+            tooltip=#{page.settings.qualifierSettingsForm.tooltip.qualifierServiceName},
+            required='false'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='qualifierConfig_messageTypeConfig_messageSchema',
+			labelText=#{page.settings.qualifierSettingsForm.label.messageType.messageSchema},
+			inputType='text',
+			value=${qualifierConfig.getMessageTypeConfig().getMessageSchema()},
+            tooltip=#{page.settings.qualifierSettingsForm.tooltip.messageType.messageSchema},
+            required='false'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+			id='qualifierConfig_messageTypeConfig_value',
+			labelText=#{page.settings.qualifierSettingsForm.label.messageType.value},
+			inputType='text',
+			value=${qualifierConfig.getMessageTypeConfig().getValue()},
+            tooltip=#{page.settings.qualifierSettingsForm.tooltip.messageType.value},
+            required='false'
+		)}"/>
+
+        <th:block th:replace="~{components :: form_row(
+            id='qualifierConfig_buiBusinessScenarioConfig_defined',
+            labelText=#{page.settings.qualifierSettingsForm.label.qualifierBusinessScenario.defined},
+            inputType='checkbox',
+            value=${qualifierConfig.getBuiBusinessScenarioConfig().isDefined()},
+            tooltip=#{page.settings.qualifierSettingsForm.tooltip.qualifierBusinessScenario.defined},
+            required='false'
+        )}"/>
+
+        <div id="scenario_undefined"
+             th:class="${!qualifierConfig.getBuiBusinessScenarioConfig().isDefined() ?'form-group collapse show' :'form-group collapse'}"
+             th:aria-expanded="${!qualifierConfig.getBuiBusinessScenarioConfig().isDefined()}">
+            <th:block th:replace="~{components :: form_row(
+				id='qualifierConfig_buiBusinessScenarioConfig_undefined',
+				labelText=#{page.settings.qualifierSettingsForm.label.qualifierBusinessScenario.undefined},
+				inputType='text',
+				value=${qualifierConfig.getBuiBusinessScenarioConfig().getUndefined()},
+	            tooltip=#{page.settings.qualifierSettingsForm.tooltip.qualifierBusinessScenario.undefined},
+	            required='false'
+			)}"/>
+        </div>
+        <div id="scenario_defined"
+             th:class="${qualifierConfig.getBuiBusinessScenarioConfig().isDefined() ?'form-group collapse show' :'form-group collapse'}"
+             th:aria-expanded="${qualifierConfig.getBuiBusinessScenarioConfig().isDefined()}">
+            <th:block th:replace="~{components :: form_row(
+				id='qualifierConfig_buiBusinessScenarioConfig_listURI',
+				labelText=#{page.settings.qualifierSettingsForm.label.qualifierBusinessScenario.listUri},
+				inputType='text',
+				value=${qualifierConfig.getBuiBusinessScenarioConfig().getListURI()},
+	            tooltip=#{page.settings.qualifierSettingsForm.tooltip.qualifierBusinessScenario.listUri},
+	            required='false'
+			)}"/>
+
+            <th:block th:replace="~{components :: form_row(
+				id='qualifierConfig_buiBusinessScenarioConfig_listVersionID',
+				labelText=#{page.settings.qualifierSettingsForm.label.qualifierBusinessScenario.listVersionId},
+				inputType='text',
+				value=${qualifierConfig.getBuiBusinessScenarioConfig().getListVersionID()},
+	            tooltip=#{page.settings.qualifierSettingsForm.tooltip.qualifierBusinessScenario.listVersionId},
+	            required='false'
+			)}"/>
+
+            <th:block th:replace="~{components :: form_row(
+				id='qualifierConfig_buiBusinessScenarioConfig_code',
+				labelText=#{page.settings.qualifierSettingsForm.label.qualifierBusinessScenario.code},
+				inputType='text',
+				value=${qualifierConfig.getBuiBusinessScenarioConfig().getCode()},
+	            tooltip=#{page.settings.qualifierSettingsForm.tooltip.qualifierBusinessScenario.code},
+	            required='false'
+			)}"/>
+        </div>
+        <div class="alert alert-success" id="successMessage" role="alert" style="display: none"
+             th:text="#{page.settings.messages.success}">Erfolgreich
+        </div>
+        <div class="alert alert-danger" id="errorMessage" role="alert" style="display: none"
+             th:text="#{page.settings.messages.error}">Fehler
+        </div>
+
+        <button class="btn btn-primary" type="submit" id="save" th:text="#{page.settings.metatdataForm.button.save}">
+            Speichern
+        </button>
+        <button class="btn btn-secondary" type="reset" id="btn-config-reset"
+                th:text="#{page.settings.metatdataForm.button.resetToDefault}">Zurücksetzen
+        </button>
+    </form>
+</div>
+
+<div layout:fragment="optional">
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function () {
+             $("#qualifierConfig_buiBusinessScenarioConfig_defined")
+                     .change(
+                             function(event) {
+                                 const data = event.target.checked;
+                                 if (data === true) {
+                                     $('#scenario_defined').toggleClass("show", true);
+                                     $('#scenario_defined').prop("ariaExpanded", "true");
+                                     $('#scenario_undefined').toggleClass("show", false);
+                                     $('#scenario_undefined').prop("ariaExpanded", "false");
+                                 } else {
+                                     $('#scenario_defined').toggleClass("show", false);
+                                     $('#scenario_defined').prop("ariaExpanded", "false");
+                                     $('#scenario_undefined').toggleClass("show", true);
+                                     $('#scenario_undefined').prop("ariaExpanded", "true");
+                                 }
+
+                             })
+
+
+            $("#btn-config-reset").click(function (event) {
+                // cancel standard action
+                event.preventDefault();
+                if (confirm( /*[[ #{page.settings.messages.resetconfirm} ]]*/ "Sind Sie sicher, dass Sie alle Einstellungen auf Standardwerte zurücksetzen möchten?" )) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/rest/api/mgmt/xtaConfig/reset",
+                    }).done(() => {
+                        $('#successMessage').show();
+                        $('#errorMessage').hide();
+                        setTimeout(() => location.reload(), 1500);
+                    }).fail( () => {
+                        $('#successMessage').hide();
+                        $('#errorMessage').show();
+                    });
+                }
+            })
+
+            $("#save").click(function (event) {
+                // cancel standard action
+                event.preventDefault();
+
+                const body = {
+                    protocolMetadata: {
+                        softwareManufacturer: $("#protocol_softwareManufacturer").val(),
+                        softwareName: $("#protocol_softwareName").val(),
+                        softwareVersion: $("#protocol_softwareVersion").val(),
+                        street: $("#protocol_street").val(),
+                        streetNo: $("#protocol_streetNo").val(),
+                        zipCode: $("#protocol_zipCode").val(),
+                        city: $("#protocol_city").val(),
+                        addressAddition: $("#protocol_addressAddition").val(),
+                    },
+                    clientProperties: {
+                        checkHostnameInCertificate: $("#connectionSettings_checkHostnameInCertificate").prop("checked"),
+                        keyStore: $("#connectionSettings_keyStore").val(),
+                        keyStorePassword: $("#connectionSettings_keyStorePassword").val(),
+                        keyAlias: $("#connectionSettings_keyAlias").val(),
+                        keyPassword: $("#connectionSettings_keyPassword").val(),
+                        trustStore: $("#connectionSettings_trustStore").val(),
+                        trustStorePassword: $("#connectionSettings_trustStorePassword").val(),
+                        serverUrl: {
+                            transportBasePort: $("#connectionSettings_transportBasePort").val(),
+                            senderPort: $("#connectionSettings_senderPort").val(),
+                            recipientPort: $("#connectionSettings_recipientPort").val(),
+                            readerPort: $("#connectionSettings_readerPort").val(),
+                        }
+                    },
+                    partyIdentifierConfig: {
+                        identifierScheme: $("#partyIdentifier_identifierScheme").val(),
+                        name: $("#partyIdentifier_identifierName").val(),
+                        organizationCategory: $("#partyIdentifier_organizationCategory").val(),
+                        value: $("#partyIdentifier_value").val(),
+                        directory: $("#partyIdentifier_directory").val(),
+                    },
+                    authorIdentifierConfig: {
+                        identifierScheme: $("#authorIdentifier_identifierScheme").val(),
+                        name: $("#authorIdentifier_identifierName").val(),
+                        organizationCategory: $("#authorIdentifier_organizationCategory").val(),
+                        value: $("#authorIdentifier_value").val(),
+                        directory: $("#authorIdentifier_directory").val(),
+                    },
+                    readerIdentifierConfig: {
+                        identifierScheme: $("#readerIdentifier_identifierScheme").val(),
+                        name: $("#readerIdentifier_identifierName").val(),
+                        organizationCategory: $("#readerIdentifier_organizationCategory").val(),
+                        value: $("#readerIdentifier_value").val(),
+                        directory: $("#readerIdentifier_directory").val(),
+
+                    },
+                    senderIdentifierConfig: {
+                        identifierScheme: $("#senderIdentifier_identifierScheme").val(),
+                        name: $("#senderIdentifier_identifierName").val(),
+                        organizationCategory: $("#senderIdentifier_organizationCategory").val(),
+                        value: $("#senderIdentifier_value").val(),
+                        directory: $("#senderIdentifier_directory").val(),
+                    },
+                    qualifierConfig: {
+                        service: $("#qualifierConfig_service").val(),
+                        buiBusinessScenarioConfig: {
+                            defined: $("#qualifierConfig_buiBusinessScenarioConfig_defined").prop("checked"),
+                            undefined: $("#qualifierConfig_buiBusinessScenarioConfig_undefined").val(),
+                            listURI: $("#qualifierConfig_buiBusinessScenarioConfig_listURI").val(),
+                            listVersionID: $("#qualifierConfig_buiBusinessScenarioConfig_listVersionID").val(),
+                            code: $("#qualifierConfig_buiBusinessScenarioConfig_code").val(),
+                        },
+                        messageTypeConfig: {
+                            messageSchema: $("#qualifierConfig_messageTypeConfig_messageSchema").val(),
+                            value: $("#qualifierConfig_messageTypeConfig_value").val(),
+                        },
+                    },
+                }
+
+                $.ajax({
+                    type: "PUT",
+                    url: "/rest/api/mgmt/xtaConfig/update",
+                    data: JSON.stringify(body),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    encode: false
+                }).done(function (data) {
+                    // success
+                    //console.log('done:');
+                    //console.log(data.responseJSON);
+                    $('#successMessage').show();
+                    $('#errorMessage').hide();
+                }).fail(function (data) {
+                    // error
+                    //console.log('fail:');
+                    //console.log(data.responseJSON);
+                    $('#successMessage').hide();
+                    $('#errorMessage').text(JSON.stringify(data.responseJSON));
+                    $('#errorMessage').show();
+                });
+            });
+        });
+    </script>
+</div>
+</body>
+
+
+</html>

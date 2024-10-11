@@ -1,0 +1,30 @@
+@startuml
+participant "Empfänger (synchron)" as empfaenger
+participant "Leser (synchron)" as leser #LightGreen
+
+activate empfaenger
+
+empfaenger -> leser: deliverMessage
+activate leser
+return
+
+
+
+leser -> empfaenger: checkAccountActive
+note right 
+muss zu einem beliebigen 
+Zeitpunkt aufgerufen werden
+end note
+activate empfaenger
+return 
+
+leser -> empfaenger: getTransportReport
+note right 
+muss zu einem beliebigen 
+Zeitpunkt nach deliverMessage 
+aufgerufen werden
+end note
+activate empfaenger
+return
+
+@enduml
