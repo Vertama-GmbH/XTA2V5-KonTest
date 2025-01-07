@@ -48,8 +48,8 @@ class XtaClientTest {
     private Path tempfile;
 
     @BeforeAll
-    void setup() {
-        try {
+    void setup() throws IOException {
+//        try {
             tempfile = Files.createTempFile("client_", ".yaml");
 
             Files.copy(Paths.get("src/test/resources/configDefaultTest.yaml").toAbsolutePath(),
@@ -58,19 +58,19 @@ class XtaClientTest {
             // doReturn("file:" + testfile.toAbsolutePath().toString()).when(configurationService).getConfigFileName();
             configurationService.configFileName = "file:" + tempfile.toAbsolutePath().toString();
             configurationService.resetXtaConfigBean();
-        } catch (IOException e) {
-            System.err.println(e);
-        }
+//        } catch (IOException e) {
+//            System.err.println(e);
+//        }
     }
 
     @AfterAll
-    void cleanup() {
-        try {
+    void cleanup() throws IOException {
+//        try {
             Files.deleteIfExists(tempfile);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
     }
 
     @Test
@@ -85,14 +85,14 @@ class XtaClientTest {
         // ClientConnectionProperties servers = configurationService.getClientProperties().getServerUrl();
         // servers.setManagementPort("https://localhost:" + serverPort + 1 + "/services/XTAService/ManagementPort");
 
-        try {
+//        try {
             xtaClient.checkAccountActive();
 
-        } catch (CancelScenarioExecution e) {
-            fail("Execution failed: " + e.getMessage(), e);
-        } catch (Exception e) {
-            fail("Execution failed: " + e.getMessage(), e);
-        }
+//        } catch (CancelScenarioExecution e) {
+//            fail("Execution failed: " + e.getMessage(), e);
+//        } catch (Exception e) {
+//            fail("Execution failed: " + e.getMessage(), e);
+//        }
         // then
 
     }
